@@ -1,0 +1,2 @@
+# Raffle-Market
+"Join the Raffle Market – a unique lottery-style shopping experience where supermarkets, hotels, and electronics stores turn everyday products into exciting draws. Buy affordable tickets, watch the countdown, and stand a chance to win big prizes like bags of rice, gadgets, and more – all while shop owners profit fairly. Transparent, thrilling, and rewarding – this is the future of smart shopping!"
