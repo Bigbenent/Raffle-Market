@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Raffle Market</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    body.dark-mode {
+      background-color: #0b1a2a;
+      color: #f8f9fa;
+    }
+    body.light-mode {
+      background-color: #f8f9fa;
+      color: #212529;
+    }
+    .nav-tabs .nav-link.active {
+      font-weight: bold;
+    }
+    .ticket-ball {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #fff;
+      border: 2px solid #333;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 3px;
+      font-weight: bold;
+      font-size: 14px;
+    }
+    .ticket-ball.sold {
+      background: #ffc107;
+      color: #000;
+    }
+    .ticket-ball.mine {
+      background: #198754;
+      color: #fff;
+    }
+  </style>
+</head>
+<body class="dark-mode">
+  <!-- Navbar -->
+  <nav class="navbar navbar-dark bg-dark px-4">
+    <a class="navbar-brand fw-bold" href="#">RF</a>
+    <span class="navbar-text text-light">Raffle Market</span>
+    <div class="ms-auto d-flex align-items-center">
+      <span class="text-warning me-3">Welcome, Guest</span>
+      <button class="btn btn-outline-light btn-sm me-2">Login</button>
+      <button class="btn btn-warning btn-sm me-2">Register</button>
+      <button id="toggleMode" class="btn btn-outline-light btn-sm">🌙 Dark</button>
+    </div>
+  </nav>
+
+  <!-- Content -->
+  <div class="container py-4">
+    <!-- Tabs -->
+    <ul class="nav nav-tabs mb-3">
+      <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#active">🎟 Active Draws</a></li>
+      <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#winners">🏅 Past Winners</a></li>
+    </ul>
+
+    <div class="tab-content">
+      <!-- Active Draws -->
+      <div class="tab-pane fade show active" id="active">
+        <div class="row" id="activeDraws"></div>
+      </div>
+
+      <!-- Past Winners -->
+      <div class="tab-pane fade" id="winners">
+        <ul class="list-group" id="pastWinners"></ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ticket Purchase Modal -->
+  <div class="modal fade" id="buyTicketModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Confirm Ticket Purchase</h5>
+          <button class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body" id="ticketModalBody">Loading...</div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button class="btn btn-primary" id="confirmPurchase">Confirm</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Sample data
+    const draws = [
+      {id:1, product:"Bag of Rice (50kg)", seller:"Sunrise Supermarket", price:1000, total:50, sold:30, tickets:[25,26,27,28,29,30]},
+      {id:2, product:"Samsung 43” Smart TV", seller:"Prime Electronics", price:2000, total:75, sold:75, tickets:[75,76,77,78,79,80]},
+      {id:3, product:"Weekend Stay Voucher", seller:"Golden Hotel", price:2000, total:40, sold:10, tickets:[5,6,7,8,9,10]}
+    ];
+    const winners = [
+      {draw:"#099", winner:"John Doe", prize:"Shopping Voucher"},
+      {draw:"#098", winner:"Mary Jane", prize:"iPhone 14"},
+    ];
+
+    let selectedDraw = null;
+
+    // Render Active Draws
+    function renderDraws(){
+      const container = document.getElementById('activeDraws');
+      container.innerHTML = "";
+      draws.forEach(d => {
+        const col = document.createElement('div');
+        col.className = "col-md-4 mb-3";
+        col.innerHTML = `
+          <div class="card h-100 shadow-sm">
+            <div class="card-body">
+              <h5>${d.product}</h5>
+              <p class="text-muted">${d.seller}</p>
+              <h6 class="text-warning">₦${d.price.toLocaleString()}</h6>
+              <p class="small">Odds: 1 in ${d.total}</p>
+              <div class="progress mb-2">
+                <div class="progress-bar bg-primary" style="width:${(d.sold/d.total)*100}%"></div>
+              </div>
+              <p class="small">${d.sold}/${d.total} sold</p>
+              <div class="d-flex gap-2">
+                <button class="btn btn-sm btn-outline-primary flex-fill" onclick="showDetails(${d.id})">Details</button>
+                <button class="btn btn-sm btn-warning flex-fill" ${d.sold>=d.total?"disabled":""} onclick="buyTicket(${d.id})">Buy Ticket</button>
+              </div>
+              <div class="d-flex flex-wrap mt-2">${renderBalls(d)}</div>
+            </div>
+          </div>`;
+        container.appendChild(col);
+      });
+    }
+
+    // Render Ticket Balls
+    function renderBalls(draw){
+      let html = "";
+      for(let i=1;i<=draw.total;i++){
+        const sold = draw.tickets.includes(i);
+        html += `<div class="ticket-ball ${sold?"sold":""}">${i}</div>`;
+      }
+      return html;
+    }
+
+    // Render Winners
+    function renderWinners(){
+      const ul = document.getElementById('pastWinners');
+      ul.innerHTML = "";
+      winners.forEach(w=>{
+        ul.innerHTML += `<li class="list-group-item">${w.draw} - <b>${w.winner}</b> won <i>${w.prize}</i></li>`;
+      });
+    }
+
+    // Ticket purchase
+    function buyTicket(id){
+      selectedDraw = draws.find(d=>d.id===id);
+      document.getElementById('ticketModalBody').innerHTML = `
+        Buy 1 ticket for <b>${selectedDraw.product}</b> at ₦${selectedDraw.price}?`;
+      new bootstrap.Modal(document.getElementById('buyTicketModal')).show();
+    }
+
+    document.getElementById('confirmPurchase').addEventListener('click',()=>{
+      if(!selectedDraw) return;
+      if(selectedDraw.sold<selectedDraw.total){
+        selectedDraw.sold++;
+        selectedDraw.tickets.push(selectedDraw.sold);
+      }
+      renderDraws();
+      bootstrap.Modal.getInstance(document.getElementById('buyTicketModal')).hide();
+    });
+
+    function showDetails(id){
+      alert("Show details for draw "+id);
+    }
+
+    // Dark/Light mode toggle
+    document.getElementById('toggleMode').addEventListener('click',()=>{
+      document.body.classList.toggle('dark-mode');
+      document.body.classList.toggle('light-mode');
+    });
+
+    // Initial render
+    renderDraws();
+    renderWinners();
+  </script>
+</body>
+</html>
