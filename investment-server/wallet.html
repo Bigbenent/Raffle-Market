@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>042 Raffle Market Investor | Dashboard</title>
+
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Official investor dashboard for 042 Raffle Market — manage investments, monitor ROI, and grow your raffle funding portfolio." />
+  <meta name="keywords" content="042 Raffle Market, Investment, ROI, Raffle Funding, BenCodes Innovation Hub" />
+  <meta name="author" content="BenCodes Innovation Hub LTD" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="img/logo.png" type="image/png" />
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+
+  <!-- Toastr Notifications -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+
+  <!-- Chart.js for ROI Chart -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+  <!-- Custom CSS -->
+  <link href="css/style.css" rel="stylesheet" />
+
+  <!-- Theme Color for Mobile -->
+  <meta name="theme-color" content="#0d6efd" />
+
+</head>
+
+
+<body>
+
+ <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <h4>042 <span class="text-white">Investor</span></h4>
+    </div>
+ <ul class="sidebar-menu">
+      <li><a href="index.html" class="active"><i class="bi bi-house-door"></i> Dashboard</a></li>
+      <li><a href="plans.html"><i class="bi bi-graph-up-arrow"></i> Investment Plans</a></li>
+      <li><a href="wallet.html"><i class="bi bi-wallet2"></i> Wallet</a></li>
+      <li><a href="transaction.html"><i class="bi bi-cash-coin"></i> Transactions</a></li>
+      <li><a href="roi_history.html"><i class="bi bi-clock-history"></i> ROI History</a></li>
+      <li><a href="support.html"><i class="bi bi-envelope"></i> Support</a></li>
+      <li><a href="settings.html"><i class="bi bi-gear"></i> Settings</a></li>
+    </ul>
+  </aside>
+
+   <!-- MAIN CONTENT -->
+  <main class="main-content" id="main-content">
+
+
+    <!-- ADVANCED RESPONSIVE NAVBAR -->
+<nav class="navbar navbar-expand-lg   shadow-sm sticky-top py-3 px-3 px-md-4" id="mainNavbar">
+  <!-- SIDEBAR TOGGLE (Visible only on mobile) -->
+  <button class="btn btn-outline-dark me-2 d-lg-none" id="sidebarToggle">
+    <i class="bi bi-list fs-5"></i>
+  </button>
+
+  <!-- LOGO + TITLE -->
+  <div class="d-flex align-items-center">
+    <h6 class="fw-bold mb-0 d-lg-none">042 Investor</h6> <!-- shorter text for mobile -->
+    <h5 class="fw-bold mb-0 d-none d-lg-block">042 Raffle Market Investor</h5>
+  </div>
+
+  <!-- NAV ACTIONS -->
+  <div class="ms-auto d-flex align-items-center gap-2 gap-md-3">
+
+    <!-- USER GREETING (Hidden on mobile) -->
+    <span class="d-none d-md-inline">Welcome, <strong>John Doe</strong></span>
+
+    <!-- THEME TOGGLE (Hidden on very small devices) -->
+    <button class="btn btn-light border d-none d-sm-inline" id="themeToggle" title="Toggle Theme">
+      <i class="bi bi-moon"></i>
+    </button>
+
+    <!-- NOTIFICATION DROPDOWN -->
+    <div class="dropdown">
+      <button class="btn btn-light position-relative border-0" id="notifDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="bi bi-bell fs-5"></i>
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.6rem;">3</span>
+      </button>
+      <ul class="dropdown-menu dropdown-menu-end shadow border-0 rounded-4 p-0" aria-labelledby="notifDropdown" style="width: 280px;">
+        <li class="dropdown-header text-center fw-semibold py-2 border-bottom bg-light">Notifications</li>
+        <li><a class="dropdown-item py-2 small" href="#"><i class="bi bi-cash-coin text-success me-2"></i>ROI payout processed successfully</a></li>
+        <li><a class="dropdown-item py-2 small" href="#"><i class="bi bi-graph-up-arrow text-success me-2"></i>New investment plan added</a></li>
+        <li><a class="dropdown-item py-2 small" href="#"><i class="bi bi-info-circle text-warning me-2"></i>System maintenance scheduled</a></li>
+        <li><hr class="dropdown-divider my-1"></li>
+        <li><a class="dropdown-item text-center small text-success fw-semibold" href="#">View all</a></li>
+      </ul>
+    </div>
+
+    <!-- PROFILE DROPDOWN -->
+    <div class="dropdown">
+      <a href="#" class="d-flex align-items-center text-decoration-none" data-bs-toggle="dropdown" aria-expanded="false">
+        <img src="img/profile.jpg" class="rounded-circle me-1 me-md-2" width="36" height="36" alt="Profile" />
+        <i class="bi bi-chevron-down text-dark fs-6 bg-success py-1 px-2 rounded-pill d-none d-sm-inline"></i>
+      </a>
+      <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 rounded-4">
+        <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i> View Profile</a></li>
+        <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i> Settings</a></li>
+        <li><hr class="dropdown-divider" /></li>
+        <li><a class="dropdown-item text-danger" href="#"><i class="bi bi-box-arrow-right me-2"></i> Logout</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- WALLET SECTION -->
+<div class="wallet-container">
+
+  <!-- Fintech-style Wallet Card -->
+  <div class="wallet-card" data-animate>
+    <div class="d-flex justify-content-between align-items-center">
+      <h5>Wallet Summary</h5>
+      <i class="bi bi-wallet2 fs-2"></i>
+    </div>
+    <div class="wallet-info mt-3">
+      <div>
+        <h5>Available Balance</h5>
+        <h2 id="availableBalance">₦450,000</h2>
+      </div>
+      <div>
+        <h5>Locked Capital</h5>
+        <h2>₦1,200,000</h2>
+      </div>
+      <div>
+        <h5>Withdrawable</h5>
+        <h2>₦320,000</h2>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <ul class="nav nav-tabs" id="walletTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="overview-tab" data-bs-toggle="tab" data-bs-target="#overview" type="button" role="tab">Wallet Overview</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings" type="button" role="tab">Settings</button>
+    </li>
+  </ul>
+
+  <div class="tab-content mt-3" id="walletTabsContent">
+
+    <!-- Overview Tab -->
+    <div class="tab-pane fade show active" id="overview" role="tabpanel">
+      <div class="roi-card" data-animate>
+        <h5 class="fw-bold text-success mb-3"><i class="bi bi-calculator me-2"></i>Live ROI Calculator</h5>
+        <form id="roiForm">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Select Plan</label>
+              <select class="form-select input-glow" id="planSelect" required>
+                <option value="">-- Choose Plan --</option>
+                <option value="10" data-duration="7">Starter (10% - 7 Days)</option>
+                <option value="20" data-duration="14">Middle-Class (20% - 14 Days)</option>
+                <option value="25" data-duration="21">Growth (25% - 21 Days)</option>
+                <option value="30" data-duration="30">VIP (30% - 30 Days)</option>
+                <option value="60" data-duration="60">Gold (40% - 60 Days)</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Enter Amount (₦)</label>
+              <input type="number" class="form-control input-glow" id="amountInput" placeholder="e.g. 100000" min="10000" max="5000000" required />
+            </div>
+          </div>
+
+          <div class="calc-result mt-4">
+            <div>Expected Profit: <span id="profit">₦0</span></div>
+            <div>Total Return: <span id="totalReturn">₦0</span></div>
+            <div>Duration: <span id="duration">0 Days</span></div>
+          </div>
+
+          <!-- <div class="text-end mt-4">
+            <button type="submit" class="btn btn-success px-4">Invest Now</button>
+          </div> -->
+        </form>
+      </div>
+    </div>
+
+    <!-- Settings Tab -->
+    <div class="tab-pane fade" id="settings" role="tabpanel">
+      <div class="card border-0 shadow-sm rounded-4 p-3" data-animate>
+        <div class="setting-item d-flex justify-content-between align-items-center">
+          <span>Enable Auto Reinvest</span>
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="autoReinvest" />
+          </div>
+        </div>
+        <div class="setting-item d-flex justify-content-between align-items-center">
+          <span>ROI Notifications</span>
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="roiNotif" checked />
+          </div>
+        </div>
+        <div class="setting-item d-flex justify-content-between align-items-center">
+          <span>Preferred Withdrawal</span>
+          <select class="form-select w-auto">
+            <option>Bank Transfer</option>
+            <option>Crypto (USDT)</option>
+            <option>Mobile Wallet</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+      <!-- FOOTER -->
+      <footer class="text-center mt-5 py-4 border-top">
+        <p class="mb-0 small text-muted">&copy; 2025 042 Raffle Market | Powered by <strong>BenCodes Innovation Hub LTD</strong></p>
+      </footer>
+
+  </main>
+
+<!-- SCRIPTS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // Animate on load
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  });
+  document.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
+
+
+  // ROI Calculator
+  const planSelect = document.getElementById('planSelect');
+  const amountInput = document.getElementById('amountInput');
+  const profitDisplay = document.getElementById('profit');
+  const totalDisplay = document.getElementById('totalReturn');
+  const durationDisplay = document.getElementById('duration');
+
+  function calculateROI() {
+    const roi = parseFloat(planSelect.value);
+    const amount = parseFloat(amountInput.value);
+    const duration = planSelect.options[planSelect.selectedIndex]?.getAttribute('data-duration') || 0;
+
+    if (!roi || !amount) {
+      profitDisplay.textContent = '₦0';
+      totalDisplay.textContent = '₦0';
+      durationDisplay.textContent = '0 Days';
+      return;
+    }
+
+    const profit = (roi / 100) * amount;
+    const total = amount + profit;
+
+    profitDisplay.textContent = `₦${profit.toLocaleString()}`;
+    totalDisplay.textContent = `₦${total.toLocaleString()}`;
+    durationDisplay.textContent = `${duration} Days`;
+  }
+
+  amountInput.addEventListener('input', calculateROI);
+  planSelect.addEventListener('change', calculateROI);
+
+
+</script>
+<script src="Js/main.js"></script>
+
+</body>
+</html>

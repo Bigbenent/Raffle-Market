@@ -1,0 +1,702 @@
+<doctype html>
+<html lang="en" data-bs-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>042 Raffle Market — Play, Win & Celebrate Everyday!</title>
+
+  <!-- Primary Meta Tags -->
+  <meta name="title" content="042 Raffle Market — Play, Win & Celebrate Everyday!" />
+  <meta name="description" content="Join 042 Raffle Market — Nigeria’s most trusted raffle and reward platform. Play exciting draws, win amazing prizes like foodstuffs, electronics, hotel stays, and more. Experience fair draws and instant rewards!" />
+  <meta name="keywords" content="042 raffle, raffle market, Nigeria raffle draw, play and win, lucky draw, mega draws, raffle ticket, electronics raffle, foodstuff raffle, hotel raffle, rewards, Enugu raffle market" />
+  <meta name="author" content="042 Raffle Market Team" />
+  <meta name="robots" content="index, follow" />
+  <meta name="language" content="English" />
+  <meta name="theme-color" content="#198754" />
+
+  <!-- Canonical Link -->
+  <link rel="canonical" href="https://www.042rafflemarket.com" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.042rafflemarket.com/" />
+  <meta property="og:title" content="042 Raffle Market — Play, Win & Celebrate Everyday!" />
+  <meta property="og:description" content="Buy raffle tickets, participate in mega draws, and win fantastic prizes instantly! Join thousands of winners across Nigeria." />
+  <meta property="og:image" content="https://www.042rafflemarket.com/img/social-preview.jpg" />
+  <meta property="og:site_name" content="042 Raffle Market" />
+
+  <!-- Twitter Meta -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://www.042rafflemarket.com/" />
+  <meta name="twitter:title" content="042 Raffle Market — Play, Win & Celebrate Everyday!" />
+  <meta name="twitter:description" content="Join 042 Raffle Market — Play exciting draws and win amazing prizes every week. Transparent, fun, and rewarding!" />
+  <meta name="twitter:image" content="https://www.042rafflemarket.com/img/social-preview.jpg" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="../img/favicon.png" />
+  <link rel="apple-touch-icon" href="../img/apple-touch-icon.png" />
+
+  <!-- Stylesheets -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/main.css" />
+
+  <!-- Preload Important Assets for Speed -->
+  <link rel="preload" href="../css/main.css" as="style" />
+  <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" as="style" />
+</head>
+
+
+<body>
+
+  <!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm sticky-top py-2">
+  <div class="container">
+    <!-- Brand -->
+    <a class="navbar-brand d-flex align-items-center gap-2" href="#">
+      <img src="../img/logo.png" width="70" class="rounded-circle border border-2 border-success" alt="042 Raffle Market">
+      <span class="fw-bold text-success fs-5">042 Raffle Market</span>
+    </a>
+
+    <!-- Toggle button for mobile -->
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu"
+      aria-controls="navbarMenu" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Collapsible Menu -->
+    <div class="collapse navbar-collapse" id="navbarMenu">
+
+      <!-- Affiliate Links -->
+      <ul class="navbar-nav mx-auto align-items-lg-center text-center">
+        <li class="nav-item mx-2">
+          <a href="index.html" class="nav-link text-dark fw-semibold">
+            <i class="fa-solid fa-house me-1 text-success"></i> Home
+          </a>
+          </li>
+        <li class="nav-item mx-2">
+          <a href="lead.html" class="nav-link text-dark fw-semibold">
+            <i class="fa-solid fa-trophy me-1 text-danger"></i> Leaderboard
+          </a>
+        </li>
+        <li class="nav-item mx-2">
+          <a href="support.html" class="nav-link text-dark fw-semibold">
+            <i class="fa-solid fa-headset me-1 text-secondary"></i> Support
+          </a>
+        </li>
+      </ul>
+
+      <!-- Right Section -->
+      <div class="d-flex align-items-center gap-3 ms-lg-3">
+        <!-- Welcome Info -->
+        <div class="text-end d-none d-lg-block">
+          <div class="fw-bold text-success">Welcome, Goodness</div>
+          <div class="small text-muted">
+            <i class="fa-regular fa-clock me-1"></i> <span id="local-time"></span>
+          </div>
+        </div>
+
+        <!-- Theme Toggle -->
+        <button class="btn btn-sm btn-outline-secondary rounded-pill" id="themeToggle" title="Toggle theme">
+          <i class="fa-solid fa-moon"></i> light-mode
+        </button>
+
+        <!-- Join / Register Button -->
+        <a href="#" class="btn btn-success btn-sm rounded-pill fw-bold">
+          <i class="fa-solid fa-link me-1"></i> Join Affiliate
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+
+
+<!-- CSS Styling -->
+
+
+ <!-- Live Raffle Carousel Scoreboard -->
+<section class="raffle-scoreboard container my-5">
+  <div class="card raffle-card shadow-lg border-0 rounded-4 p-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h4 class="fw-bold mb-0 d-flex align-items-center gap-2">
+        🎯 Live Raffle Scoreboard
+      </h4>
+      <span class="badge bg-success text-dark px-3 py-2 rounded-pill shadow-sm">Real-Time</span>
+    </div>
+
+    <div id="raffleCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="5000">
+      
+      <!-- Carousel Indicators -->
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#raffleCarousel" data-bs-slide-to="0" class="active"></button>
+        <button type="button" data-bs-target="#raffleCarousel" data-bs-slide-to="1"></button>
+        <button type="button" data-bs-target="#raffleCarousel" data-bs-slide-to="2"></button>
+      </div>
+
+      <!-- Carousel Inner -->
+      <div class="carousel-inner">
+
+        <!-- Slide 1: Foodstuff Draws -->
+        <div class="carousel-item active">
+          <div class="raffle-category text-center mb-3">
+            <h5 class="fw-bold text-success">🥇 Foodstuff Mega Draw</h5>
+            <small class="text-secondary">Latest Winners & Slots</small>
+          </div>
+          <div class="d-flex flex-column gap-3">
+            <!-- Example 1 -->
+            <div class="raffle-item p-3 rounded-3 d-flex justify-content-between align-items-center animate__animated animate__fadeInUp">
+              <div class="d-flex align-items-center gap-3">
+                <div class="raffle-icon bg-success text-dark fw-bold rounded-circle shadow-sm">🍚</div>
+                <div>
+                  <h6 class="fw-bold mb-0">Rice Jackpot</h6>
+                  <small class="text-secondary">Slot Status: <span class="text-success fw-semibold">Sold Out</span></small>
+                </div>
+              </div>
+              <div class="text-end">
+                <div class="fw-bold text-success small">🏆 Winner: Ada</div>
+                <small class="text-secondary">Prize: 50kg Rice Bag</small>
+              </div>
+            </div>
+
+            <!-- Example 2 -->
+            <div class="raffle-item p-3 rounded-3 d-flex justify-content-between align-items-center animate__animated animate__fadeInUp">
+              <div class="d-flex align-items-center gap-3">
+                <div class="raffle-icon bg-success text-light fw-bold rounded-circle shadow-sm">🍗</div>
+                <div>
+                  <h6 class="fw-bold mb-0">Groceries Combo</h6>
+                  <small class="text-secondary">Slot Status: <span class="text-success fw-semibold">Sold Out</span></small>
+                </div>
+              </div>
+              <div class="text-end">
+                <div class="fw-bold text-success small">🏆 Winner: Felix</div>
+                <small class="text-secondary">Prize: ₦25,000 Voucher</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 2: Electronics -->
+        <div class="carousel-item">
+          <div class="raffle-category text-center mb-3">
+            <h5 class="fw-bold text-info">💡 Electronics Bonanza</h5>
+            <small class="text-secondary">Top Winners & Pending Draws</small>
+          </div>
+          <div class="d-flex flex-column gap-3">
+            <div class="raffle-item p-3 rounded-3 d-flex justify-content-between align-items-center animate__animated animate__fadeInUp">
+              <div class="d-flex align-items-center gap-3">
+                <div class="raffle-icon bg-info text-dark fw-bold rounded-circle shadow-sm">📺</div>
+                <div>
+                  <h6 class="fw-bold mb-0">Smart TV Raffle</h6>
+                  <small class="text-secondary">Slot Status: <span class="text-success fw-semibold">Sold Out</span></small>
+                </div>
+              </div>
+              <div class="text-end">
+                <div class="fw-bold text-info small">🎬 Drawing: Tunde</div>
+                <small class="text-secondary">Prize: 43” Smart TV</small>
+              </div>
+            </div>
+
+            <div class="raffle-item p-3 rounded-3 d-flex justify-content-between align-items-center animate__animated animate__fadeInUp">
+              <div class="d-flex align-items-center gap-3">
+                <div class="raffle-icon bg-primary text-light fw-bold rounded-circle shadow-sm">🎧</div>
+                <div>
+                  <h6 class="fw-bold mb-0">Sound System Draw</h6>
+                  <small class="text-secondary">Slot Status: <span class="text-success fw-semibold">Few Left</span></small>
+                </div>
+              </div>
+              <div class="text-end">
+                <div class="fw-bold text-primary small">⏳ Ongoing</div>
+                <small class="text-secondary">Prize: Home Theatre</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 3: Hotel Stay -->
+        <div class="carousel-item">
+          <div class="raffle-category text-center mb-3">
+            <h5 class="fw-bold text-danger">🏨 Hotel Stay Weekend</h5>
+            <small class="text-secondary">Luxury Experiences Await</small>
+          </div>
+          <div class="d-flex flex-column gap-3">
+            <div class="raffle-item p-3 rounded-3 d-flex justify-content-between align-items-center animate__animated animate__fadeInUp">
+              <div class="d-flex align-items-center gap-3">
+                <div class="raffle-icon bg-danger text-light fw-bold rounded-circle shadow-sm">🛏️</div>
+                <div>
+                  <h6 class="fw-bold mb-0">Luxury Suite Stay</h6>
+                  <small class="text-secondary">Slot Status: <span class="text-success fw-semibold">Pending</span></small>
+                </div>
+              </div>
+              <div class="text-end">
+                <div class="fw-bold text-danger small">🚫 No Winner Yet</div>
+                <small class="text-secondary">Prize: 2 Nights Stay</small>
+              </div>
+            </div>
+
+            <div class="raffle-item p-3 rounded-3 d-flex justify-content-between align-items-center animate__animated animate__fadeInUp">
+              <div class="d-flex align-items-center gap-3">
+                <div class="raffle-icon bg-secondary text-light fw-bold rounded-circle shadow-sm">🏖️</div>
+                <div>
+                  <h6 class="fw-bold mb-0">Beach Resort Promo</h6>
+                  <small class="text-secondary">Slot Status: <span class="text-success fw-semibold">Sold Out</span></small>
+                </div>
+              </div>
+              <div class="text-end">
+                <div class="fw-bold text-success small">🏆 Winner: Chioma</div>
+                <small class="text-secondary">Prize: Beach View Suite</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+  <!-- Hero Replaced with Scoreboard Tabs -->
+  <section class="container my-5">
+    <ul class="nav nav-tabs justify-content-center mb-4" id="raffleTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active fw-bold" id="active-tab" data-bs-toggle="tab" data-bs-target="#active-draws" type="button" role="tab">🎟 Active Draws</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link fw-bold" id="winners-tab" data-bs-toggle="tab" data-bs-target="#past-winners" type="button" role="tab">🏆 Draw Results</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link fw-bold" id="history-tab" data-bs-toggle="tab" data-bs-target="#ticket-history" type="button" role="tab">🧾 Ticket History</button>
+      </li>
+    </ul>
+
+    <div class="tab-content" id="raffleTabsContent">
+    <!-- ===== ACTIVE DRAWS SECTION ===== -->
+<div class="tab-pane fade show active" id="active-draws" role="tabpanel">
+
+  
+  <!-- ===== CATEGORY 1: FOODSTUFF MEGA DRAWS ===== -->
+  <div class="category-card p-3 mb-4 rounded-4 shadow-lg bg-light-subtle">
+   <div class="d-flex justify-content-between align-items-center mb-3 bg-success py-3 p-3">
+      <h5 class="fw-bold text-center text-light mb-0">🥇FOODSTUFF MEGA DRAWS</h5>
+      <div class="d-flex align-items-center gap-2">
+        <button class="btn btn-sm btn-light prev-btn">‹</button>
+        <button class="btn btn-sm btn-light next-btn">›</button>
+      </div>
+    </div>
+    <a href="" class="btn btn-sm btn-outline-success mb-3">view more</a>
+    <div class="draws-carousel d-flex gap-3 overflow-hidden">
+      
+      <!-- Card -->
+     <div class="card draw-card border-0 shadow-sm rounded-4 flex-shrink-0">
+        <div class="card-body">
+          <div class="ratio ratio-1x1 rounded-3 overflow-hidden mb-2">
+            <img src="../img/rice.jpeg" class="object-fit-cover w-100 h-100" alt="Electronics Draw">
+          </div>
+          <h6 class="fw-bold mb-1">2Bags of (50kg) Rice</h6>
+          <div class="small"><b>Market Price:</b> ₦100,000</div>
+          <div class="small"><b>Tickets Sold</b>: 20/50</div>
+          <div class="mt-2">
+            <div class="progress" style="height:8px;border-radius:10px;">
+              <div class="progress-bar bg-success" style="width:50%;"></div>
+            </div>
+            <div class="d-block justify-content-between small text-muted mt-2">
+              <span><b>Ticket Price:</b> ₦2,000</span> <br>
+              <b>Time Left:</b> <span class="fw-bold text-danger countdown" data-time="72:00:00">72:00:00</span>
+            </div>
+          </div>
+          <div class="d-flex justify-content-between align-items-center mt-3">
+
+            <div class="d-flex gap-2">
+
+<button class="btn btn-sm btn-outline-success buy-ticket-btn" 
+  data-bs-toggle="modal" 
+  data-bs-target="#buyTicketModal"
+  data-title="2Bags of (50kg) Rice"
+  data-price="₦2,000"
+  data-img="../img/rice.jpeg"
+  data-sold="45"
+  data-total="50"
+  data-progress="90"
+  data-total-sold="₦90,000"
+  data-remaining="5">
+  Buy Ticket
+</button>
+
+<button class="btn btn-sm btn-outline-secondary details-btn"
+  data-bs-toggle="modal"
+  data-bs-target="#detailsModal"
+  data-title="2Bags of (50kg) Rice"
+  data-img="../img/rice.jpeg"
+  data-price="₦2,000"
+  data-prize="2Bags of (50kg) Rice"
+  data-desc="Join this exciting raffle for a chance to win an amazing 50-inch Smart TV. Every ticket increases your odds of winning!">
+  Details
+</button>
+
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+<!-- ======================= BUY TICKET MODAL ======================= -->
+<div class="modal fade" id="buyTicketModal" tabindex="-1" aria-labelledby="buyTicketModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content border-0 shadow-lg rounded-4">
+      
+      <!-- Header -->
+      <div class="modal-header bg-success text-white rounded-top-4">
+        <h5 class="modal-title fw-bold" id="buyTicketModalLabel">🎟️ Buy Ticket</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <!-- Body -->
+      <div class="modal-body">
+        <div class="row g-4 align-items-center">
+          
+          <!-- Image -->
+          <div class="col-md-5">
+            <img src="" class="w-100 rounded-4 shadow-sm modal-img" alt="Draw Image">
+          </div>
+
+          <!-- Details -->
+          <div class="col-md-7">
+            <h5 class="fw-bold mb-2 modal-draw-title"></h5>
+            <p class="text-muted small mb-1 modal-ticket-price"></p>
+            <p class="text-muted small mb-1 modal-ticket-sold"></p>
+
+            <div class="progress mt-2" style="height:8px; border-radius:10px;">
+              <div class="progress-bar bg-success modal-progress" style="width:0%;"></div>
+            </div>
+
+            <div class="d-flex justify-content-between small text-muted mt-2">
+              <span class="modal-total-sold"></span>
+              <span class="modal-remaining"></span>
+            </div>
+
+            <hr>
+
+            <!-- Ticket Form -->
+            <form class="mt-3">
+              <div class="mb-3">
+                <label class="form-label fw-semibold">Select Number of Tickets</label>
+                <input type="number" min="1" max="5" class="form-control rounded-3" placeholder="Enter quantity">
+              </div>
+
+              <div class="d-flex justify-content-between align-items-center mt-4">
+                <span class="fw-bold fs-5 text-success modal-total-price">Total: ₦0</span>
+                <button type="submit" class="btn btn-success px-4 py-2 rounded-3 shadow-sm">
+                  Confirm Purchase
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="modal-footer bg-light rounded-bottom-4 d-flex justify-content-between align-items-center">
+        <div class="text-muted small">
+          ⏰ Time Remaining: <span class="fw-bold text-danger countdown" data-time="72:00:00">72:00:00</span>
+        </div>
+        <button type="button" class="btn btn-outline-secondary rounded-3" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ======================= DETAILS MODAL ======================= -->
+<div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content border-0 shadow-lg rounded-4">
+
+      <!-- Header -->
+      <div class="modal-header bg-secondary text-white rounded-top-4">
+        <h5 class="modal-title fw-bold" id="detailsModalLabel">📦 Draw Details</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <!-- Body -->
+      <div class="modal-body">
+        <div class="row g-4 align-items-center">
+
+          <!-- Image -->
+          <div class="col-md-5">
+            <img src="" class="w-100 rounded-4 shadow-sm modal-details-img" alt="Draw Details Image">
+          </div>
+
+          <!-- Details -->
+          <div class="col-md-7">
+            <h5 class="fw-bold modal-details-title"></h5>
+            <p class="small text-muted mb-2 modal-details-price"></p>
+            <p class="small text-muted mb-2 modal-details-prize"></p>
+
+            <p class="mt-3 text-secondary small modal-details-desc"></p>
+
+            <div class="alert alert-warning small rounded-3 mt-3">
+              <i class="bi bi-clock-history me-1"></i>
+              Draw closes in <strong class="text-danger">72 hours</strong>.
+            </div>
+
+            <div class="mt-4 d-flex gap-2">
+              <!-- <button class="btn btn-success px-3 rounded-3 open-buy-modal"
+                data-bs-toggle="modal" 
+                data-bs-target="#buyTicketModal">
+                Buy Ticket
+              </button> -->
+              <button class="btn btn-outline-secondary px-3 rounded-3" data-bs-dismiss="modal">
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="modal-footer bg-light rounded-bottom-4 d-flex justify-content-end">
+        <span class="text-muted small">Draw Ends in <b class="text-danger countdown" data-time="72:00:00">72:00:00</b></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+    </div>
+  </div>
+
+
+  <!-- ===== CATEGORY 2: ELECTRONICS MEGA DRAWS ===== -->
+  <div class="category-card p-3 mb-4 rounded-4 shadow-lg bg-light-subtle">
+    <div class="d-flex justify-content-between align-items-center mb-3 bg-success py-3 p-3">
+      <h5 class="fw-bold text-center text-light mb-0">🥇 ELECTRONICS MEGA DRAWS</h5>
+      <div class="d-flex align-items-center gap-2">
+        <button class="btn btn-sm btn-light prev-btn">‹</button>
+        <button class="btn btn-sm btn-light next-btn">›</button>
+      </div>
+    </div>
+    <a href="" class="btn btn-sm btn-outline-success mb-3">view more</a>
+    <div class="draws-carousel d-flex gap-3 overflow-hidden">
+      <!-- Add more cards -->
+<div class="card draw-card border-0 shadow-sm rounded-4 flex-shrink-0">
+        <div class="card-body">
+          <div class="ratio ratio-1x1 rounded-3 overflow-hidden mb-2">
+            <img src="../img/tv.jpeg" class="object-fit-cover w-100 h-100" alt="Electronics Draw">
+          </div>
+          <h6 class="fw-bold mb-1">Samsung 43\u201d Smart TV</h6>
+          <div class="small"><b>Market Price:</b> ₦120,000</div>
+          <div class="small"><b>Tickets Sold</b>: 20/60</div>
+          <div class="mt-2">
+            <div class="progress" style="height:8px;border-radius:10px;">
+              <div class="progress-bar bg-success" style="width:50%;"></div>
+            </div>
+            <div class="d-block justify-content-between small text-muted mt-2">
+              <span><b>Ticket Price:</b> ₦2,000</span> <br>
+              <b>Time Left:</b> <span class="fw-bold text-danger countdown" data-time="72:00:00">72:00:00</span>
+            </div>
+          </div>
+          <div class="d-flex justify-content-between align-items-center mt-3">
+
+            <div class="d-flex gap-2">
+              <button class="btn btn-sm btn-outline-success buy-ticket-btn" 
+  data-bs-toggle="modal" 
+  data-bs-target="#buyTicketModal"
+  data-title="Samsung 43\u201d Smart TV"
+  data-price="₦2,000"
+  data-img="../img/rice.jpeg"
+  data-sold="20"
+  data-total="50"
+  data-progress="90"
+  data-total-sold="₦40,000"
+  data-remaining="40">
+  Buy Ticket
+</button>
+
+<button class="btn btn-sm btn-outline-secondary details-btn"
+  data-bs-toggle="modal"
+  data-bs-target="#detailsModal"
+  data-title="ELECTRONICS Mega Draw"
+  data-img="../img/rice.jpeg"
+  data-price="₦2,000"
+  data-prize="Samsung 43\u201d Smart TV"
+  data-desc="Join this exciting raffle for a chance to win an amazing 50-inch Smart TV. Every ticket increases your odds of winning!">
+  Details
+</button>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    
+    </div>
+  </div>
+
+
+  <!-- ===== CATEGORY 3: Hotel MEGA DRAWS ===== -->
+  <div class="category-card p-3 mb-4 rounded-4 shadow-lg bg-light-subtle">
+   <div class="d-flex justify-content-between align-items-center mb-3 bg-success py-3 p-3">
+      <h5 class="fw-bold text-center text-light mb-0">🥇HOTEL STAY DRAWS</h5>
+      <div class="d-flex align-items-center gap-2">
+        <button class="btn btn-sm btn-light prev-btn">‹</button>
+        <button class="btn btn-sm btn-light next-btn">›</button>
+      </div>
+    </div>
+    <a href="" class="btn btn-sm btn-outline-success mb-3">view more</a>
+    <div class="draws-carousel d-flex gap-3 overflow-hidden">
+      
+      <div class="card draw-card border-0 shadow-sm rounded-4 flex-shrink-0">
+        <div class="card-body">
+          <div class="ratio ratio-1x1 rounded-3 overflow-hidden mb-2">
+            <img src="../img/logo.png" class="object-fit-cover w-100 h-100" alt="Hotel Draw">
+          </div>
+          <h6 class="fw-bold mb-1">Hotel Weekend Stay</h6>
+          <div class="small"><b>Market Price:</b> ₦10,000</div>
+          <div class="small"><b>Tickets Sold</b>: 20/30</div>
+          <div class="mt-2">
+            <div class="progress" style="height:8px;border-radius:10px;">
+              <div class="progress-bar bg-success" style="width:50%;"></div>
+            </div>
+            <div class="d-block justify-content-between small text-muted mt-2">
+              <span><b>Ticket Price:</b> ₦1,000</span> <br>
+              <b>Time Left:</b> <span class="fw-bold text-danger countdown" data-time="72:00:00">72:00:00</span>
+            </div>
+          </div>
+          <div class="d-flex justify-content-between align-items-center mt-3">
+
+            <div class="d-flex gap-2">
+                          <button class="btn btn-sm btn-outline-success buy-ticket-btn" 
+  data-bs-toggle="modal" 
+  data-bs-target="#buyTicketModal"
+  data-title="HOTEL STAY Mega Draw"
+  data-price="₦1,000"
+  data-img="../img/logo.png"
+  data-sold="20"
+  data-total="50"
+  data-progress="45"
+  data-total-sold="₦20,000"
+  data-remaining="10">
+  Buy Ticket
+</button>
+
+<button class="btn btn-sm btn-outline-secondary details-btn"
+  data-bs-toggle="modal"
+  data-bs-target="#detailsModal"
+  data-title="HOTEL STAY Mega Draw"
+  data-img="../img/logo.png"
+  data-price="₦2,000"
+  data-prize="2 Night stay at Grand Hotel"
+  data-desc="Join this exciting raffle for a chance to win an amazing 50-inch Smart TV. Every ticket increases your odds of winning!">
+  Details
+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Duplicate above for ELECTRONICS & HOTEL categories -->
+  <!-- Just change title, theme colors, and images -->
+</div>
+
+      <!-- Past Winners -->
+      <div class="tab-pane fade" id="past-winners" role="tabpanel">
+        <div class="list-group shadow-sm rounded-4">
+          <div class="list-group-item d-flex justify-content-between align-items-center">
+            <div>
+              <h6 class="fw-bold mb-1">🍚 Foodstuff Mega Draw</h6>
+              <small class="text-muted">Winner: <span class="text-success fw-semibold">@Chika2025</span></small>
+            </div>
+            <span class="badge bg-success">50kg Rice</span>
+          </div>
+          <div class="list-group-item d-flex justify-content-between align-items-center">
+            <div>
+              <h6 class="fw-bold mb-1">📺 Electronics Bonanza</h6>
+              <small class="text-muted">Winner: <span class="text-info fw-semibold">@TechKing</span></small>
+            </div>
+            <span class="badge bg-info text-dark">43” Smart TV</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ticket History -->
+      <div class="tab-pane fade" id="ticket-history" role="tabpanel">
+        <div class="list-group shadow-sm rounded-4">
+          <div class="list-group-item d-flex justify-content-between align-items-center">
+            <div>
+              <h6 class="fw-bold mb-1">Foodstuff Mega Draw</h6>
+              <small class="text-muted">Tickets: 2 • Date: 02 Oct 2025</small>
+            </div>
+            <span class="badge bg-secondary">Active</span>
+          </div>
+          <div class="list-group-item d-flex justify-content-between align-items-center">
+            <div>
+              <h6 class="fw-bold mb-1">Hotel Weekend Stay</h6>
+              <small class="text-muted">Tickets: 1 • Date: 29 Sept 2025</small>
+            </div>
+            <span class="badge bg-success text-dark">Pending</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  
+  <!-- Floating WhatsApp -->
+  <a href="https://wa.me/2349012345678" target="_blank" class="whatsapp-float" id="whatsappBtn">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+  <div class="contact-support">Contact Support</div>
+
+<!-- ================== Bottom Navbar ================== -->
+<div class="bg">
+<nav id="bottomNav" class="bottom-nav shadow-lg bg-success rounded-top-4">
+  <ul class="nav justify-content-around align-items-center mb-0 py-2">
+    <li class="nav-item">
+      <a href="#" class="nav-link text-light text-center">
+        <i class="bi bi-house-door-fill fs-5"></i>
+        <div class="small fw-semibold">Home</div>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link text-light text-center">
+        <i class="bi bi-wallet2 fs-5"></i>
+        <div class="small fw-semibold">Wallet</div>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link text-light text-center">
+        <i class="bi bi-trophy-fill fs-5"></i>
+        <div class="small fw-semibold">Leaderboard</div>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link text-light text-center">
+        <i class="bi bi-headset fs-5"></i>
+        <div class="small fw-semibold">Support</div>
+      </a>
+    </li>
+  </ul>
+</nav>
+</div>
+
+
+
+  <!-- Footer -->
+  <footer class="text-center py-3 border-top mt-5 small text-muted">
+    &copy; <?= date('Y'); ?> 042 Raffle Market — A Product of BenCodes Innovation Hub LTD
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+ <script src="../js/main.js"></script>
+</body>
+</html>

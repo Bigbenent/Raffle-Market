@@ -1,0 +1,529 @@
+<doctype html>
+<html lang="en" data-bs-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>042 Raffle Market — Play. Win. Celebrate!</title>
+  
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Animate.css -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+ <link rel="stylesheet" href="../css/main.css">
+ <!-- Bootstrap Icons CDN (required) -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+
+  <style>
+    :root{
+      --accent: #10b981;
+      --muted: #94a3b8;
+      --card-radius: 14px;
+      --glass: rgba(255,255,255,0.03);
+    }
+
+    /* Light / Dark mode classes will be toggled on body */
+    body {
+      font-family: Inter, system-ui, Arial, sans-serif;
+      margin:0;
+      background: linear-gradient(180deg,#f6f8fb 0%, #eef4f9 100%);
+      color: #071027;
+      transition: background 0.3s ease, color 0.3s ease;
+      padding-bottom: 60px;
+    }
+    body.dark-mode {
+      background: linear-gradient(180deg,#071027 0%, #071b2a 100%);
+      color: #e6eef6;
+    }
+
+    /* Top nav */
+    .topbar {
+      background: transparent;
+      padding: 18px 0;
+      border-bottom: 1px solid rgba(15,23,42,0.04);
+    }
+    body.dark-mode .topbar { border-bottom-color: rgba(255,255,255,0.06); }
+
+    .brand {
+      display:flex; align-items:center; gap:.6rem;
+    }
+    .brand .logo {
+      width:48px; height:48px; border-radius:10px; display:flex;align-items:center;justify-content:center;
+      background: linear-gradient(135deg,#16a34a,#f97316); color:#071027; font-weight:800;
+    }
+
+    /* Page layout */
+    .container-settings { max-width:1100px; margin: 28px auto; padding: 0 16px; }
+
+    .card-theme {
+      background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,255,255,0.96));
+      border-radius: var(--card-radius);
+      box-shadow: 0 8px 30px rgba(7,16,40,0.06);
+      border: 1px solid rgba(15,23,42,0.04);
+      transition: background 0.3s ease, color 0.3s ease, border 0.3s ease, box-shadow .2s ease;
+    }
+    body.dark-mode .card-theme {
+      background: rgba(10,14,20,0.48);
+      border: 1px solid rgba(255,255,255,0.06);
+      box-shadow: 0 8px 30px rgba(2,6,23,0.6);
+    }
+
+    .card-theme .card-body { padding:1.2rem; }
+
+    /* Profile */
+    .avatar-circle {
+      width:96px; height:96px; border-radius:18px; display:inline-flex; align-items:center; justify-content:center;
+      background: linear-gradient(135deg,#e6f9f0,#c5fff0); color:#062022; font-weight:800; font-size:1.25rem;
+      border: 2px solid rgba(0,0,0,0.04);
+    }
+    body.dark-mode .avatar-circle { background: linear-gradient(135deg,#062022,#0b2b2a); color:#e6eef6; border-color:rgba(255,255,255,0.05); }
+
+    .input-group .form-control {
+      border-radius:10px;
+    }
+
+    .muted { color:var(--muted); }
+    .section-title { font-weight:700; margin-bottom: .6rem; }
+
+    /* small helpers */
+    .kv { font-weight:700; }
+    .pill { border-radius:999px; padding:.18rem .6rem; font-size:.85rem; }
+
+    /* switches */
+    .form-check-input:checked {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    /* API key box */
+    .key-box {
+      background: rgba(15,23,42,0.03);
+      border-radius:10px; padding:.6rem; font-family:monospace; display:flex; gap:.6rem; align-items:center;
+    }
+    body.dark-mode .key-box { background: rgba(255,255,255,0.03); }
+
+    /* leaderboard/podium-like miniature */
+    .mini-card { display:flex; gap:1rem; align-items:center; }
+
+    /* Danger */
+    .danger { background: linear-gradient(180deg,#fff6f6,#fff0f0); border:1px solid rgba(240,60,60,0.06); }
+    body.dark-mode .danger { background: rgba(255,10,10,0.06); border-color: rgba(255,80,80,0.06); }
+
+    /* responsive layout */
+    .grid-2 { display:grid; grid-template-columns: 1fr 360px; gap:1rem; align-items:start; }
+    @media (max-width: 992px) { .grid-2 { grid-template-columns: 1fr; } .sidebar-sticky { position: static !important; } }
+
+    /* save indicator */
+    .save-indicator { font-size:.9rem; color:var(--muted); display:flex; gap:.5rem; align-items:center; }
+    .save-dot { width:8px; height:8px; border-radius:50%; background: #f3f4f6; box-shadow: 0 0 8px rgba(0,0,0,0.06); }
+    body.dark-mode .save-dot { background: #24303a; box-shadow: none; }
+
+    .saved { color: var(--accent); font-weight:700; }
+
+    /* avatar upload */
+    .avatar-upload { position:relative; display:inline-block; }
+    .avatar-upload input[type=file] { display:none; }
+    .avatar-upload .edit-btn { position:absolute; right: -6px; bottom: -6px; border-radius:999px; padding:6px; background:#fff; border:1px solid rgba(0,0,0,0.06); cursor:pointer;}
+    body.dark-mode .avatar-upload .edit-btn { background:#061224; border:1px solid rgba(255,255,255,0.06); color:#fff; }
+
+    /* micro animations */
+    .pulse { animation: pulse 2s infinite; }
+    @keyframes pulse { 0%{ transform:translateY(0);} 50%{ transform:translateY(-4px);} 100%{ transform:translateY(0);} }
+
+    /* tiny utilities */
+    .mb-sm { margin-bottom:.6rem; }
+    .muted-2 { color: rgba(0,0,0,0.45); }
+    body.dark-mode .muted-2 { color: rgba(255,255,255,0.6); }
+
+    /* table-like list for payments & connected accounts */
+    .row-list .item { display:flex; justify-content:space-between; gap:1rem; padding:.7rem; border-radius:10px; align-items:center; background: linear-gradient(180deg,#ffffff,#fbfdff); border:1px solid rgba(15,23,42,0.03); }
+    body.dark-mode .row-list .item { background: rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.04); }
+
+    .row-list .item + .item { margin-top:.6rem; }
+
+    /* small top actions */
+    .top-actions { display:flex; gap:.6rem; align-items:center; }
+
+    /* last-synced stamp */
+    .last-synced { font-size:.85rem; color:var(--muted); }
+
+  </style>
+
+<body >
+
+     <!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm sticky-top py-2">
+  <div class="container">
+    <!-- Brand -->
+    <a class="navbar-brand d-flex align-items-center gap-2" href="#">
+      <img src="../img/logo.png" width="70" class="rounded-circle border border-2 border-success" alt="042 Raffle Market">
+      <span class="fw-bold text-success fs-5">042 Raffle Market</span>
+    </a>
+
+    <!-- Toggle button for mobile -->
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu"
+      aria-controls="navbarMenu" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Collapsible Menu -->
+    <div class="collapse navbar-collapse" id="navbarMenu">
+
+      <!-- Affiliate Links -->
+      <ul class="navbar-nav mx-auto align-items-lg-center text-center">
+        <li class="nav-item mx-2">
+          <a href="wallet.html" class="nav-link text-dark fw-semibold">
+            <i class="fa-solid fa-wallet me-1 text-success"></i> Wallet
+          </a>
+        </li>
+        <!-- <li class="nav-item mx-2">
+          <a href="#" class="nav-link text-dark fw-semibold">
+            <i class="fa-solid fa-coins me-1 text-success"></i> My Earnings
+          </a>
+        </li> -->
+        <li class="nav-item mx-2">
+          <a href="lead.html" class="nav-link text-dark fw-semibold">
+            <i class="fa-solid fa-trophy me-1 text-danger"></i> Leaderboard
+          </a>
+        </li>
+        <li class="nav-item mx-2">
+          <a href="support.html" class="nav-link text-dark fw-semibold">
+            <i class="fa-solid fa-headset me-1 text-secondary"></i> Support
+          </a>
+        </li>
+      </ul>
+
+      <!-- Right Section -->
+      <div class="d-flex align-items-center gap-3 ms-lg-3">
+        <!-- Welcome Info -->
+        <div class="text-end d-none d-lg-block">
+          <div class="fw-bold text-success">Welcome, Goodness</div>
+          <div class="small text-muted">
+            <i class="fa-regular fa-clock me-1"></i> <span id="local-time"></span>
+          </div>
+        </div>
+
+        <!-- Theme Toggle -->
+        <button class="btn btn-sm btn-outline-secondary rounded-pill" id="themeToggle" title="Toggle theme">
+          <i class="fa-solid fa-moon"></i> light-mode
+        </button>
+
+        <!-- Join / Register Button -->
+        <!-- <a href="#" class="btn btn-success btn-sm rounded-pill fw-bold">
+          <i class="fa-solid fa-link me-1"></i> Join Affiliate
+        </a> -->
+      </div>
+    </div>
+  </div>
+</nav>
+
+
+  <main class="container-settings">
+    <div class="grid-2">
+
+      <!-- LEFT: Main settings -->
+      <div>
+
+        <!-- Profile Card -->
+        <section class="card-theme mb-3">
+          <div class="card-body d-flex gap-3">
+            <div>
+              <div class="avatar-upload">
+                <div id="avatarPreview" class="avatar-circle">AL</div>
+                <label class="edit-btn" title="Change avatar">
+                  <input id="avatarInput" type="file" accept="image/*">
+                  <i class="bi bi-pencil-fill"></i>
+                </label>
+              </div>
+            </div>
+            <div style="flex:1;">
+              <div class="d-flex justify-content-between align-items-start">
+                <div>
+                  <div class="section-title">Profile</div>
+                  <div class="muted">Update your public profile and contact info. Changes save automatically.</div>
+                </div>
+                <div class="text-end">
+                  <div class="last-synced" id="lastSynced">Last saved: —</div>
+                </div>
+              </div>
+
+              <form id="profileForm" class="mt-3">
+                <div class="row g-2">
+                  <div class="col-12 col-md-6">
+                    <label class="form-label small">Display name</label>
+                    <input id="displayName" class="form-control form-control-sm" placeholder="Alice" />
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <label class="form-label small">Handle</label>
+                    <div class="input-group">
+                      <span class="input-group-text">@</span>
+                      <input id="handle" class="form-control form-control-sm" placeholder="alice" />
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-md-6">
+                    <label class="form-label small">Email</label>
+                    <div class="d-flex gap-2">
+                      <input id="email" class="form-control form-control-sm" placeholder="you@example.com" />
+                      <button id="verifyEmailBtn" type="button" class="btn btn-sm btn-outline-success">Verify</button>
+                    </div>
+                    <div class="small muted-2 mt-1">Verified email ensures faster support & withdrawals.</div>
+                  </div>
+
+                  <div class="col-12 col-md-6">
+                    <label class="form-label small">Phone</label>
+                    <div class="d-flex gap-2">
+                      <input id="phone" class="form-control form-control-sm" placeholder="+234 801 234 5678" />
+                      <button id="verifyPhoneBtn" type="button" class="btn btn-sm btn-outline-success">Verify</button>
+                    </div>
+                  </div>
+
+                  <div class="col-12">
+                    <label class="form-label small">Bio (public)</label>
+                    <textarea id="bio" class="form-control form-control-sm" rows="2" placeholder="Short bio shown to others..."></textarea>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <!-- Security Card -->
+        <section class="card-theme mb-3">
+          <div class="card-body">
+            <div class="d-flex justify-content-between">
+              <div>
+                <div class="section-title">Security</div>
+                <div class="muted">Manage password, 2FA and API keys.</div>
+              </div>
+              <div class="muted-2">Strong passwords required</div>
+            </div>
+
+            <!-- Change password -->
+            <div class="mt-3 row g-2">
+              <div class="col-12 col-md-4">
+                <input id="currentPassword" type="password" class="form-control form-control-sm" placeholder="Current password">
+              </div>
+              <div class="col-12 col-md-4">
+                <input id="newPassword" type="password" class="form-control form-control-sm" placeholder="New password">
+              </div>
+              <div class="col-12 col-md-4">
+                <button id="changePasswordBtn" class="btn btn-sm btn-outline-secondary w-100">Change password</button>
+              </div>
+            </div>
+
+            <hr>
+
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <div class="fw-semibold">Two-factor authentication (2FA)</div>
+                <div class="muted-2">Use SMS or authenticator app for extra security.</div>
+              </div>
+              <div>
+                <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox" id="toggle2fa">
+                  <label class="form-check-label muted" for="toggle2fa">Enabled</label>
+                </div>
+              </div>
+            </div>
+
+            <hr>
+
+            <div>
+              <div class="fw-semibold mb-2"></div>
+              <div class="row g-2">
+              
+            </div>
+          </div>
+        </section>
+
+        <!-- Notifications -->
+        <section class="card-theme mb-3">
+          <div class="card-body">
+            <div class="d-flex justify-content-between">
+              <div>
+                <div class="section-title">Notifications</div>
+                <div class="muted">Choose how you want to receive updates</div>
+              </div>
+              <div class="muted-2">Real-time preview below</div>
+            </div>
+
+            <div class="row g-2 mt-3">
+              <div class="col-12 col-md-6">
+                <div class="form-check form-switch">
+                  <input class="form-check-input" id="notifyEmail" type="checkbox" checked>
+                  <label class="form-check-label" for="notifyEmail">Email notifications</label>
+                </div>
+              </div>
+              <div class="col-12 col-md-6">
+                <div class="form-check form-switch">
+                  <input class="form-check-input" id="notifySms" type="checkbox">
+                  <label class="form-check-label" for="notifySms">SMS notifications</label>
+                </div>
+              </div>
+              <div class="col-12 col-md-6">
+                <div class="form-check form-switch">
+                  <input class="form-check-input" id="notifyPush" type="checkbox" checked>
+                  <label class="form-check-label" for="notifyPush">In-app push</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-3">
+              <div class="section-title mb-2">Preview</div>
+              <div id="notifPreview" class="card p-2" style="border-radius:10px;background:linear-gradient(180deg,#fff,#fbfdff);">
+                <div class="d-flex align-items-center gap-3">
+                  <div class="avatar-circle" style="width:44px;height:44px;font-size:.95rem">RF</div>
+                  <div>
+                    <div class="fw-semibold">Raffle Market</div>
+                    <div class="muted-2 small">New draw: Rice & Oil Combo — Join now!</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+       
+        <!-- Danger Zone -->
+        <section class="card-theme danger mb-5">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <div class="section-title">Danger zone</div>
+                <div class="muted">Permanent actions that cannot be undone</div>
+              </div>
+              <div class="d-flex gap-2">
+                <button id="deactivateBtn" class="btn btn-sm btn-outline-warning">Deactivate account</button>
+                <button id="deleteBtn" class="btn btn-sm btn-danger">Delete account</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- RIGHT: Sidebar (sticky) -->
+      <aside class="sidebar-sticky" style="position:sticky; top:24px;">
+        <div class="card-theme mb-3">
+          <div class="card-body">
+            <div class="section-title">Summary</div>
+            <div class="mini-card mt-2 mb-2">
+              <div>
+                <div class="muted small">Balance</div>
+                <div class="d-flex align-items-center gap-2">
+                  <div id="balanceMask" class="kv">₦12,450.00</div>
+                 <i id="toggleBalance" class="bi bi-eye-slash-fill  cursor-pointer" style="font-size: 1.3rem;"></i>
+                </div>
+              </div>
+            </div>
+
+            <div class="divider my-2" style="height:1px;background:rgba(0,0,0,0.04)"></div>
+
+            <div class="small-muted">Account</div>
+            <div class="fw-semibold mt-1">alice • @alice</div>
+            <div class="muted-2 small mt-2">Member since Jan 2024</div>
+
+            <hr>
+
+            <div class="section-title">Quick actions</div>
+            <div class="d-grid gap-2 mt-2">
+              <button id="openWithdraw" class="btn btn-sm btn-outline-secondary">KYC</button>
+              <button id="openSupport" class="btn btn-sm btn-outline-success">Contact support</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-theme">
+          <div class="card-body">
+            <div class="section-title">Activity</div>
+            <div class="muted-2 small mb-2">Recent actions</div>
+            <ul class="list-unstyled">
+              <li class="mb-2"><span class="fw-semibold">Purchased</span> • Rice draw • 2h ago</li>
+              <li class="mb-2"><span class="fw-semibold">Referral</span> • +₦250 • 1d ago</li>
+              <li class="mb-2"><span class="fw-semibold">Withdrawal</span> • Pending • 3d ago</li>
+            </ul>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+
+  <!-- Delete confirmation modal -->
+  <div class="modal fade" id="confirmDelete" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content card-theme">
+        <div class="modal-body text-center">
+          <div class="mb-3"><i class="bi bi-exclamation-triangle-fill text-danger" style="font-size:40px"></i></div>
+          <h5 class="fw-bold">Delete your account?</h5>
+          <p class="muted-2">This action is permanent. All your data will be removed.</p>
+          <div class="d-flex gap-2 justify-content-center mt-3">
+            <button class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button id="confirmDeleteBtn" class="btn btn-danger">Yes, delete account</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tiny toasts for feedback -->
+  <div class="position-fixed bottom-0 end-0 p-3" style="z-index:2000">
+    <div id="toast" class="toast align-items-center text-bg-dark border-0" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body" id="toastBody">Saved</div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Footer -->
+  <footer class="text-center py-3 border-top mt-5 small text-muted">
+    &copy; <?= date('Y'); ?> 042 Raffle Market — A Product of BenCodes Innovation Hub LTD
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+ <script src="../js/main.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+  const balanceText = document.getElementById("balance");
+  const toggleIcon = document.getElementById("toggleBalance");
+  let isHidden = false;
+  const actualBalance = balanceText.textContent;
+  const hiddenBalance = "••••••••";
+
+  toggleIcon.addEventListener("click", () => {
+    // Add fade-out class first
+    balanceText.classList.add("fade-out");
+    
+    setTimeout(() => {
+      // Toggle text after fade-out completes
+      if (!isHidden) {
+        balanceText.textContent = hiddenBalance;
+        toggleIcon.classList.replace("bi-eye-slash-fill", "bi-eye-fill");
+        isHidden = true;
+      } else {
+        balanceText.textContent = actualBalance;
+        toggleIcon.classList.replace("bi-eye-fill", "bi-eye-slash-fill");
+        isHidden = false;
+      }
+      
+      // Trigger fade-in effect
+      balanceText.classList.remove("fade-out");
+      balanceText.classList.add("fade-in");
+
+      // Remove fade-in after animation completes (for reusability)
+      setTimeout(() => {
+        balanceText.classList.remove("fade-in");
+      }, 350);
+    }, 250); // matches fade-out duration
+  });
+});
+</script>
+</body>
+</html>

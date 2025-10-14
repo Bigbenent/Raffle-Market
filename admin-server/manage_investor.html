@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Dashboard | Overview</title>
+
+  <!-- Bootstrap & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+
+  <!-- Custom Styles -->
+  <link href="css/style.css" rel="stylesheet" />
+  <!-- ========== Admin Investors Management — MAIN CONTENT ONLY ========== -->
+<!-- Drop this into your admin layout (no sidebar/navbar included) -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+
+<style>
+  /* Main content-only styles (dark-mode aware via body.dark-mode) */
+  #admin-investors { max-width: 1200px; margin: 0 auto; }
+  .card { border-radius: 12px; }
+  table tbody tr:hover { background: rgba(13,110,253,0.03); }
+  .status-pill { padding: 6px 10px; border-radius: 999px; font-weight:600; font-size:.8rem; }
+  .status-active { background: rgba(16,185,129,0.12); color:#10b981; }
+  .status-pending { background: rgba(245,158,11,0.08); color:#f59e0b; }
+  .status-suspended { background: rgba(239,68,68,0.08); color:#ef4444; }
+
+  .btn-ghost { background:transparent; border:none; color:var(--bs-body-color); }
+
+  /* drawer content */
+  .offcanvas { max-width:520px; }
+  .offcanvas-body { padding:1.25rem; }
+
+  /* table small screens */
+  @media (max-width: 768px){
+    #admin-investors .table-responsive { overflow:auto; }
+    .offcanvas { width: 100% !important; }
+  }
+</style>
+
+<body>
+    <!-- Sidebar -->
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-header">
+      <h4 class="fw-bold text-success mb-0">Admin<span class="text-dark">Panel</span></h4>
+      <button class="btn btn-sm btn-outline-secondary d-lg-none" id="sidebarToggle"><i class="bi bi-x-lg"></i></button>
+    </div>
+
+    <ul class="sidebar-menu list-unstyled mt-4">
+      <li><a href="overview.html" class="active"><i class="bi bi-house-door me-2"></i> Dashboard</a></li>
+      <li><a href="#"><i class="bi bi-people me-2"></i> Users</a></li>
+     <li class="nav-item dropdown">
+  <a href="#" class="nav-link d-flex align-items-center justify-content-between" data-bs-toggle="collapse" data-bs-target="#drawDropdown" aria-expanded="false">
+    <span><i class="bi bi-ticket-detailed me-2"></i> Draws</span>
+    <i class="bi bi-chevron-down small"></i>
+  </a>
+  <ul class="collapse list-unstyled ms-4 mt-1" id="drawDropdown">
+    <li><a href="add-draws.html" class="nav-link"><i class="bi bi-plus-circle me-2"></i> Add Draw</a></li>
+    <li><a href="manage-draws.html" class="nav-link"><i class="bi bi-gear me-2"></i> Manage Draws</a></li>
+  </ul>
+</li>
+
+      <li><a href="transactions.html"><i class="bi bi-wallet2 me-2"></i> Transactions</a></li>
+      <li><a href="settings.html"><i class="bi bi-envelope me-2"></i> Support</a></li>
+      <li><a href="settings.html"><i class="bi bi-gear me-2"></i> Settings</a></li>
+    </ul>
+  </aside>
+
+  
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top py-3 px-4">
+      <button class="btn btn-outline-success me-3 d-lg-none" id="sidebarToggleMobile"><i class="bi bi-list"></i></button>
+      <h5 class="fw-bold text-dark mb-0">Dashboard Overview</h5>
+      <div class="ms-auto d-flex align-items-center gap-3">
+        <button class="btn btn-light" id="themeToggle"><i class="bi bi-moon"></i></button>
+        <div class="dropdown">
+          <a href="#" class="d-flex align-items-center text-decoration-none" data-bs-toggle="dropdown">
+            <img src="../img/logo.png" class="rounded-circle me-2" width="40" height="40" alt="Admin">
+            <span class="fw-semibold">Admin</span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+            <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Profile</a></li>
+            <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>Settings</a></li>
+            <li><hr class="dropdown-divider" /></li>
+            <li><a class="dropdown-item text-danger" href="#"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+
+    <!-- Page Content -->
+    <div class="container-fluid p-4">
+  
+
+
+<section id="admin-investors" class="container-fluid py-4">
+  <div class="d-flex align-items-start justify-content-between gap-3 mb-3">
+    <div>
+      <h4 class="mb-1">Investors</h4>
+      <div class="text-muted small">Register, view, search, filter and manage investor accounts</div>
+    </div>
+
+    <div class="d-flex gap-2 align-items-center">
+      <input id="searchInput" class="form-control form-control-sm" style="min-width:220px" placeholder="Search by name, email, phone or id">
+      <select id="statusFilter" class="form-select form-select-sm">
+        <option value="">All status</option>
+        <option value="active">Active</option>
+        <option value="pending">Pending KYC</option>
+        <option value="suspended">Suspended</option>
+      </select>
+      <select id="planFilter" class="form-select form-select-sm">
+        <option value="">All plans</option>
+        <option value="starter">Starter</option>
+        <option value="growth">Growth</option>
+        <option value="vip">VIP</option>
+      </select>
+      <button class="btn btn-sm btn-outline-secondary" id="btnClearFilters" title="Reset filters"><i class="bi bi-x-lg"></i></button>
+      <button class="btn btn-sm btn-primary" id="btnRegisterInvestor"><i class="bi bi-person-plus me-1"></i>New</button>
+    </div>
+  </div>
+
+  <!-- table card -->
+  <div class="card mb-3">
+    <div class="card-body p-2">
+      <div class="table-responsive">
+        <table class="table table-hover table-borderless align-middle mb-0" id="investorsTable" aria-label="Investors table">
+          <thead>
+            <tr class="text-muted small">
+              <th style="width:48px">#</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Plan</th>
+              <th>Wallet (₦)</th>
+              <th>KYC</th>
+              <th>Status</th>
+              <th style="width:150px">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="investorsBody">
+            <!-- populated by JS -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- paginator -->
+      <div class="d-flex justify-content-between align-items-center mt-3">
+        <div class="small text-muted" id="tableInfo"></div>
+        <nav>
+          <ul class="pagination pagination-sm mb-0" id="pagination"></ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right-side drawer / modal for investor details -->
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="investorDrawer" aria-labelledby="investorDrawerLabel">
+    <div class="offcanvas-header">
+      <h5 id="investorDrawerLabel" class="offcanvas-title">Investor Profile</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+      <div id="investorProfile">
+        <!-- header -->
+        <div class="d-flex gap-3 align-items-center mb-3">
+          <img id="drawerAvatar" src="https://via.placeholder.com/80" class="rounded-3" width="80" height="80" alt="avatar">
+          <div>
+            <h5 id="drawerName" class="mb-0">Name Here</h5>
+            <div class="text-muted small" id="drawerEmail">email@example.com</div>
+            <div class="small text-muted" id="drawerMemberSince">Member since Jan 2024</div>
+          </div>
+        </div>
+
+        <!-- quick balances -->
+        <div class="d-flex gap-2 mb-3">
+          <div class="flex-fill p-2 rounded-2" style="background:#f5f7fa">
+            <div class="small text-muted">Available</div>
+            <div class="fw-bold" id="drawerAvailable">₦0</div>
+          </div>
+          <div class="flex-fill p-2 rounded-2" style="background:#f5f7fa">
+            <div class="small text-muted">Locked</div>
+            <div class="fw-bold" id="drawerLocked">₦0</div>
+          </div>
+          <div class="flex-fill p-2 rounded-2" style="background:#f5f7fa">
+            <div class="small text-muted">Withdrawable</div>
+            <div class="fw-bold" id="drawerWithdrawable">₦0</div>
+          </div>
+        </div>
+
+        <!-- editable form -->
+        <form id="investorEditForm" class="mb-3">
+          <input type="hidden" id="drawerInvestorId">
+          <div class="mb-2">
+            <label class="form-label small">Full name</label>
+            <input id="drawerInputName" class="form-control form-control-sm" required>
+          </div>
+          <div class="mb-2">
+            <label class="form-label small">Email</label>
+            <input id="drawerInputEmail" class="form-control form-control-sm" type="email" required>
+          </div>
+          <div class="mb-2">
+            <label class="form-label small">Phone</label>
+            <input id="drawerInputPhone" class="form-control form-control-sm">
+          </div>
+          <div class="mb-2">
+            <label class="form-label small">Plan</label>
+            <select id="drawerInputPlan" class="form-select form-select-sm">
+              <option value="">None</option>
+              <option value="starter">Starter</option>
+              <option value="middle">Middle-Class</option>
+              <option value="growth">Growth</option>
+              <option value="vip">VIP</option>
+              <option value="gold">Gold</option>
+            </select>
+          </div>
+
+          <div class="mb-2">
+            <label class="form-label small">KYC Status</label>
+            <select id="drawerKycStatus" class="form-select form-select-sm">
+              <option value="not_submitted">Not submitted</option>
+              <option value="pending">Pending</option>
+              <option value="verified">Verified</option>
+              <option value="rejected">Rejected</option>
+            </select>
+          </div>
+
+          <div class="d-flex gap-2 mt-3">
+            <button class="btn btn-sm btn-primary" id="saveInvestorBtn">Save</button>
+            <button class="btn btn-sm btn-outline-secondary" id="resetPasswordBtn">Reset Password</button>
+            <button class="btn btn-sm btn-outline-danger ms-auto" id="suspendBtn">Suspend</button>
+          </div>
+        </form>
+
+        <!-- investments table -->
+        <div class="mb-3">
+          <h6 class="mb-2">Investments</h6>
+          <div class="table-responsive" style="max-height:200px; overflow:auto">
+            <table class="table table-sm mb-0">
+              <thead class="small text-muted">
+                <tr><th>Plan</th><th>Amount</th><th>ROI</th><th>Start</th><th>End</th><th>Status</th></tr>
+              </thead>
+              <tbody id="drawerInvestments">
+                <!-- js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ROI history -->
+        <div class="mb-3">
+          <h6 class="mb-2">ROI History</h6>
+          <ul id="drawerROIHistory" class="list-group list-group-flush small">
+            <!-- js -->
+          </ul>
+        </div>
+
+        <!-- audit log -->
+        <div class="mb-3">
+          <h6 class="mb-2">Audit Log</h6>
+          <ul id="drawerAuditLog" class="list-group list-group-flush small">
+            <!-- js -->
+          </ul>
+        </div>
+
+        <!-- delete -->
+        <div class="d-flex gap-2">
+          <button class="btn btn-sm btn-outline-secondary" data-bs-dismiss="offcanvas">Close</button>
+          <button class="btn btn-sm btn-danger ms-auto" id="deleteInvestorBtn">Delete investor</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modals -->
+  <!-- Register New Investor Modal -->
+  <div class="modal fade" id="registerModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content rounded-3">
+        <div class="modal-header">
+          <h5 class="modal-title">Register New Investor</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <form id="registerForm">
+          <div class="modal-body">
+            <div class="mb-2"><label class="form-label small">Full name</label><input id="regName" class="form-control form-control-sm" required></div>
+            <div class="mb-2"><label class="form-label small">Email</label><input id="regEmail" class="form-control form-control-sm" type="email" required></div>
+            <div class="mb-2"><label class="form-label small">Phone</label><input id="regPhone" class="form-control form-control-sm"></div>
+            <div class="mb-2"><label class="form-label small">Initial deposit (₦)</label><input id="regDeposit" class="form-control form-control-sm" type="number" min="0" value="0"></div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button class="btn btn-sm btn-primary" type="submit">Create investor</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reset Password Confirm Modal -->
+  <div class="modal fade" id="resetPwModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content rounded-3">
+        <div class="modal-header"><h5 class="modal-title">Reset Password</h5><button class="btn-close" data-bs-dismiss="modal"></button></div>
+        <div class="modal-body">
+          <p class="small text-muted">Enter a temporary password to set for this investor. They should change it on next login.</p>
+          <input id="tempPassword" class="form-control" placeholder="Temporary password">
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button class="btn btn-sm btn-primary" id="confirmResetPw">Set password</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer py-3 text-center border-top mt-auto">
+      <p class="mb-0 small text-muted">© 2025 AdminPanel. Built with ❤️ by BenCode Team</p>
+    </footer>
+  </main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+/* ------------------ Demo data (replace with backend) ------------------ */
+let investors = [
+  { id: 'INV001', name:'Aisha Bello', email:'aisha@example.com', phone:'+234800111222', plan:'starter', available:45000, locked:100000, withdrawable:25000, kyc:'verified', status:'active', memberSince:'2024-01-12',
+    investments:[
+      {plan:'Starter', amount:100000, roi:'8%', start:'2025-10-01', end:'2025-10-08', status:'active'},
+      {plan:'Middle-Class', amount:150000, roi:'15%', start:'2025-08-01', end:'2025-08-15', status:'completed'}
+    ],
+    roiHistory:[ {date:'2025-09-01', amount:12000}, {date:'2025-08-15', amount:17500} ],
+    audit:[ 'Created account', 'KYC verified' ]
+  },
+  { id: 'INV002', name:'Samuel Okoye', email:'samuel@example.com', phone:'+234800333444', plan:'vip', available:120000, locked:500000, withdrawable:80000, kyc:'pending', status:'pending', memberSince:'2024-03-02',
+    investments:[ {plan:'VIP', amount:500000, roi:'35%', start:'2025-09-10', end:'2025-10-10', status:'active'} ],
+    roiHistory:[], audit:['Created account','KYC pending']
+  },
+  { id: 'INV003', name:'Fatima Yusuf', email:'fatima@example.com', phone:'+234800555666', plan:'growth', available:60000, locked:250000, withdrawable:30000, kyc:'verified', status:'active', memberSince:'2023-11-10',
+    investments:[ {plan:'Growth', amount:250000, roi:'25%', start:'2025-08-05', end:'2025-08-26', status:'completed'} ],
+    roiHistory:[ {date:'2025-08-26', amount:62500} ], audit:['Created account','Investment completed']
+  }
+];
+
+/* ------------------ Table, search, filter, pagination ------------------ */
+const rowsPerPage = 6;
+let currentPage = 1;
+let filtered = investors.slice();
+
+function formatCurrency(n){ return '₦' + Number(n).toLocaleString('en-NG'); }
+
+function renderTable(){
+  const tbody = document.getElementById('investorsBody');
+  tbody.innerHTML = '';
+  const start = (currentPage-1)*rowsPerPage;
+  const pageItems = filtered.slice(start, start + rowsPerPage);
+
+  pageItems.forEach((inv, idx)=>{
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td class="text-muted small">${start + idx + 1}</td>
+      <td><div class="fw-bold">${inv.name}</div><div class="small text-muted">${inv.id}</div></td>
+      <td>${inv.email}</td>
+      <td>${inv.phone}</td>
+      <td class="text-capitalize">${inv.plan || '—'}</td>
+      <td>${formatCurrency(inv.available)}</td>
+      <td><span class="small">${inv.kyc}</span></td>
+      <td><span class="status-pill ${inv.status==='active'?'status-active': (inv.status==='pending'?'status-pending':'status-suspended')}">${inv.status}</span></td>
+      <td>
+        <div class="d-flex gap-1">
+          <button class="btn btn-sm btn-outline-primary" data-action="view" data-id="${inv.id}" title="View profile"><i class="bi bi-eye"></i></button>
+          <button class="btn btn-sm btn-outline-secondary" data-action="edit" data-id="${inv.id}" title="Edit"><i class="bi bi-pencil"></i></button>
+          <button class="btn btn-sm btn-outline-danger" data-action="delete" data-id="${inv.id}" title="Delete"><i class="bi bi-trash"></i></button>
+        </div>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  renderPagination();
+  document.getElementById('tableInfo').textContent = `Showing ${Math.min(filtered.length, start+1)} to ${Math.min(filtered.length, start + pageItems.length)} of ${filtered.length} investors`;
+}
+
+function renderPagination(){
+  const pages = Math.max(1, Math.ceil(filtered.length / rowsPerPage));
+  const ul = document.getElementById('pagination');
+  ul.innerHTML = '';
+
+  for(let p=1;p<=pages;p++){
+    const li = document.createElement('li');
+    li.className = 'page-item ' + (p===currentPage ? 'active' : '');
+    li.innerHTML = `<a class="page-link" href="#" data-page="${p}">${p}</a>`;
+    li.addEventListener('click', (e)=>{ e.preventDefault(); currentPage = p; renderTable(); });
+    ul.appendChild(li);
+  }
+}
+
+/* filters & search */
+function applyFilters(){
+  const q = document.getElementById('searchInput').value.trim().toLowerCase();
+  const status = document.getElementById('statusFilter').value;
+  const plan = document.getElementById('planFilter').value;
+
+  filtered = investors.filter(inv=>{
+    const matchQ = !q || (inv.name + ' ' + inv.email + ' ' + inv.phone + ' ' + inv.id).toLowerCase().includes(q);
+    const matchStatus = !status || inv.status === status;
+    const matchPlan = !plan || inv.plan === plan;
+    return matchQ && matchStatus && matchPlan;
+  });
+
+  currentPage = 1;
+  renderTable();
+}
+
+/* reset filters */
+document.getElementById('btnClearFilters').addEventListener('click', ()=>{
+  document.getElementById('searchInput').value = '';
+  document.getElementById('statusFilter').value = '';
+  document.getElementById('planFilter').value = '';
+  filtered = investors.slice();
+  currentPage = 1;
+  renderTable();
+});
+document.getElementById('searchInput').addEventListener('input', applyFilters);
+document.getElementById('statusFilter').addEventListener('change', applyFilters);
+document.getElementById('planFilter').addEventListener('change', applyFilters);
+
+/* ------------------ Row action handlers (view/edit/delete) ------------------ */
+const investorDrawer = new bootstrap.Offcanvas(document.getElementById('investorDrawer'));
+document.getElementById('investorsTable').addEventListener('click', (e)=>{
+  const btn = e.target.closest('button');
+  if(!btn) return;
+  const action = btn.getAttribute('data-action');
+  const id = btn.getAttribute('data-id');
+  if(action === 'view' || action === 'edit') openInvestorDrawer(id, action==='edit');
+  if(action === 'delete') confirmDeleteInvestor(id);
+});
+
+/* open drawer and populate */
+function openInvestorDrawer(id, editable=false){
+  const inv = investors.find(i=>i.id===id);
+  if(!inv) return alert('Investor not found');
+  document.getElementById('drawerInvestorId').value = inv.id;
+  document.getElementById('drawerName').textContent = inv.name;
+  document.getElementById('drawerEmail').textContent = inv.email;
+  document.getElementById('drawerMemberSince').textContent = 'Member since ' + inv.memberSince;
+  document.getElementById('drawerAvatar').src = 'https://ui-avatars.com/api/?name='+encodeURIComponent(inv.name)+'&background=111827&color=fff';
+  document.getElementById('drawerAvailable').textContent = formatCurrency(inv.available);
+  document.getElementById('drawerLocked').textContent = formatCurrency(inv.locked);
+  document.getElementById('drawerWithdrawable').textContent = formatCurrency(inv.withdrawable);
+
+  // form fields
+  document.getElementById('drawerInputName').value = inv.name;
+  document.getElementById('drawerInputEmail').value = inv.email;
+  document.getElementById('drawerInputPhone').value = inv.phone;
+  document.getElementById('drawerInputPlan').value = inv.plan || '';
+  document.getElementById('drawerKycStatus').value = inv.kyc || 'not_submitted';
+
+  // investments list
+  const invTbl = document.getElementById('drawerInvestments'); invTbl.innerHTML = '';
+  inv.investments.forEach(it=>{
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${it.plan}</td><td>${formatCurrency(it.amount)}</td><td>${it.roi}</td><td>${it.start}</td><td>${it.end}</td><td><span class="small text-muted">${it.status}</span></td>`;
+    invTbl.appendChild(tr);
+  });
+
+  // roi history
+  const roiList = document.getElementById('drawerROIHistory'); roiList.innerHTML = '';
+  (inv.roiHistory || []).forEach(r=>{
+    const li = document.createElement('li');
+    li.className = 'list-group-item py-1 px-0';
+    li.innerHTML = `<div class="d-flex justify-content-between"><div>${r.date}</div><div class="fw-bold">${formatCurrency(r.amount)}</div></div>`;
+    roiList.appendChild(li);
+  });
+
+  // audit log
+  const audit = document.getElementById('drawerAuditLog'); audit.innerHTML = '';
+  (inv.audit || []).forEach(a=>{
+    const li = document.createElement('li');
+    li.className = 'list-group-item py-1 px-0';
+    li.textContent = a;
+    audit.appendChild(li);
+  });
+
+  // show drawer
+  investorDrawer.show();
+
+  // editable toggle
+  document.getElementById('investorEditForm').querySelectorAll('input,select,button').forEach(el=>el.disabled = !editable);
+}
+
+/* save investor edits (local demo) */
+document.getElementById('investorEditForm').addEventListener('submit',(e)=>{
+  e.preventDefault();
+  const id = document.getElementById('drawerInvestorId').value;
+  const inv = investors.find(i=>i.id===id);
+  if(!inv) return;
+  inv.name = document.getElementById('drawerInputName').value.trim();
+  inv.email = document.getElementById('drawerInputEmail').value.trim();
+  inv.phone = document.getElementById('drawerInputPhone').value.trim();
+  inv.plan = document.getElementById('drawerInputPlan').value;
+  inv.kyc = document.getElementById('drawerKycStatus').value;
+  inv.audit = inv.audit || [];
+  inv.audit.push('Profile updated by admin — ' + new Date().toLocaleString());
+  alert('Investor updated (demo).');
+  investorDrawer.hide();
+  applyFilters();
+});
+
+/* reset password */
+let resettingInvestorId = null;
+document.getElementById('resetPasswordBtn').addEventListener('click',(e)=>{
+  e.preventDefault();
+  resettingInvestorId = document.getElementById('drawerInvestorId').value;
+  const modal = new bootstrap.Modal(document.getElementById('resetPwModal'));
+  modal.show();
+});
+document.getElementById('confirmResetPw').addEventListener('click', ()=>{
+  const pwd = document.getElementById('tempPassword').value.trim() || Math.random().toString(36).slice(-8);
+  const inv = investors.find(i=>i.id===resettingInvestorId);
+  if(inv){
+    inv.audit.push('Password reset by admin — ' + new Date().toLocaleString());
+    alert(`Temporary password set for ${inv.name}: ${pwd} (demo)`);
+  }
+  document.getElementById('tempPassword').value = '';
+  bootstrap.Modal.getInstance(document.getElementById('resetPwModal')).hide();
+});
+
+/* suspend / delete investor */
+document.getElementById('suspendBtn').addEventListener('click', ()=>{
+  const id = document.getElementById('drawerInvestorId').value;
+  const inv = investors.find(i=>i.id===id);
+  if(!inv) return;
+  if(!confirm(`Suspend account for ${inv.name}?`)) return;
+  inv.status = 'suspended';
+  inv.audit.push('Account suspended by admin — ' + new Date().toLocaleString());
+  alert('Account suspended (demo).');
+  investorDrawer.hide();
+  applyFilters();
+});
+
+document.getElementById('deleteInvestorBtn').addEventListener('click', ()=>{
+  const id = document.getElementById('drawerInvestorId').value;
+  confirmDeleteInvestor(id);
+});
+
+/* confirm delete */
+function confirmDeleteInvestor(id){
+  const inv = investors.find(i=>i.id===id);
+  if(!inv) return;
+  if(!confirm(`Permanently delete ${inv.name} (${inv.id})? This action is irreversible.`)) return;
+  // log for audit (in real app write to audit logs)
+  inv.audit = inv.audit || [];
+  inv.audit.push('Account deleted by admin — ' + new Date().toLocaleString());
+  // delete from array (demo)
+  investors = investors.filter(i=>i.id!==id);
+  applyFilters();
+  alert('Investor deleted (demo).');
+}
+
+/* register new investor (demo) */
+document.getElementById('btnRegisterInvestor').addEventListener('click', ()=> new bootstrap.Modal(document.getElementById('registerModal')).show() );
+document.getElementById('registerForm').addEventListener('submit', (e)=>{
+  e.preventDefault();
+  const newInv = {
+    id: 'INV' + String(Math.floor(Math.random()*9000)+1000),
+    name: document.getElementById('regName').value.trim(),
+    email: document.getElementById('regEmail').value.trim(),
+    phone: document.getElementById('regPhone').value.trim(),
+    plan: '',
+    available: Number(document.getElementById('regDeposit').value) || 0,
+    locked: 0, withdrawable: 0, kyc:'not_submitted', status:'active', memberSince: new Date().toISOString().slice(0,10),
+    investments: [], roiHistory:[], audit:['Account created by admin']
+  };
+  investors.unshift(newInv);
+  bootstrap.Modal.getInstance(document.getElementById('registerModal')).hide();
+  applyFilters();
+  alert('Investor created (demo).');
+});
+
+/* delete/edit action from table (if clicked outside buttons) */
+document.getElementById('investorsTable').addEventListener('dblclick', (e)=>{
+  const tr = e.target.closest('tr');
+  if(!tr) return;
+  const idx = tr.rowIndex - 1;
+});
+
+/* init */
+document.addEventListener('DOMContentLoaded', ()=>{
+  filtered = investors.slice();
+  renderTable();
+});
+</script>
+
+  <script src="Js/main.js"></script>
+</body>
+</html>

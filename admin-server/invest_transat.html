@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Dashboard | Overview</title>
+
+  <!-- Bootstrap & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+
+  <!-- Custom Styles -->
+  <link href="css/style.css" rel="stylesheet" />
+</head>
+
+<style>
+    /* ===== Fintech Transaction Page ===== */
+.bg-success-light { background: rgba(25, 135, 84, 0.1); }
+.bg-danger-light { background: rgba(220, 53, 69, 0.1); }
+.bg-warning-light { background: rgba(255, 193, 7, 0.15); }
+.bg-primary-light { background: rgba(13, 110, 253, 0.1); }
+
+.stat-card h6 { font-size: 0.9rem; }
+.stat-card h4 { font-size: 1.4rem; }
+
+.text-gradient {
+  background: linear-gradient(90deg, #007bff, #6610f2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Modal Styling */
+#viewTransactionModal .modal-content {
+  border-radius: 1rem;
+}
+#viewTransactionModal img {
+  transition: all 0.3s ease-in-out;
+}
+#viewTransactionModal img:hover {
+  transform: scale(1.02);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .stat-card { margin-bottom: 1rem; }
+  #transaction-page .d-flex.gap-2 { flex-direction: column; width: 100%; }
+  #transaction-page .d-flex.gap-2 button { width: 100%; }
+}
+
+</style>
+
+<body>
+    <!-- Sidebar -->
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-header">
+      <h4 class="fw-bold text-success mb-0">Admin<span class="text-dark">Panel</span></h4>
+      <button class="btn btn-sm btn-outline-secondary d-lg-none" id="sidebarToggle"><i class="bi bi-x-lg"></i></button>
+    </div>
+
+    <ul class="sidebar-menu list-unstyled mt-4">
+      <li><a href="overview.html" class="active"><i class="bi bi-house-door me-2"></i> Dashboard</a></li>
+      <li><a href="#"><i class="bi bi-people me-2"></i> Users</a></li>
+     <li class="nav-item dropdown">
+  <a href="#" class="nav-link d-flex align-items-center justify-content-between" data-bs-toggle="collapse" data-bs-target="#drawDropdown" aria-expanded="false">
+    <span><i class="bi bi-ticket-detailed me-2"></i> Draws</span>
+    <i class="bi bi-chevron-down small"></i>
+  </a>
+  <ul class="collapse list-unstyled ms-4 mt-1" id="drawDropdown">
+    <li><a href="add-draws.html" class="nav-link"><i class="bi bi-plus-circle me-2"></i> Add Draw</a></li>
+    <li><a href="manage-draws.html" class="nav-link"><i class="bi bi-gear me-2"></i> Manage Draws</a></li>
+  </ul>
+</li>
+
+      <li><a href="transactions.html"><i class="bi bi-wallet2 me-2"></i> Transactions</a></li>
+      <li><a href="settings.html"><i class="bi bi-envelope me-2"></i> Support</a></li>
+      <li><a href="settings.html"><i class="bi bi-gear me-2"></i> Settings</a></li>
+    </ul>
+  </aside>
+
+  
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top py-3 px-4">
+      <button class="btn btn-outline-success me-3 d-lg-none" id="sidebarToggleMobile"><i class="bi bi-list"></i></button>
+      <h5 class="fw-bold text-dark mb-0">Dashboard Overview</h5>
+      <div class="ms-auto d-flex align-items-center gap-3">
+        <button class="btn btn-light" id="themeToggle"><i class="bi bi-moon"></i></button>
+        <div class="dropdown">
+          <a href="#" class="d-flex align-items-center text-decoration-none" data-bs-toggle="dropdown">
+            <img src="../img/logo.png" class="rounded-circle me-2" width="40" height="40" alt="Admin">
+            <span class="fw-semibold">Admin</span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+            <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Profile</a></li>
+            <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>Settings</a></li>
+            <li><hr class="dropdown-divider" /></li>
+            <li><a class="dropdown-item text-danger" href="#"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+
+    <!-- Page Content -->
+    <div class="container-fluid p-4">
+  
+<div class="container-fluid py-4 px-4" id="transaction-page">
+
+  <!-- Page Header -->
+  <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+    <h3 class="fw-bold text-gradient mb-2">💰 Transaction Management</h3>
+    <div class="d-flex gap-2">
+      <button class="btn btn-outline-success rounded-pill px-3 shadow-sm" id="exportCSV">
+        <i class="bi bi-file-earmark-spreadsheet"></i> Export CSV
+      </button>
+      <button class="btn btn-outline-danger rounded-pill px-3 shadow-sm" id="exportPDF">
+        <i class="bi bi-file-earmark-pdf"></i> Export PDF
+      </button>
+    </div>
+  </div>
+
+  <!-- Summary Cards -->
+  <div class="row g-3 mb-4">
+    <div class="col-md-3 col-sm-6">
+      <div class="stat-card bg-success-light p-4 rounded-4 shadow-sm">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <h6 class="text-muted mb-1">Total Deposits</h6>
+            <h4 class="fw-bold">₦4,540,000</h4>
+            <small class="text-success">+12% this month</small>
+          </div>
+          <i class="bi bi-wallet2 fs-2 text-success"></i>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 col-sm-6">
+      <div class="stat-card bg-danger-light p-4 rounded-4 shadow-sm">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <h6 class="text-muted mb-1">Total Withdrawals</h6>
+            <h4 class="fw-bold">₦1,230,000</h4>
+            <small class="text-danger">-4% this month</small>
+          </div>
+          <i class="bi bi-bank2 fs-2 text-danger"></i>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 col-sm-6">
+      <div class="stat-card bg-warning-light p-4 rounded-4 shadow-sm">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <h6 class="text-muted mb-1">Pending Approvals</h6>
+            <h4 class="fw-bold">12</h4>
+          </div>
+          <i class="bi bi-hourglass-split fs-2 text-warning"></i>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 col-sm-6">
+      <div class="stat-card bg-primary-light p-4 rounded-4 shadow-sm">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <h6 class="text-muted mb-1">Net Balance Flow</h6>
+            <h4 class="fw-bold">₦3,310,000</h4>
+          </div>
+          <i class="bi bi-graph-up-arrow fs-2 text-primary"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="card border-0 shadow-sm rounded-4 mb-4 p-3">
+    <div class="row g-3 align-items-end">
+      <div class="col-md-3">
+        <label class="form-label fw-semibold">Search by User</label>
+        <input type="text" class="form-control" id="searchUser" placeholder="Enter name or email">
+      </div>
+      <div class="col-md-3">
+        <label class="form-label fw-semibold">Transaction Type</label>
+        <select class="form-select" id="transactionType">
+          <option value="">All</option>
+          <option value="deposit">Deposit</option>
+          <option value="withdrawal">Withdrawal</option>
+        </select>
+      </div>
+      <div class="col-md-3">
+        <label class="form-label fw-semibold">Status</label>
+        <select class="form-select" id="statusFilter">
+          <option value="">All</option>
+          <option value="pending">Pending</option>
+          <option value="approved">Approved</option>
+          <option value="declined">Declined</option>
+        </select>
+      </div>
+      <div class="col-md-3">
+        <button class="btn btn-primary w-100 rounded-pill" id="applyFilters">
+          <i class="bi bi-funnel"></i> Apply Filters
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Transaction Table -->
+  <div class="card shadow-lg border-0 rounded-4">
+    <div class="card-body p-4">
+      <div class="table-responsive">
+        <table id="transactionsTable" class="table table-hover align-middle">
+          <thead class="table-light">
+            <tr>
+              <th>#</th>
+              <th>User</th>
+              <th>Type</th>
+              <th>Amount (₦)</th>
+              <th>Date</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>John Doe</td>
+              <td><span class="badge bg-success-light text-success">Deposit</span></td>
+              <td>₦150,000</td>
+              <td>Oct 13, 2025</td>
+              <td><span class="badge bg-warning text-dark">Pending</span></td>
+              <td>
+                <div class="dropdown">
+                  <button class="btn btn-sm btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">Manage</button>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item text-success" href="#">Approve</a></li>
+                    <li><a class="dropdown-item text-danger" href="#">Decline</a></li>
+                    <li><a class="dropdown-item text-primary" href="#" data-bs-toggle="modal" data-bs-target="#viewTransactionModal">View Details</a></li>
+                  </ul>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Mary Obi</td>
+              <td><span class="badge bg-danger-light text-danger">Withdrawal</span></td>
+              <td>₦75,000</td>
+              <td>Oct 10, 2025</td>
+              <td><span class="badge bg-success text-light">Approved</span></td>
+              <td>
+                <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#viewTransactionModal">View</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- View Transaction Modal -->
+  <div class="modal fade" id="viewTransactionModal" tabindex="-1" aria-labelledby="viewTransactionLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content rounded-4 shadow-lg border-0">
+        <div class="modal-header bg-light border-0">
+          <h5 class="modal-title fw-bold text-primary" id="viewTransactionLabel">
+            Transaction Details
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <p><strong>User:</strong> John Doe</p>
+              <p><strong>Email:</strong> johndoe@email.com</p>
+              <p><strong>Transaction Type:</strong> Deposit</p>
+            </div>
+            <div class="col-md-6">
+              <p><strong>Amount:</strong> ₦150,000</p>
+              <p><strong>Date:</strong> Oct 13, 2025</p>
+              <p><strong>Status:</strong> <span class="badge bg-warning text-dark">Pending</span></p>
+            </div>
+          </div>
+
+          <hr>
+
+          <div class="mt-3">
+            <h6 class="fw-bold text-secondary mb-2">Proof of Payment</h6>
+            <img src="https://via.placeholder.com/400x200" class="img-fluid rounded-3 shadow-sm" alt="Payment Proof">
+          </div>
+
+          <div class="mt-4">
+            <h6 class="fw-bold text-secondary mb-2">Admin Notes</h6>
+            <textarea class="form-control rounded-3" rows="3" placeholder="Add remarks or verification notes..."></textarea>
+          </div>
+        </div>
+
+        <div class="modal-footer border-0 d-flex justify-content-between">
+          <button class="btn btn-outline-danger rounded-pill px-4"><i class="bi bi-x-circle"></i> Decline</button>
+          <button class="btn btn-outline-success rounded-pill px-4"><i class="bi bi-check-circle"></i> Approve</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chart -->
+  <div class="card border-0 shadow-sm rounded-4 mt-4">
+    <div class="card-body">
+      <h5 class="fw-bold mb-3">Balance Flow Overview</h5>
+      <canvas id="balanceFlowChart" height="120"></canvas>
+    </div>
+  </div>
+</div>
+
+        
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer py-3 text-center border-top mt-auto">
+      <p class="mb-0 small text-muted">© 2025 AdminPanel. Built with ❤️ by BenCode Team</p>
+    </footer>
+  </main>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="Js/main.js"></script>
+
+  <script>
+    // DataTable Initialization
+$(document).ready(function() {
+  $('#transactionsTable').DataTable({
+    responsive: true,
+    pageLength: 5,
+    language: {
+      search: "_INPUT_",
+      searchPlaceholder: "Search transactions..."
+    }
+  });
+});
+
+// Chart.js Balance Flow
+const ctx = document.getElementById('balanceFlowChart').getContext('2d');
+new Chart(ctx, {
+  type: 'line',
+  data: {
+    labels: ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+    datasets: [
+      {
+        label: 'Deposits',
+        data: [1200000, 1800000, 1500000, 2000000, 2500000, 3000000],
+        borderColor: '#198754',
+        fill: false,
+        tension: 0.3
+      },
+      {
+        label: 'Withdrawals',
+        data: [500000, 900000, 700000, 850000, 1200000, 1000000],
+        borderColor: '#dc3545',
+        fill: false,
+        tension: 0.3
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: { legend: { position: 'bottom' } }
+  }
+});
+
+  </script>
+</body>
+</html>

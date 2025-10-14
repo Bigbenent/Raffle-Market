@@ -9,142 +9,254 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
-<!-- Add animate.css for icon/text animations -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-<!-- Font Awesome CDN (place inside <head>) -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-  <style>
-    :root{
-      --lottery-size:56px;
-      --card-bg-dark: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      --muted: #94a3b8;
-      font-family: Inter, system-ui, Arial, sans-serif;
-    }
-
-    /* Light / dark base */
-    body.light-mode { background:#f9fafb; color:#0f172a; }
-    body.dark-mode  { background: linear-gradient(180deg,#071027 0%, #071b2a 100%); color:#e6eef6; }
-
-    /* Header */
-    .brand-logo { width:56px; height:56px; border-radius:12px; background:linear-gradient(135deg,#fbbf24,#f97316); display:flex; align-items:center; justify-content:center; font-weight:800; color:#071027; }
-
-    /* text helpers */
-    .small-muted { color: var(--muted); }
-    body.light-mode .small-muted { color:#64748b; }
-
-    /* cards */
-    .card-theme {
-      background: var(--card-bg-dark);
-      border:1px solid rgba(255,255,255,0.03);
-      color: inherit;
-    }
-    body.light-mode .card-theme {
-      background: #fff;
-      border:1px solid rgba(15,23,42,0.06);
-      color: inherit;
-    }
-
-    .ticket-price { background:#061224; padding:.35rem .6rem; border-radius:.5rem; color:#fbbf24; font-weight:700; }
-    .odds-badge { background:rgba(255,255,255,0.03); padding:.25rem .5rem; border-radius:.5rem; color:var(--muted); font-size:.85rem; }
-    body.light-mode .odds-badge { background:rgba(15,23,42,0.03); color:#64748b; }
-
-    .lottery-ball {
-      width:var(--lottery-size);
-      height:var(--lottery-size);
-      border-radius:50%;
-      background:linear-gradient(180deg,#fff,#e6e6e6);
-      color:#071027;
-      display:flex;align-items:center;justify-content:center;font-weight:700;
-      box-shadow:0 6px 18px rgba(0,0,0,0.25);
-      margin-right:.5rem;margin-bottom:.5rem;
-    }
-    body.dark-mode .lottery-ball { background: linear-gradient(180deg,#fff,#e6e6e6); color:#071027; }
-    body.light-mode .lottery-ball { background: linear-gradient(180deg,#f3f4f6,#e6eef6); color:#071027; }
-
-    footer { margin:28px 0; text-align:center; color:var(--muted); }
-
-    /* responsive tweaks */
-    @media (max-width:520px){
-      .product-row { flex-direction:column; align-items:flex-start }
-      .product-image { width:100%; height:140px }
-    }
-
-    .card-theme:hover { transform:translateY(-4px); transition:transform .18s ease; }
-
-    /* modal opacity (darker backdrop) and content contrast */
-    .modal-backdrop.show { background: rgba(2,6,23,0.6); } /* darker overlay */
-    .modal-content { background: rgba(6,10,22,0.9); color: #fff; }
-    body.light-mode .modal-content { background: rgba(255,255,255,0.98); color: #071027; }
-
-    /* small buttons in header */
-    .btn-outline-light.custom { border-color: rgba(255,255,255,0.2); color: #fff; }
-    body.light-mode .btn-outline-light.custom { border-color: rgba(15,23,42,0.1); color: #0f172a; }
-
-    /* ticket-number small */
-    .small-ball { width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#fff;color:#071027;margin:.15rem;font-weight:700;box-shadow:0 6px 18px rgba(0,0,0,.15) }
-    body.dark-mode .small-ball{ background:#fff;color:#071027 }
-    body.light-mode .small-ball{ background:#fff;color:#071027 }
-
-    /* readable text adjustments */
-    .card-theme .small-muted{ color: rgba(255,255,255,0.65); }
-    body.light-mode .card-theme .small-muted{ color:#64748b; }
-
-  /* Animate nav links on collapse */
-  .navbar-collapse.collapse.show .nav-item {
-    animation: fadeInUp 0.5s ease forwards;
-  }
-
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .brand-logo {
-    font-size: 1.2rem;
-    font-weight: bold;
-    background: #ffc107;
-    color: #000;
-  }
-.hero-section {
-  height: 50vh; /* half of screen height */
-  overflow: hidden;
+  <!-- Add animate.css for icon/text animations -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<!-- Optional Animate.css CDN -->
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+/>
+<style>
+:root {
+  --lottery-size: 56px;
+  --card-bg-dark: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  --muted: #94a3b8;
+  font-family: Inter, system-ui, Arial, sans-serif;
 }
 
+/* ===== BASE THEME ===== */
+body.light-mode {
+  background: #f9fafb;
+  color: #0f172a;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+body.dark-mode {
+  background: linear-gradient(180deg, #071027 0%, #071b2a 100%);
+  color: #e6eef6;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* ===== NAVBAR ===== */
+.navbar {
+  transition: background 0.4s ease, border 0.4s ease, color 0.4s ease;
+}
+
+/* Dark mode navbar (default): dark background, white border/text */
+.navbar.dark-mode {
+  background: #061224 !important;
+  border-bottom: 1px solid rgba(255,255,255,0.92);
+  color: #ffffff;
+}
+
+/* Light mode navbar: white background, dark border/text */
+.navbar.light-mode {
+  background: #ffffff !important;
+  border-bottom: 1px solid #061224;
+  color: #061224;
+}
+
+.navbar .nav-link,
+.navbar .navbar-brand,
+.navbar .fw-bold,
+.navbar .small {
+  color: inherit !important;
+  transition: color 0.3s ease;
+}
+
+/* ===== BUTTONS ===== */
+.loginBtn, .registerBtn, .toggleBtn, .btn-theme-toggle {
+  border: none;
+  font-weight: 600;
+  padding: 0.38rem 0.8rem;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+/* When body is dark-mode: button styles appropriate for dark background */
+body.dark-mode .loginBtn,
+body.dark-mode .toggleBtn {
+  background: #ffffff;
+  color: #061224;
+}
+body.dark-mode .registerBtn {
+  background: #10b981;
+  color: #071027;
+}
+
+/* When body is light-mode: buttons appropriate for light background */
+body.light-mode .loginBtn,
+body.light-mode .toggleBtn {
+  background: #061224;
+  color: #ffffff;
+}
+body.light-mode .registerBtn {
+  background: #10b981;
+  color: #071027;
+}
+
+.loginBtn:hover,
+.registerBtn:hover,
+.toggleBtn:hover {
+  opacity: 0.92;
+  transform: translateY(-1px);
+}
+
+/* ===== CARD ===== */
+.card-theme {
+  background: var(--card-bg-dark);
+  border: 1px solid rgba(255,255,255,0.03);
+  color: inherit;
+  transition: background 0.4s ease, color 0.4s ease, border 0.4s ease;
+}
+body.light-mode .card-theme {
+  background: #ffffff;
+  border: 1px solid rgba(15,23,42,0.06);
+  color: #0f172a;
+}
+body.dark-mode .card-theme {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: #e6eef6;
+}
+.card-theme:hover {
+  transform: translateY(-4px);
+  transition: transform 0.18s ease;
+}
+
+/* ===== TABS ===== */
+.nav-tabs .nav-link {
+  border: none;
+  font-weight: 600;
+  transition: 0.3s;
+}
+body.light-mode .nav-tabs .nav-link.active {
+  color: #061224;
+  border-bottom: 3px solid #061224;
+}
+body.dark-mode .nav-tabs .nav-link.active {
+  color: #10b981;
+  border-bottom: 3px solid #10b981;
+}
+
+/* ===== TEXT ===== */
+.small-muted { color: var(--muted); }
+body.light-mode .small-muted { color: #64748b; }
+.card-theme .small-muted { color: rgba(255,255,255,0.65); }
+body.light-mode .card-theme .small-muted { color: #64748b; }
+
+/* ===== LOTTERY ELEMENTS ===== */
+.ticket-price {
+  background: #061224;
+  padding: .35rem .6rem;
+  border-radius: .5rem;
+  color: #10b981;
+  font-weight: 700;
+}
+.odds-badge {
+  background: rgba(255,255,255,0.03);
+  padding: .25rem .5rem;
+  border-radius: .5rem;
+  color: var(--muted);
+  font-size: .85rem;
+}
+body.light-mode .odds-badge {
+  background: rgba(15,23,42,0.03);
+  color: #64748b;
+}
+.lottery-ball {
+  width: var(--lottery-size);
+  height: var(--lottery-size);
+  border-radius: 50%;
+  background: linear-gradient(180deg, #fff, #e6e6e6);
+  color: #071027;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+  margin-right: .5rem;
+  margin-bottom: .5rem;
+}
+.small-ball {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #071027;
+  margin: .15rem;
+  font-weight: 700;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+}
+
+/* ===== MODAL ===== */
+.modal-backdrop.show {
+  background: rgb(2, 6, 23);
+}
+.modal-content {
+  background: rgb(6, 10, 22);
+  color: #ffffff;
+  border-radius: 10px;
+}
+body.light-mode .modal-content {
+  background: rgba(255,255,255,0.98);
+  color: #071027;
+}
+body.dark-mode .modal-content {
+  background: rgba(14, 13, 13, 0.959);
+  color: #ededee;
+}
+
+/* ===== BRAND & HERO ===== */
+.brand-logo {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, forestgreen, #f97316);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  color: #071027;
+  font-size: 1.2rem;
+}
+.hero-section {
+  height: 50vh;
+  overflow: hidden;
+}
 .hero-img {
   height: 50vh;
   object-fit: cover;
 }
-
 .carousel-caption h2, 
 .carousel-caption p {
   animation-duration: 1.5s;
+  color: #fff;
+}
+body.light-mode .carousel-caption h2,
+body.light-mode .carousel-caption p {
+  color: #000;
 }
 
-/* Mobile adjustments */
-@media (max-width: 768px) {
-  .hero-section {
-    height: 50vh;
-  }
-  .hero-img {
-    width: 100%;
-    height: 50vh;
-    object-fit: cover;
-  }
-  .carousel-caption {
-    font-size: 14px;
-  }
+/* ===== FOOTER ===== */
+footer {
+  margin: 28px 0;
+  text-align: center;
+  color: var(--muted);
+  transition: color 0.3s ease;
+}
+body.dark-mode footer {
+  color: rgba(255,255,255,0.65);
 }
 
+/* ===== WHATSAPP FLOAT ===== */
 .whatsapp-float {
   position: fixed;
-  bottom: 80px; /* above the label */
+  bottom: 80px;
   right: 20px;
   background: #25d366;
   color: #fff;
@@ -163,7 +275,6 @@
   background: #1ebc59;
   transform: scale(1.1);
 }
-
 .whatsapp-label {
   position: fixed;
   bottom: 30px;
@@ -178,31 +289,104 @@
   z-index: 998;
   transition: opacity 0.3s ease;
 }
-
-/* Hidden state */
 .whatsapp-hidden {
   opacity: 0;
   pointer-events: none;
   transform: translateY(20px);
 }
+
+/* ===== Navbar Toggler Icon ===== */
+.navbar-toggler .menu{
+  border: none;
+  transition: filter 0.3s ease, background 0.3s ease;
+}
+
+/* Default icon (dark mode as default) */
+.navbar.dark-mode .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=UTF8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='white' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+/* Light mode icon */
+.navbar.light-mode .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=UTF8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='black' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+/* Optional: subtle hover effect */
+.navbar-toggler:hover {
+  opacity: 0.8;
+}
+
+:root {
+  --card-bg: #ffffff;
+  --text-color: #000000;
+  --raffle-item-bg: #f8f9fa;
+  --raffle-border: #e0e0e0;
+}
+
+body.dark-mode {
+  --card-bg: #0d1117;
+  --text-color: #f8f9fa;
+  --raffle-item-bg: #161b22;
+  --raffle-border: #2d333b;
+}
+.text-muted.dark-mode{
+  color: white;
+}
+
+.raffle-card {
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  transition: all 0.3s ease;
+}
+
+.raffle-item {
+  background: var(--raffle-item-bg);
+  border: 1px solid var(--raffle-border);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.raffle-icon {
+  width: 45px;
+  height: 45px;
+}
+
+
+/* ===== ANIMATIONS ===== */
+.navbar-collapse.collapse.show .nav-item {
+  animation: fadeInUp 0.5s ease forwards;
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width:520px){
+  .product-row { flex-direction:column; align-items:flex-start; }
+  .product-image { width:100%; height:140px; }
+  
+}
+@media (max-width:768px){
+  .hero-section, .hero-img { height:50vh; }
+  .carousel-caption { font-size:14px; }
+  .loginBtn , .registerBtn, .toggleBtn { padding: .3rem .6rem; font-size: .85rem; width: 100%; }
+}
 </style>
-
-
 </head>
 <body class="dark-mode">
   <div class="container py-3">
     <!-- Header / Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm rounded-3 px-3 mb-4">
+<nav id="mainNavbar" class="navbar navbar-expand-lg  shadow-sm rounded-3 px-3 mb-4">
   <div class="container-fluid">
     <!-- Brand -->
     <a class="navbar-brand d-flex align-items-center gap-2" href="#">
-      <div class="brand-logo fw-bold bg-warning text-dark rounded-circle px-2 py-1">RF</div>
-      <span class="fw-semibold">Raffle Market</span>
+      <div class="rounded-circle px-2 py-1 brand-logo"><img src="img/logo.png" width="56" alt="042 Raffle Market"></div>
     </a>
 
     <!-- Toggle button for mobile -->
-    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu">
-      <span class="navbar-toggler-icon"></span>
+    
+    <button class="navbar-toggler border-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="text-light">Menu</span> <span class="navbar-toggler-icon"></span>
     </button>
 
     <!-- Collapsible Content -->
@@ -210,23 +394,23 @@
       <ul class="navbar-nav ms-auto align-items-lg-center gap-2">
         <!-- Welcome text -->
         <li class="nav-item text-center text-lg-end">
-          <div class="fw-bold text-warning">Welcome, Guest</div>
+          <div class="fw-bold text-success">Welcome, Guest</div>
           <div class="small small-muted"> <span id="local-time"></span></div>
         </li>
 
         <!-- Buttons -->
-        <li class="nav-item">
-          <button id="loginBtn" class="btn btn-sm btn-outline-light w-100" data-bs-toggle="modal" data-bs-target="#loginModal">
+        <!-- <li class="nav-item">
+          <button id="loginBtn" class="btn loginBtn btn-sm mx-1" data-bs-toggle="modal" data-bs-target="#loginModal">
             Login
           </button>
+        </li> -->
+        <li class="nav-item">
+          <a href="#" class="btn registerBtn btn-sm mx-1">
+            My Wallet
+          </a>
         </li>
         <li class="nav-item">
-          <button id="registerBtn" class="btn btn-sm btn-warning text-dark w-100" data-bs-toggle="modal" data-bs-target="#registerModal">
-            Register
-          </button>
-        </li>
-        <li class="nav-item">
-          <button id="modeToggle" class="btn btn-sm btn-outline-light w-100">
+          <button id="modeToggle" class="btn toggleBtn btn-sm mx-1">
             🌙 Dark
           </button>
         </li>
@@ -235,61 +419,74 @@
   </div>
 </nav>
 
-<!-- Hero Section -->
-<section class="hero-section mb-4 container">
-  <div id="heroCarousel" class="carousel slide rounded-4 shadow-lg overflow-hidden" data-bs-ride="carousel">
-    
-    <!-- Carousel Indicators -->
-    <div class="carousel-indicators">
-      <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"></button>
-      <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
-      <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2"></button>
+<!-- Live Raffle Scoreboard Section -->
+<section class="raffle-scoreboard container my-4">
+  <div class="card raffle-card shadow-lg border-0 rounded-4 p-3">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h4 class="fw-bold mb-0">🎯 Live Raffle Scoreboard</h4>
+      <span class="badge bg-warning text-dark">Real-Time</span><hr>
     </div>
 
-    <!-- Carousel Inner -->
-    <div class="carousel-inner rounded-4">
-      <div class="carousel-item active">
-        <img src="img/rice.jpeg" class="d-block w-100 hero-img" alt="Raffle Slide 1">
-        <div class="carousel-caption  d-md-block bg-dark bg-opacity-50 p-3 rounded-3">
-          <h2 class="animate__animated animate__fadeInDown fw-bold text-warning">Welcome to Raffle Market</h2>
-          <p class="animate__animated animate__fadeInUp text-light">Play. Win. Celebrate!</p>
+    <div id="raffleList" class="raffle-list d-flex flex-column gap-3">
+      <!-- Foodstuff Draw -->
+      <div class="raffle-item p-3 rounded-3 d-flex justify-content-between align-items-center">
+        <div class="d-flex align-items-center gap-3">
+          <div class="raffle-icon bg-warning text-dark fw-bold d-flex align-items-center justify-content-center rounded-circle">
+            🍚
+          </div>
+          <div>
+            <h6 class="fw-bold mb-0">Foodstuff Mega Draw</h6>
+            <small class="">Slot Status: <span class="text-success fw-semibold">Sold Out</span></small>
+          </div>
+        </div>
+        <div class="text-end">
+          <div class="fw-bold text-warning" id="winner-food">Winner: ...</div>
+          <small class="">Prize: 50kg Rice Bag</small>
         </div>
       </div>
 
-      <div class="carousel-item">
-        <img src="img/tv.jpeg" class="d-block w-100 hero-img" alt="Raffle Slide 2">
-        <div class="carousel-caption  d-md-block bg-dark bg-opacity-50 p-3 rounded-3">
-          <h2 class="animate__animated animate__fadeInDown fw-bold text-warning">Your Chance to Win Big</h2>
-          <p class="animate__animated animate__fadeInUp text-light">Fair, Fun & Transparent</p>
+      <!-- Electronics Draw -->
+      <div class="raffle-item p-3 rounded-3 d-flex justify-content-between align-items-center">
+        <div class="d-flex align-items-center gap-3">
+          <div class="raffle-icon bg-info text-dark fw-bold d-flex align-items-center justify-content-center rounded-circle">
+            📺
+          </div>
+          <div>
+            <h6 class="fw-bold mb-0">Electronics Bonanza</h6>
+            <small class="">Slot Status: <span class="text-success fw-semibold">Sold Out</span></small>
+          </div>
+        </div>
+        <div class="text-end">
+          <div class="fw-bold text-info" id="winner-electronics">Winner: ...</div>
+          <small class="">Prize: 43” Smart TV</small>
         </div>
       </div>
 
-      <div class="carousel-item">
-        <img src="img/phone.jpeg" class="d-block w-100 hero-img" alt="Raffle Slide 3">
-        <div class="carousel-caption  d-md-block bg-dark bg-opacity-50 p-3 rounded-3">
-          <h2 class="animate__animated animate__fadeInDown fw-bold text-warning">Join Now!</h2>
-          <p class="animate__animated animate__fadeInUp text-light">Exciting Prizes Await</p>
+      <!-- Hotel Draw -->
+      <div class="raffle-item p-3 rounded-3 d-flex justify-content-between align-items-center">
+        <div class="d-flex align-items-center gap-3">
+          <div class="raffle-icon bg-danger text-light fw-bold d-flex align-items-center justify-content-center rounded-circle">
+            🏨
+          </div>
+          <div>
+            <h6 class="fw-bold mb-0">Hotel Stay Weekend</h6>
+            <small class="">Slot Status: <span class="text-warning fw-semibold">Pending (Not All Sold)</span></small>
+          </div>
+        </div>
+        <div class="text-end">
+          <div class="fw-bold text-danger" id="winner-hotel">No Winner Yet</div>
+          <small class="">Prize: 2 Nights Stay</small>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-
-
-
-
     <!-- Tabs -->
     <ul class="nav nav-tabs mb-3" role="tablist">
-      <li class="nav-item" role="presentation">
-        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#active" type="button">🛒 Active Draws</button>
-      </li>
-      <li class="nav-item" role="presentation">
-        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#past" type="button">🥇 Past Winners</button>
-      </li>
-      <li class="nav-item" role="presentation">
-        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#history" type="button">📜 Ticket History</button>
-      </li>
+      <li class="nav-item" role="presentation"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#active" type="button">🛒 Active Draws</button></li>
+      <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#past" type="button">🥇 Past Winners</button></li>
+      <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#history" type="button">📜 Ticket History</button></li>
     </ul>
 
     <!-- Filters -->
@@ -311,13 +508,13 @@
 
       <!-- Past Draws -->
       <div id="past" class="tab-pane fade">
-        <h5 class="text-warning mb-3">Recent Draw Results</h5>
+        <h5 class="text-success mb-3">Recent Draw Results</h5>
         <div id="winners-grid" class="row g-3"></div>
       </div>
 
       <!-- Ticket History -->
       <div id="history" class="tab-pane fade">
-        <h5 class="text-warning mb-3">Your Ticket History</h5>
+        <h5 class="text-success mb-3">Your Ticket History</h5>
         <div id="ticket-history" class="list-group"></div>
       </div>
     </div>
@@ -328,17 +525,16 @@
 </a>
 <div id="whatsappLabel" class="whatsapp-label">Contact Support</div>
 
-
     <footer>Prototype — frontend only. Backend & payments to be integrated later.</footer>
   </div>
 
   <!-- Details Modal -->
   <div class="modal fade" id="detailsModal" tabindex="-1">
     <div class="modal-dialog modal-lg modal-dialog-centered">
-      <div class="modal-content card-theme text-white">
+      <div class="modal-content card-theme">
         <div class="modal-header border-0">
           <h5 class="modal-title" id="details-title">Draw Details</h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
           <div id="details-body"></div>
@@ -346,8 +542,8 @@
           <div id="details-balls" class="d-flex flex-wrap"></div>
         </div>
         <div class="modal-footer border-0">
-          <button class="btn btn-outline-light" data-bs-dismiss="modal">Close</button>
-          <button id="details-buy-btn" class="btn btn-warning">Buy Tickets</button>
+          <button class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+          <button id="details-buy-btn" class="btn btn-success">Buy Tickets</button>
         </div>
       </div>
     </div>
@@ -356,17 +552,17 @@
   <!-- Buy Modal -->
   <div class="modal fade" id="buyModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content card-theme text-white">
+      <div class="modal-content card-theme">
         <div class="modal-header border-0">
           <h5 class="modal-title" id="modal-title">Buy Tickets</h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
           <div id="modal-product" class="small small-muted mb-2"></div>
           <div class="d-flex justify-content-between">
             <div>
               <div class="small small-muted">Ticket Price</div>
-              <div id="modal-price" class="fw-bold text-warning"></div>
+              <div id="modal-price" class="fw-bold text-success"></div>
             </div>
             <div>
               <div class="small small-muted">Slots</div>
@@ -378,19 +574,19 @@
             <div>
               <div class="small small-muted">Number of Tickets</div>
               <div class="d-flex align-items-center mt-1">
-                <button id="qty-dec" class="btn btn-outline-light btn-sm">-</button>
+                <button id="qty-dec" class="btn btn-outline-secondary btn-sm">-</button>
                 <div id="qty" class="px-3">1</div>
-                <button id="qty-inc" class="btn btn-outline-light btn-sm">+</button>
+                <button id="qty-inc" class="btn btn-outline-secondary btn-sm">+</button>
               </div>
             </div>
             <div>
               <div class="small small-muted">Total</div>
-              <div id="modal-total" class="fw-bold text-warning">₦0</div>
+              <div id="modal-total" class="fw-bold text-success">₦0</div>
             </div>
           </div>
         </div>
         <div class="modal-footer border-0">
-          <button class="btn btn-outline-light" data-bs-dismiss="modal">Cancel</button>
+          <button class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
           <button id="pay-btn" class="btn btn-success">Simulate Payment</button>
         </div>
       </div>
@@ -400,10 +596,10 @@
   <!-- Register Modal -->
   <div class="modal fade" id="registerModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content card-theme text-white">
+      <div class="modal-content card-theme">
         <div class="modal-header border-0">
           <h5 class="modal-title">Create account</h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
           <form id="registerForm">
@@ -413,8 +609,8 @@
           </form>
         </div>
         <div class="modal-footer border-0">
-          <button class="btn btn-outline-light" data-bs-dismiss="modal">Cancel</button>
-          <button id="registerSubmit" class="btn btn-warning">Create account</button>
+          <button class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button id="registerSubmit" class="btn btn-success">Create account</button>
         </div>
       </div>
     </div>
@@ -423,10 +619,10 @@
   <!-- Login Modal -->
   <div class="modal fade" id="loginModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content card-theme text-white">
+      <div class="modal-content card-theme">
         <div class="modal-header border-0">
           <h5 class="modal-title">Login</h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
           <form id="loginForm">
@@ -435,8 +631,8 @@
           </form>
         </div>
         <div class="modal-footer border-0">
-          <button class="btn btn-outline-light" data-bs-dismiss="modal">Cancel</button>
-          <button id="loginSubmit" class="btn btn-warning">Login</button>
+          <button class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button id="loginSubmit" class="btn btn-success">Login</button>
         </div>
       </div>
     </div>
@@ -447,8 +643,8 @@
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Font Awesome -->
-<script src="https://kit.fontawesome.com/a2d9d6a66a.js" crossorigin="anonymous"></script>
+  <!-- Font Awesome -->
+  <script src="https://kit.fontawesome.com/a2d9d6a66a.js" crossorigin="anonymous"></script>
 
 <!-- Scroll Hide/Show Script -->
 <script>
@@ -457,427 +653,473 @@ window.addEventListener("scroll", function() {
   const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
   const btn = document.getElementById("whatsappBtn");
   const label = document.getElementById("whatsappLabel");
-
+  if (!btn || !label) return;
   if (currentScroll > lastScroll) {
-    // Scrolling down → hide
     btn.classList.add("whatsapp-hidden");
     label.classList.add("whatsapp-hidden");
   } else {
-    // Scrolling up → show
     btn.classList.remove("whatsapp-hidden");
     label.classList.remove("whatsapp-hidden");
   }
-  lastScroll = currentScroll <= 0 ? 0 : currentScroll; // avoid negative
+  lastScroll = currentScroll <= 0 ? 0 : currentScroll;
 });
 </script>
 
-  <script>
-    // Data (sample)
-    const drawsSample = [
-      { id:1, owner:'Sunrise Supermarket', category:'supermarket', product:'Bag of Rice (50kg)', market_price:50000, ticket_price:1000, slots_sold:30, start_time:Date.now(), end_time:Date.now()+48*3600*1000, image:'Rice', status:'active', required_slots:50 },
-      { id:2, owner:'Prime Electronics', category:'electronics', product:'Samsung 43\\u201d Smart TV', market_price:150000, ticket_price:2000, slots_sold:75, start_time:Date.now(), end_time:Date.now()+48*3600*1000, image:'TV', status:'active', required_slots:75 },
-      { id:3, owner:'Golden Hotel', category:'supermarket', product:'Weekend Stay Voucher', market_price:80000, ticket_price:2000, slots_sold:10, start_time:Date.now(), end_time:Date.now()+48*3600*1000, image:'Hotel', status:'active', required_slots:40 }
-    ];
+<script>
+  // ---------- SAMPLE & APP STATE ----------
+  const drawsSample = [
+    { id:1, owner:'Sunrise Supermarket', category:'supermarket', product:'Bag of Rice (50kg)', market_price:50000, ticket_price:1000, slots_sold:30, start_time:Date.now(), end_time:Date.now()+48*3600*1000, image:'Rice', status:'active', required_slots:50 },
+    { id:2, owner:'Prime Electronics', category:'electronics', product:'Samsung 43\\u201d Smart TV', market_price:150000, ticket_price:2000, slots_sold:75, start_time:Date.now(), end_time:Date.now()+48*3600*1000, image:'TV', status:'active', required_slots:75 },
+    { id:3, owner:'Golden Hotel', category:'supermarket', product:'Weekend Stay Voucher', market_price:80000, ticket_price:2000, slots_sold:10, start_time:Date.now(), end_time:Date.now()+48*3600*1000, image:'Hotel', status:'active', required_slots:40 }
+  ];
 
-    const staticPast = [
-      { draw_id: 101, product: 'Bag of Rice (50kg)', owner: 'Sunrise Supermarket', winner_name: 'John', winning_ticket: 50, status: 'won', time: Date.now() - 5*24*3600*1000 },
-      { draw_id: 102, product: 'Samsung 43\" Smart TV', owner: 'Prime Electronics', winner_name: 'Mary', winning_ticket: 150, status: 'won', time: Date.now() - 3*24*3600*1000 },
-      { draw_id: 103, product: 'Weekend Stay Voucher', owner: 'Golden Hotel', winner_name: null, winning_ticket: 40, status: 'no_winner', time: Date.now() - 2*24*3600*1000 }
-    ];
+  const staticPast = [
+    { draw_id: 101, product: 'Bag of Rice (50kg)', owner: 'Sunrise Supermarket', winner_name: 'John', winning_ticket: 50, status: 'won', time: Date.now() - 5*24*3600*1000 },
+    { draw_id: 102, product: 'Samsung 43\" Smart TV', owner: 'Prime Electronics', winner_name: 'Mary', winning_ticket: 150, status: 'won', time: Date.now() - 3*24*3600*1000 },
+    { draw_id: 103, product: 'Weekend Stay Voucher', owner: 'Golden Hotel', winner_name: null, winning_ticket: 40, status: 'no_winner', time: Date.now() - 2*24*3600*1000 }
+  ];
 
-    const STORAGE_KEY = 'raffle_bootstrap_state_v1';
-    let state = loadState();
+  const STORAGE_KEY = 'raffle_bootstrap_state_v1';
+  let state = loadState();
 
-    function loadState(){
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if(raw) return JSON.parse(raw);
-      const d = drawsSample.map(dr => ({...dr}));
-      const init = { draws: d, tickets: [], winners: staticPast.slice() };
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(init));
-      return init;
-    }
-    function saveState(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+  function loadState(){
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(raw) return JSON.parse(raw);
+    const d = drawsSample.map(dr => ({...dr}));
+    const init = { draws: d, tickets: [], winners: staticPast.slice() };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(init));
+    return init;
+  }
+  function saveState(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
 
-    // DOM refs
-    const listingEl = document.getElementById('listing');
-    const winnersGrid = document.getElementById('winners-grid');
-    const historyEl = document.getElementById('ticket-history');
-    const modalBuyEl = document.getElementById('buyModal');
-    const bsBuyModal = new bootstrap.Modal(modalBuyEl);
-    const modalDetailsEl = document.getElementById('detailsModal');
-    const bsDetailsModal = new bootstrap.Modal(modalDetailsEl);
+  // DOM refs
+  const listingEl = document.getElementById('listing');
+  const winnersGrid = document.getElementById('winners-grid');
+  const historyEl = document.getElementById('ticket-history');
+  const modalBuyEl = document.getElementById('buyModal');
+  const bsBuyModal = new bootstrap.Modal(modalBuyEl);
+  const modalDetailsEl = document.getElementById('detailsModal');
+  const bsDetailsModal = new bootstrap.Modal(modalDetailsEl);
+  const navbarEl = document.getElementById('mainNavbar');
 
-    // dark/light mode
-    const body = document.body, modeBtn = document.getElementById('modeToggle');
-    function applyMode(mode){
-      body.classList.remove('dark-mode','light-mode');
-      body.classList.add(mode + '-mode');
-      modeBtn.textContent = (mode === 'dark') ? '🌙 Dark' : '☀️ Light';
-      localStorage.setItem('mode', mode);
-      // tweak header buttons readability
-      document.querySelectorAll('.btn-outline-light.custom').forEach(b => {
-        if(mode === 'dark') { b.classList.add('btn-outline-light'); b.classList.remove('btn-outline-dark'); }
-        else { b.classList.remove('btn-outline-light'); b.classList.add('btn-outline-dark'); }
-      });
-      // adjust body class itself (for selectors)
-      body.classList.remove('dark-mode','light-mode');
-      body.classList.add(mode + '-mode');
-    }
-    modeBtn.addEventListener('click', ()=>{
-      const current = body.classList.contains('dark-mode') ? 'dark' : 'light';
-      applyMode(current === 'dark' ? 'light' : 'dark');
+  // local time
+  function updateLocalTime(){ const el = document.getElementById('local-time'); if(el) el.textContent = new Date().toLocaleString(); }
+  setInterval(updateLocalTime, 1000);
+  updateLocalTime();
+
+  // theme handling (dark default)
+  const body = document.body;
+  const modeBtn = document.getElementById('modeToggle');
+
+  function applyMode(mode){
+    // body
+    body.classList.remove('dark-mode','light-mode');
+    body.classList.add(mode + '-mode');
+
+    // navbar: ensure we set the matching class so CSS rules apply
+    navbarEl.classList.remove('dark-mode','light-mode');
+    navbarEl.classList.add(mode + '-mode');
+
+    // cards & modals: toggle classes for coherent styling
+    document.querySelectorAll('.card-theme').forEach(el => {
+      el.classList.remove('dark-mode','light-mode');
+      el.classList.add(mode + '-mode');
     });
-    applyMode(localStorage.getItem('mode') || 'dark');
+    document.querySelectorAll('.modal-content').forEach(el => {
+      el.classList.remove('dark-mode','light-mode');
+      el.classList.add(mode + '-mode');
+    });
 
-    // local time
-    function updateLocalTime(){ document.getElementById('local-time').textContent = new Date().toLocaleString(); }
-    setInterval(updateLocalTime, 1000);
-    updateLocalTime();
+    // nav links
+    document.querySelectorAll('.nav-link').forEach(el => {
+      el.classList.remove('dark-mode','light-mode');
+      el.classList.add(mode + '-mode');
+    });
 
-    // helpers
-    function escapeHtml(str){ return String(str).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[m]); }
-    function numberWithCommas(x){ return String(x).replace(/\B(?=(\d{3})+(?!\d))/g, ","); }
-    function pad(n){ return String(n).padStart(2,'0'); }
-    function formatDuration(ms){
-      const s = Math.floor(ms/1000);
-      const h = Math.floor(s/3600);
-      const m = Math.floor((s%3600)/60);
-      const sec = s%60;
-      return `${pad(h)}h ${pad(m)}m ${pad(sec)}s`;
+    // header buttons: we use the body-mode to determine appearance via CSS selectors,
+    // but toggle some attributes for accessibility/text content
+    if(mode === 'dark'){
+      modeBtn.textContent = '🌙 Dark';
+    } else {
+      modeBtn.textContent = '☀️ Light';
     }
+    localStorage.setItem('mode', mode);
+  }
 
-    // countdowns registry
-    const timers = {};
+  // On click toggle
+  modeBtn.addEventListener('click', ()=>{
+    const current = body.classList.contains('dark-mode') ? 'dark' : 'light';
+    applyMode(current === 'dark' ? 'light' : 'dark');
+  });
 
-    function startCountdown(id, end){
-      const el = document.getElementById('cd-' + id);
-      if(!el) return;
-      if(timers[id]) clearInterval(timers[id]);
-      timers[id] = setInterval(() => {
-        const diff = end - Date.now();
-        if(diff <= 0){
-          clearInterval(timers[id]);
-          el.textContent = 'Expired';
-          handleExpiry(id);
-          return;
-        }
-        el.textContent = formatDuration(diff);
-      }, 500);
-    }
+  // initialize mode from localStorage or default to dark
+  applyMode(localStorage.getItem('mode') || 'dark');
 
-    function handleExpiry(id){
-      const d = state.draws.find(x => x.id === id);
-      if(!d) return;
-      const required = d.required_slots || Math.ceil(d.market_price / d.ticket_price);
-      if(d.slots_sold >= required){
-        declareWinnerIfReady(d);
-      } else {
-        // mark failed and create a new copy (rollover)
-        d.status = 'failed';
-        // record a no-winner past record
-        state.winners.push({ draw_id: d.id, product: d.product, owner: d.owner, winner_name: null, winning_ticket: d.slots_sold, status: 'no_winner', time: Date.now() });
-        saveState();
-        const newId = Math.max(...state.draws.map(x=>x.id)) + 1;
-        const copy = {...d, id:newId, slots_sold:0, start_time:Date.now(), end_time:Date.now()+48*3600*1000, status:'active'};
-        state.draws.push(copy);
-        saveState();
-        render();
-      }
-    }
+  // helpers (unchanged)
+  function escapeHtml(str){ return String(str).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[m]); }
+  function numberWithCommas(x){ return String(x).replace(/\B(?=(\d{3})+(?!\d))/g, ","); }
+  function pad(n){ return String(n).padStart(2,'0'); }
+  function formatDuration(ms){
+    const s = Math.floor(ms/1000);
+    const h = Math.floor(s/3600);
+    const m = Math.floor((s%3600)/60);
+    const sec = s%60;
+    return `${pad(h)}h ${pad(m)}m ${pad(sec)}s`;
+  }
 
-    // render functions
-    function render(){
-      renderActive();
-      renderWinners();
-      renderHistory();
-    }
-
-    function renderActive(){
-      listingEl.innerHTML = '';
-      const cat = document.getElementById('category').value;
-      const active = state.draws.filter(d => d.status === 'active' && (cat === 'all' || d.category === cat));
-      if(active.length === 0){
-        listingEl.innerHTML = '<div class="col-12"><div class="p-3 small small-muted">No active draws found.</div></div>';
+  // countdown registry
+  const timers = {};
+  function startCountdown(id, end){
+    const el = document.getElementById('cd-' + id);
+    if(!el) return;
+    if(timers[id]) clearInterval(timers[id]);
+    timers[id] = setInterval(() => {
+      const diff = end - Date.now();
+      if(diff <= 0){
+        clearInterval(timers[id]);
+        el.textContent = 'Expired';
+        handleExpiry(id);
         return;
       }
-      active.forEach(d => {
-        const required = d.required_slots || Math.ceil(d.market_price / d.ticket_price);
-        const sold = d.slots_sold || 0;
-        const remaining = Math.max(required - sold, 0);
-        const progress = Math.min(100, Math.round((sold/required)*100));
-        const col = document.createElement('div');
-        col.className = 'col-sm-6 col-lg-4';
+      el.textContent = formatDuration(diff);
+    }, 500);
+  }
+
+  function handleExpiry(id){
+    const d = state.draws.find(x => x.id === id);
+    if(!d) return;
+    const required = d.required_slots || Math.ceil(d.market_price / d.ticket_price);
+    if(d.slots_sold >= required){
+      declareWinnerIfReady(d);
+    } else {
+      d.status = 'failed';
+      state.winners.push({ draw_id: d.id, product: d.product, owner: d.owner, winner_name: null, winning_ticket: d.slots_sold, status: 'no_winner', time: Date.now() });
+      saveState();
+      const newId = Math.max(...state.draws.map(x=>x.id)) + 1;
+      const copy = {...d, id:newId, slots_sold:0, start_time:Date.now(), end_time:Date.now()+48*3600*1000, status:'active'};
+      state.draws.push(copy);
+      saveState();
+      render();
+    }
+  }
+
+  // render functions (kept behavior)
+  function render(){
+    renderActive();
+    renderWinners();
+    renderHistory();
+  }
+
+  function renderActive(){
+    listingEl.innerHTML = '';
+    const cat = document.getElementById('category').value;
+    const active = state.draws.filter(d => d.status === 'active' && (cat === 'all' || d.category === cat));
+    if(active.length === 0){
+      listingEl.innerHTML = '<div class="col-12"><div class="p-3 small small-muted">No active draws found.</div></div>';
+      return;
+    }
+    active.forEach(d => {
+      const required = d.required_slots || Math.ceil(d.market_price / d.ticket_price);
+      const sold = d.slots_sold || 0;
+      const remaining = Math.max(required - sold, 0);
+      const progress = Math.min(100, Math.round((sold/required)*100));
+      const col = document.createElement('div');
+      col.className = 'col-sm-6 col-lg-4';
+      col.innerHTML = `
+        <div class="card card-theme h-100">
+          <div class="card-body d-flex flex-column">
+            <div class="d-flex gap-3">
+              <div class="flex-shrink-0 product-image" style="width:96px;height:96px;border-radius:10px;background:#061224;display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--muted)">${escapeHtml(d.image || 'Item')}</div>
+              <div class="flex-grow-1">
+                <h6 class="mb-1">${escapeHtml(d.product)}</h6>
+                <div class="small small-muted">${escapeHtml(d.owner)} • Market ₦${numberWithCommas(d.market_price)}</div>
+                <div class="d-flex gap-2 align-items-center mt-2">
+                  <div class="ticket-price">₦${numberWithCommas(d.ticket_price)}</div>
+                  <div class="odds-badge">Odds: ${calcOdds(required, sold)}</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-3">
+              <div class="progress" style="height:12px;border-radius:12px;background:rgba(255,255,255,0.03)">
+                <div class="progress-bar" role="progressbar" style="width:${progress}%" aria-valuenow="${progress}" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+              <div class="d-flex justify-content-between small small-muted mt-2">
+                <div>${sold}/${required} sold</div>
+                <div>₦${numberWithCommas(sold * d.ticket_price)}</div>
+              </div>
+            </div>
+
+            <div class="mt-3 d-flex align-items-center justify-content-between mt-auto">
+              <div class="fw-bold text-success" id="cd-${d.id}">--</div>
+              <div>
+                <button class="btn btn-sm btn-outline-secondary detail-btn me-1" data-id="${d.id}">Details</button>
+                <button class="btn btn-success btn-sm buy-btn" data-id="${d.id}" ${remaining===0? 'disabled':''}>Buy Ticket</button>
+              </div>
+            </div>
+
+            <div class="mt-3 d-flex flex-wrap" id="balls-${d.id}"></div>
+          </div>
+        </div>
+      `;
+      listingEl.appendChild(col);
+
+      // render balls preview (show last up to 6 sold numbers)
+      const ballsWrap = col.querySelector(`#balls-${d.id}`);
+      const startBall = Math.max(1, d.slots_sold - 5);
+      for(let i = startBall; i <= d.slots_sold; i++){
+        const ball = document.createElement('div');
+        ball.className = 'lottery-ball';
+        ball.textContent = i;
+        ballsWrap.appendChild(ball);
+      }
+
+      // start countdown
+      startCountdown(d.id, d.end_time);
+    });
+  }
+
+  function calcOdds(required, sold){
+    const remaining = Math.max(required - sold, 0);
+    if(remaining === 0) return 'Closed';
+    if(remaining <= 5) return 'Hot — close!';
+    return `1 in ${remaining}`;
+  }
+
+  function renderWinners(){
+    winnersGrid.innerHTML = '';
+    if(!state.winners || state.winners.length === 0){
+      winnersGrid.innerHTML = '<div class="col-12"><div class="p-3 small small-muted">No winners yet.</div></div>';
+      return;
+    }
+    state.winners.slice().reverse().forEach(w => {
+      const col = document.createElement('div');
+      col.className = 'col-sm-6 col-lg-4';
+      if(!w.winner_name){
         col.innerHTML = `
           <div class="card card-theme h-100">
-            <div class="card-body d-flex flex-column">
-              <div class="d-flex gap-3">
-                <div class="flex-shrink-0 product-image" style="width:96px;height:96px;border-radius:10px;background:#061224;display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--muted)">${escapeHtml(d.image || 'Item')}</div>
-                <div class="flex-grow-1">
-                  <h6 class="mb-1">${escapeHtml(d.product)}</h6>
-                  <div class="small small-muted">${escapeHtml(d.owner)} • Market ₦${numberWithCommas(d.market_price)}</div>
-                  <div class="d-flex gap-2 align-items-center mt-2">
-                    <div class="ticket-price">₦${numberWithCommas(d.ticket_price)}</div>
-                    <div class="odds-badge">Odds: ${calcOdds(required, sold)}</div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="mt-3">
-                <div class="progress" style="height:12px;border-radius:12px;background:rgba(255,255,255,0.03)">
-                  <div class="progress-bar" role="progressbar" style="width:${progress}%" aria-valuenow="${progress}" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <div class="d-flex justify-content-between small small-muted mt-2">
-                  <div>${sold}/${required} sold</div>
-                  <div>₦${numberWithCommas(sold * d.ticket_price)}</div>
-                </div>
-              </div>
-
-              <div class="mt-3 d-flex align-items-center justify-content-between mt-auto">
-                <div class="fw-bold text-warning" id="cd-${d.id}">--</div>
-                <div>
-                  <button class="btn btn-sm btn-outline-light detail-btn me-1" data-id="${d.id}">Details</button>
-                  <button class="btn btn-warning btn-sm buy-btn" data-id="${d.id}" ${remaining===0? 'disabled':''}>Buy Ticket</button>
-                </div>
-              </div>
-
-              <div class="mt-3 d-flex flex-wrap" id="balls-${d.id}"></div>
+            <div class="card-body">
+              <h6>${escapeHtml(w.product)}</h6>
+              <div class="small small-muted">Owner: ${escapeHtml(w.owner)}</div>
+              <div class="mt-2 text-danger">❌ No winner — Only ${w.winning_ticket} slots sold</div>
             </div>
           </div>
         `;
-        listingEl.appendChild(col);
-
-        // render balls preview (show last up to 6 sold numbers)
-        const ballsWrap = col.querySelector(`#balls-${d.id}`);
-        const startBall = Math.max(1, d.slots_sold - 5);
-        for(let i = startBall; i <= d.slots_sold; i++){
-          const ball = document.createElement('div');
-          ball.className = 'lottery-ball';
-          ball.textContent = i;
-          ballsWrap.appendChild(ball);
-        }
-
-        // start countdown
-        startCountdown(d.id, d.end_time);
-      });
-    }
-
-    function calcOdds(required, sold){
-      const remaining = Math.max(required - sold, 0);
-      if(remaining === 0) return 'Closed';
-      if(remaining <= 5) return 'Hot — close!';
-      return `1 in ${remaining}`;
-    }
-
-    function renderWinners(){
-      winnersGrid.innerHTML = '';
-      if(!state.winners || state.winners.length === 0){
-        winnersGrid.innerHTML = '<div class="col-12"><div class="p-3 small small-muted">No winners yet.</div></div>';
-        return;
-      }
-      state.winners.slice().reverse().forEach(w => {
-        const col = document.createElement('div');
-        col.className = 'col-sm-6 col-lg-4';
-        if(!w.winner_name){
-          col.innerHTML = `
-            <div class="card card-theme h-100">
-              <div class="card-body">
-                <h6>${escapeHtml(w.product)}</h6>
-                <div class="small small-muted">Owner: ${escapeHtml(w.owner)}</div>
-                <div class="mt-2 text-danger">❌ No winner — Only ${w.winning_ticket} slots sold</div>
-              </div>
-            </div>
-          `;
-        } else {
-          const firstName = String(w.winner_name).split(' ')[0];
-          col.innerHTML = `
-            <div class="card card-theme h-100">
-              <div class="card-body">
-                <div class="d-flex gap-3">
-                  <div style="width:96px;height:96px;border-radius:10px;background:#061224;display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--muted)">${escapeHtml(w.product)}</div>
-                  <div>
-                    <h6>${escapeHtml(w.product)}</h6>
-                    <div class="small small-muted">Winner: ${escapeHtml(firstName)} • Ticket #${w.winning_ticket}</div>
-                    <div class="small small-muted mt-1">Owner: ${escapeHtml(w.owner)}</div>
-                  </div>
+      } else {
+        const firstName = String(w.winner_name).split(' ')[0];
+        col.innerHTML = `
+          <div class="card card-theme h-100">
+            <div class="card-body">
+              <div class="d-flex gap-3">
+                <div style="width:96px;height:96px;border-radius:10px;background:#061224;display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--muted)">${escapeHtml(w.product)}</div>
+                <div>
+                  <h6>${escapeHtml(w.product)}</h6>
+                  <div class="small small-muted">Winner: ${escapeHtml(firstName)} • Ticket #${w.winning_ticket}</div>
+                  <div class="small small-muted mt-1">Owner: ${escapeHtml(w.owner)}</div>
                 </div>
               </div>
             </div>
-          `;
-        }
-        winnersGrid.appendChild(col);
-      });
-    }
-
-    function renderHistory(){
-      historyEl.innerHTML = '';
-      if(!state.tickets || state.tickets.length === 0){
-        historyEl.innerHTML = '<div class="p-3 small small-muted">No ticket purchases yet.</div>';
-        return;
+          </div>
+        `;
       }
-      // show most recent first
-      state.tickets.slice().reverse().forEach(t => {
-        const item = document.createElement('div');
-        item.className = 'list-group-item d-flex justify-content-between align-items-center';
-        item.innerHTML = `<div><div class="fw-bold">${escapeHtml(t.product)}</div><div class="small small-muted">Ticket #${t.slot_number} • Purchased ${new Date(t.purchase_time).toLocaleString()}</div></div><div class="badge bg-secondary">Draw #${t.draw_id}</div>`;
-        historyEl.appendChild(item);
-      });
-    }
-
-    // buy flow
-    let activeDrawId = null;
-    let qty = 1;
-
-    document.addEventListener('click', e => {
-      if(e.target.matches('.buy-btn')){
-        const id = Number(e.target.dataset.id);
-        openBuyModal(id);
-      }
-      if(e.target.matches('.detail-btn')){
-        const id = Number(e.target.dataset.id);
-        openDetailsModal(id);
-      }
+      winnersGrid.appendChild(col);
     });
+  }
 
-    document.getElementById('qty-inc').addEventListener('click', () => { setQty(qty + 1); });
-    document.getElementById('qty-dec').addEventListener('click', () => { setQty(Math.max(1, qty - 1)); });
-    document.getElementById('pay-btn').addEventListener('click', () => simulatePayment(activeDrawId, qty));
-
-    // details modal -> buy button
-    document.getElementById('details-buy-btn').addEventListener('click', () => {
-      if(currentDetailsId) openBuyModal(currentDetailsId);
+  function renderHistory(){
+    historyEl.innerHTML = '';
+    if(!state.tickets || state.tickets.length === 0){
+      historyEl.innerHTML = '<div class="p-3 small small-muted">No ticket purchases yet.</div>';
+      return;
+    }
+    state.tickets.slice().reverse().forEach(t => {
+      const item = document.createElement('div');
+      item.className = 'list-group-item d-flex justify-content-between align-items-center';
+      item.innerHTML = `<div><div class="fw-bold">${escapeHtml(t.product)}</div><div class="small small-muted">Ticket #${t.slot_number} • Purchased ${new Date(t.purchase_time).toLocaleString()}</div></div><div class="badge bg-secondary">Draw #${t.draw_id}</div>`;
+      historyEl.appendChild(item);
     });
+  }
 
-    let currentDetailsId = null;
-    function openDetailsModal(id){
-      currentDetailsId = id;
-      const d = state.draws.find(x => x.id === id);
-      if(!d) return;
-      document.getElementById('details-title').textContent = `Details — ${d.product}`;
-      const req = d.required_slots || Math.ceil(d.market_price / d.ticket_price);
-      const body = `
-        <div class="small small-muted mb-2">Owner: ${escapeHtml(d.owner)}</div>
-        <div class="d-flex justify-content-between mb-2">
-          <div><div class="small small-muted">Ticket Price</div><div class="fw-bold text-warning">₦${numberWithCommas(d.ticket_price)}</div></div>
-          <div><div class="small small-muted">Slots</div><div class="fw-bold">${Math.max(req - d.slots_sold,0)} / ${req}</div></div>
-        </div>
-        <div class="small small-muted">Market value: ₦${numberWithCommas(d.market_price)}</div>
-      `;
-      document.getElementById('details-body').innerHTML = body;
+  // buy flow (kept)
+  let activeDrawId = null;
+  let qty = 1;
 
-      // balls
-      const ballsWrap = document.getElementById('details-balls');
-      ballsWrap.innerHTML = '';
-      for(let i=1;i<=d.slots_sold;i++){
-        const b = document.createElement('div'); b.className='lottery-ball'; b.textContent = i; ballsWrap.appendChild(b);
-      }
-      bsDetailsModal.show();
+  document.addEventListener('click', e => {
+    if(e.target.matches('.buy-btn')){
+      const id = Number(e.target.dataset.id);
+      openBuyModal(id);
     }
-
-    function openBuyModal(id){
-      activeDrawId = id;
-      qty = 1; setQty(1);
-      const d = state.draws.find(x => x.id === id);
-      document.getElementById('modal-title').textContent = `Buy Tickets — ${d.product}`;
-      document.getElementById('modal-product').innerHTML = `<div class="small small-muted">Owner: ${escapeHtml(d.owner)}</div>`;
-      document.getElementById('modal-price').textContent = `₦${numberWithCommas(d.ticket_price)}`;
-      const req = d.required_slots || Math.ceil(d.market_price / d.ticket_price);
-      document.getElementById('modal-remaining').textContent = `${Math.max(req - d.slots_sold,0)} / ${req}`;
-      updateTotal();
-      bsBuyModal.show();
+    if(e.target.matches('.detail-btn')){
+      const id = Number(e.target.dataset.id);
+      openDetailsModal(id);
     }
+  });
 
-    function setQty(v){
-      qty = v;
-      document.getElementById('qty').textContent = qty;
-      updateTotal();
+  // qty buttons (exist)
+  document.getElementById('qty-inc').addEventListener('click', () => { setQty(qty + 1); });
+  document.getElementById('qty-dec').addEventListener('click', () => { setQty(Math.max(1, qty - 1)); });
+  document.getElementById('pay-btn').addEventListener('click', () => simulatePayment(activeDrawId, qty));
+
+  // details buy
+  document.getElementById('details-buy-btn').addEventListener('click', () => {
+    if(currentDetailsId) openBuyModal(currentDetailsId);
+  });
+
+  let currentDetailsId = null;
+  function openDetailsModal(id){
+    currentDetailsId = id;
+    const d = state.draws.find(x => x.id === id);
+    if(!d) return;
+    document.getElementById('details-title').textContent = `Details — ${d.product}`;
+    const req = d.required_slots || Math.ceil(d.market_price / d.ticket_price);
+    const body = `
+      <div class="small small-muted mb-2">Owner: ${escapeHtml(d.owner)}</div>
+      <div class="d-flex justify-content-between mb-2">
+        <div><div class="small small-muted">Ticket Price</div><div class="fw-bold text-success">₦${numberWithCommas(d.ticket_price)}</div></div>
+        <div><div class="small small-muted">Slots</div><div class="fw-bold">${Math.max(req - d.slots_sold,0)} / ${req}</div></div>
+      </div>
+      <div class="small small-muted">Market value: ₦${numberWithCommas(d.market_price)}</div>
+    `;
+    document.getElementById('details-body').innerHTML = body;
+
+    const ballsWrap = document.getElementById('details-balls');
+    ballsWrap.innerHTML = '';
+    for(let i=1;i<=d.slots_sold;i++){
+      const b = document.createElement('div'); b.className='lottery-ball'; b.textContent = i; ballsWrap.appendChild(b);
     }
-    function updateTotal(){
-      if(!activeDrawId) return;
-      const d = state.draws.find(x => x.id === activeDrawId);
-      document.getElementById('modal-total').textContent = `₦${numberWithCommas(d.ticket_price * qty)}`;
+    bsDetailsModal.show();
+  }
+
+  function openBuyModal(id){
+    activeDrawId = id;
+    qty = 1; setQty(1);
+    const d = state.draws.find(x => x.id === id);
+    document.getElementById('modal-title').textContent = `Buy Tickets — ${d.product}`;
+    document.getElementById('modal-product').innerHTML = `<div class="small small-muted">Owner: ${escapeHtml(d.owner)}</div>`;
+    document.getElementById('modal-price').textContent = `₦${numberWithCommas(d.ticket_price)}`;
+    const req = d.required_slots || Math.ceil(d.market_price / d.ticket_price);
+    document.getElementById('modal-remaining').textContent = `${Math.max(req - d.slots_sold,0)} / ${req}`;
+    updateTotal();
+    bsBuyModal.show();
+  }
+
+  function setQty(v){
+    qty = v;
+    document.getElementById('qty').textContent = qty;
+    updateTotal();
+  }
+  function updateTotal(){
+    if(!activeDrawId) return;
+    const d = state.draws.find(x => x.id === activeDrawId);
+    document.getElementById('modal-total').textContent = `₦${numberWithCommas(d.ticket_price * qty)}`;
+  }
+
+  function simulatePayment(drawId, amount){
+    const d = state.draws.find(x => x.id === drawId);
+    if(!d) { alert('Invalid draw'); return; }
+    const required = d.required_slots || Math.ceil(d.market_price / d.ticket_price);
+    const remaining = Math.max(required - d.slots_sold, 0);
+    if(amount > remaining){ alert('Cannot buy more tickets than remaining slots'); return; }
+
+    const assigned = [];
+    for(let i=0;i<amount;i++){
+      const slotNumber = d.slots_sold + 1;
+      const ticket = { id: state.tickets.length + 1, draw_id: d.id, user_id: 'guest', slot_number: slotNumber, purchase_time: Date.now(), product: d.product };
+      state.tickets.push(ticket);
+      d.slots_sold += 1;
+      assigned.push(slotNumber);
     }
-
-    function simulatePayment(drawId, amount){
-      const d = state.draws.find(x => x.id === drawId);
-      if(!d) { alert('Invalid draw'); return; }
-      const required = d.required_slots || Math.ceil(d.market_price / d.ticket_price);
-      const remaining = Math.max(required - d.slots_sold, 0);
-      if(amount > remaining){ alert('Cannot buy more tickets than remaining slots'); return; }
-
-      const assigned = [];
-      for(let i=0;i<amount;i++){
-        const slotNumber = d.slots_sold + 1;
-        const ticket = { id: state.tickets.length + 1, draw_id: d.id, user_id: 'guest', slot_number: slotNumber, purchase_time: Date.now(), product: d.product };
-        state.tickets.push(ticket);
-        d.slots_sold += 1;
-        assigned.push(slotNumber);
-      }
-      saveState();
-      render();
-      bsBuyModal.hide();
-
-      alert(`Payment successful! Tickets assigned: ${assigned.join(', ')}`);
-
-      if(d.slots_sold >= required){
-        declareWinner(d, 'Guest User', assigned[assigned.length - 1]);
-      }
-    }
-
-    function declareWinner(draw, winnerName, winningTicketNumber){
-      const w = { draw_id: draw.id, product: draw.product, owner: draw.owner, winner_name: winnerName, winning_ticket: winningTicketNumber, time: Date.now(), status: 'won' };
-      state.winners.push(w);
-      draw.status = 'completed';
-      saveState();
-      render();
-      showWinnerBanner(w);
-    }
-
-    function declareWinnerIfReady(d){
-      const required = d.required_slots || Math.ceil(d.market_price / d.ticket_price);
-      if(d.slots_sold >= required){
-        declareWinner(d, 'Guest User', d.slots_sold);
-      }
-    }
-
-    // show confetti + alert
-    function showWinnerBanner(w){
-      fireConfetti();
-      setTimeout(()=> {
-        alert(`🎉 Winner announced!\nProduct: ${w.product}\nWinner: ${w.winner_name}\nTicket #: ${w.winning_ticket}`);
-      }, 300);
-    }
-
-    function fireConfetti(){
-      const conf = document.getElementById('confetti'); conf.innerHTML=''; conf.style.display='block';
-      const colors = ['#F97316','#FBBF24','#06B6D4','#10B981','#EF4444'];
-      for(let i=0;i<80;i++){
-        const s = document.createElement('span');
-        s.style.position='absolute';
-        s.style.left = Math.random()*100 + '%';
-        s.style.top = Math.random()*100 + '%';
-        s.style.width='10px';
-        s.style.height='16px';
-        s.style.opacity='0.95';
-        s.style.background = colors[Math.floor(Math.random()*colors.length)];
-        s.style.transform = `rotate(${Math.random()*360}deg)`;
-        conf.appendChild(s);
-      }
-      setTimeout(()=>{ conf.style.display='none'; conf.innerHTML=''; }, 3500);
-    }
-
-    // load + initial render
-    document.getElementById('category').addEventListener('change', render);
-    document.getElementById('registerSubmit').addEventListener('click', ()=> { alert('Register clicked — integrate backend'); document.getElementById('registerModal').querySelector('[data-bs-dismiss]')?.click(); });
-    document.getElementById('loginSubmit').addEventListener('click', ()=> { alert('Login clicked — integrate backend'); document.getElementById('loginModal').querySelector('[data-bs-dismiss]')?.click(); });
-
+    saveState();
     render();
+    bsBuyModal.hide();
 
-    // autosave / demo cron: check expired draws every 5s
-    setInterval(()=> {
-      const now = Date.now();
-      state.draws.filter(d => d.status === 'active' && d.end_time <= now).forEach(d => handleExpiry(d.id));
-    }, 5000);
+    alert(`Payment successful! Tickets assigned: ${assigned.join(', ')}`);
 
-  </script>
+    if(d.slots_sold >= required){
+      declareWinner(d, 'Guest User', assigned[assigned.length - 1]);
+    }
+  }
+
+  function declareWinner(draw, winnerName, winningTicketNumber){
+    const w = { draw_id: draw.id, product: draw.product, owner: draw.owner, winner_name: winnerName, winning_ticket: winningTicketNumber, time: Date.now(), status: 'won' };
+    state.winners.push(w);
+    draw.status = 'completed';
+    saveState();
+    render();
+    showWinnerBanner(w);
+  }
+
+  function declareWinnerIfReady(d){
+    const required = d.required_slots || Math.ceil(d.market_price / d.ticket_price);
+    if(d.slots_sold >= required){
+      declareWinner(d, 'Guest User', d.slots_sold);
+    }
+  }
+
+  // show confetti + alert
+  function showWinnerBanner(w){
+    fireConfetti();
+    setTimeout(()=> {
+      alert(`🎉 Winner announced!\nProduct: ${w.product}\nWinner: ${w.winner_name}\nTicket #: ${w.winning_ticket}`);
+    }, 300);
+  }
+
+  function fireConfetti(){
+    const conf = document.getElementById('confetti'); conf.innerHTML=''; conf.style.display='block';
+    const colors = ['#F97316','forestgreen','#06B6D4','#10B981','#EF4444'];
+    for(let i=0;i<80;i++){
+      const s = document.createElement('span');
+      s.style.position='absolute';
+      s.style.left = Math.random()*100 + '%';
+      s.style.top = Math.random()*100 + '%';
+      s.style.width='10px';
+      s.style.height='16px';
+      s.style.opacity='0.95';
+      s.style.background = colors[Math.floor(Math.random()*colors.length)];
+      s.style.transform = `rotate(${Math.random()*360}deg)`;
+      conf.appendChild(s);
+    }
+    setTimeout(()=>{ conf.style.display='none'; conf.innerHTML=''; }, 3500);
+  }
+
+  // wire up register/login demo buttons (kept behavior)
+  document.getElementById('registerSubmit').addEventListener('click', ()=> { alert('Register clicked — integrate backend'); document.getElementById('registerModal').querySelector('[data-bs-dismiss]')?.click(); });
+  document.getElementById('loginSubmit').addEventListener('click', ()=> { alert('Login clicked — integrate backend'); document.getElementById('loginModal').querySelector('[data-bs-dismiss]')?.click(); });
+
+  // initialize UI & cron
+  document.getElementById('category').addEventListener('change', render);
+  render();
+  setInterval(()=> {
+    const now = Date.now();
+    state.draws.filter(d => d.status === 'active' && d.end_time <= now).forEach(d => handleExpiry(d.id));
+  }, 5000);
+<!-- Live Draw Animation -->
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const draws = [
+      { id: "winner-food", names: ["Chika", "David", "Ada", "Ben", "Mary"] },
+      { id: "winner-electronics", names: ["John", "Gloria", "Tunde", "Kemi", "Victor"] }
+    ];
+
+    draws.forEach(draw => {
+      const winnerEl = document.getElementById(draw.id);
+      let index = 0;
+
+      setInterval(() => {
+        winnerEl.textContent = "Drawing: " + draw.names[index] + "...";
+        winnerEl.classList.add("animate__animated", "animate__pulse");
+
+        setTimeout(() => {
+          winnerEl.classList.remove("animate__pulse");
+          if (Math.random() > 0.7) {
+            winnerEl.textContent = "🏆 Winner: " + draw.names[index];
+            winnerEl.classList.add("animate__flash");
+          }
+          index = (index + 1) % draw.names.length;
+        }, 1000);
+      }, 3000);
+    });
+  });
+</script>
 </body>
 </html>

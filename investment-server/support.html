@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>042 Raffle Market Investor | Dashboard</title>
+
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Official investor dashboard for 042 Raffle Market — manage investments, monitor ROI, and grow your raffle funding portfolio." />
+  <meta name="keywords" content="042 Raffle Market, Investment, ROI, Raffle Funding, BenCodes Innovation Hub" />
+  <meta name="author" content="BenCodes Innovation Hub LTD" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="img/favicon.png" type="image/png" />
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+
+  <!-- Toastr Notifications -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+
+  <!-- Chart.js for ROI Chart -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+  <!-- Custom CSS -->
+  <link href="css/style.css" rel="stylesheet" />
+
+  <!-- Theme Color for Mobile -->
+  <meta name="theme-color" content="forestgreen" />
+
+</head>
+<style>
+     .page-header {
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .page-header h2 {
+      font-weight: 700;
+      color: forestgreen;
+    }
+
+    .card {
+      background: rgba(228, 227, 227, 0.95);
+      border: none;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(2, 160, 54, 0.2);
+      transition: 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+    }
+
+    .form-control, .form-select {
+      background: #dbd9d9;
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 10px 15px;
+    }
+
+    .form-control:focus, .form-select:focus {
+      box-shadow: 0 0 0 0.2rem rgba(13,110,253,0.25);
+    }
+
+    .btn-send {
+      background: forestgreen;
+      border: none;
+      border-radius: 12px;
+      padding: 12px 20px;
+      color: #fff;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+
+    .btn-send:hover {
+      background: #0b5ed7;
+      transform: scale(1.03);
+    }
+
+    /* FAQ Section */
+    .faq-section {
+      margin-top: 60px;
+    }
+
+    .accordion-item {
+      background: #f0efef;
+      border: none;
+      margin-bottom: 10px;
+      border-radius: 15px;
+      overflow: hidden;
+    }
+
+    .accordion-button {
+      background: #0ca332;
+      color: #fff;
+      font-weight: 500;
+      border: none;
+    }
+
+    .accordion-button:focus {
+      box-shadow: none;
+    }
+
+    .accordion-button::after {
+      filter: invert(1);
+    }
+
+    .accordion-body {
+      background: #1f1f1f;
+      color: #ccc;
+      border-top: 1px solid #333;
+    }
+
+    .contact-info {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      color: #ccc;
+    }
+
+    .contact-info i {
+      font-size: 1.2rem;
+      color: forestgreen;
+    }
+</style>
+<body>
+   <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <h4>042 <span class="text-white">Investor</span></h4>
+    </div>
+     <ul class="sidebar-menu">
+      <li><a href="index.html" class="active"><i class="bi bi-house-door"></i> Dashboard</a></li>
+      <li><a href="plans.html"><i class="bi bi-graph-up-arrow"></i> Investment Plans</a></li>
+      <li><a href="wallet.html"><i class="bi bi-wallet2"></i> Wallet</a></li>
+      <li><a href="transaction.html"><i class="bi bi-cash-coin"></i> Transactions</a></li>
+      <li><a href="roi_history.html"><i class="bi bi-clock-history"></i> ROI History</a></li>
+      <li><a href="support.html"><i class="bi bi-envelope"></i> Support</a></li>
+      <li><a href="settings.html"><i class="bi bi-gear"></i> Settings</a></li>
+    </ul>
+  </aside>
+
+  
+  <!-- Main Content -->
+  <main class="main-content">
+ 
+    <!-- ADVANCED RESPONSIVE NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top py-3 px-3 px-md-4" id="mainNavbar">
+  <!-- SIDEBAR TOGGLE (Visible only on mobile) -->
+  <button class="btn btn-outline-dark me-2 d-lg-none" id="sidebarToggle">
+    <i class="bi bi-list fs-5"></i>
+  </button>
+
+  <!-- LOGO + TITLE -->
+  <div class="d-flex align-items-center">
+    <h6 class="fw-bold mb-0 d-lg-none">042 Investor</h6> <!-- shorter text for mobile -->
+    <h5 class="fw-bold mb-0 d-none d-lg-block">042 Raffle Market Investor</h5>
+  </div>
+
+  <!-- NAV ACTIONS -->
+  <div class="ms-auto d-flex align-items-center gap-2 gap-md-3">
+
+    <!-- USER GREETING (Hidden on mobile) -->
+    <span class="d-none d-md-inline text-muted">Welcome, <strong>John Doe</strong></span>
+
+    <!-- THEME TOGGLE (Hidden on very small devices) -->
+    <button class="btn btn-light border d-none d-sm-inline" id="themeToggle" title="Toggle Theme">
+      <i class="bi bi-moon"></i>
+    </button>
+
+    <!-- NOTIFICATION DROPDOWN -->
+    <div class="dropdown">
+      <button class="btn btn-light position-relative border-0" id="notifDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="bi bi-bell fs-5"></i>
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.6rem;">3</span>
+      </button>
+      <ul class="dropdown-menu dropdown-menu-end shadow border-0 rounded-4 p-0" aria-labelledby="notifDropdown" style="width: 280px;">
+        <li class="dropdown-header text-center fw-semibold py-2 border-bottom bg-light">Notifications</li>
+        <li><a class="dropdown-item py-2 small" href="#"><i class="bi bi-cash-coin text-success me-2"></i>ROI payout processed successfully</a></li>
+        <li><a class="dropdown-item py-2 small" href="#"><i class="bi bi-graph-up-arrow text-primary me-2"></i>New investment plan added</a></li>
+        <li><a class="dropdown-item py-2 small" href="#"><i class="bi bi-info-circle text-warning me-2"></i>System maintenance scheduled</a></li>
+        <li><hr class="dropdown-divider my-1"></li>
+        <li><a class="dropdown-item text-center small text-primary fw-semibold" href="#">View all</a></li>
+      </ul>
+    </div>
+
+    <!-- PROFILE DROPDOWN -->
+    <div class="dropdown">
+      <a href="#" class="d-flex align-items-center text-decoration-none" data-bs-toggle="dropdown" aria-expanded="false">
+        <img src="img/profile.jpg" class="rounded-circle me-1 me-md-2" width="36" height="36" alt="Profile" />
+        <i class="bi bi-chevron-down text-dark fs-6 bg-success py-1 px-2 rounded-pill d-none d-sm-inline"></i>
+      </a>
+      <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 rounded-4">
+        <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i> View Profile</a></li>
+        <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i> Settings</a></li>
+        <li><hr class="dropdown-divider" /></li>
+        <li><a class="dropdown-item text-danger" href="#"><i class="bi bi-box-arrow-right me-2"></i> Logout</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <!-- Page Content -->
+    <div class="container-fluid p-4">
+
+<div class="container py-5">
+    <div class="page-header mb-5">
+      <h2>Support & Help Center</h2>
+      <p class="text-secondary">We’re here to assist you with your investments</p>
+    </div>
+
+    <div class="row g-4">
+      <!-- Contact Admin -->
+      <div class="col-lg-6">
+        <div class="card p-4">
+          <h5 class="mb-3"><i class="fa-solid fa-envelope me-2 text-primary"></i>Contact Admin</h5>
+          <p class="text-secondary mb-4">Need assistance? Send us a message and our support team will respond promptly.</p>
+          
+          <form id="supportForm">
+            <div class="mb-3">
+              <label class="form-label">Full Name</label>
+              <input type="text" class="form-control" placeholder="Enter your full name" required>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Email Address</label>
+              <input type="email" class="form-control" placeholder="example@email.com" required>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Subject</label>
+              <input type="text" class="form-control" placeholder="Subject of your message" required>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Message</label>
+              <textarea class="form-control" rows="4" placeholder="Describe your issue..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn-send w-100"><i class="fa-solid fa-paper-plane me-2"></i>Send Message</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- FAQ Section -->
+      <div class="col-lg-6 faq-section">
+        <div class="card p-4">
+          <h5 class="mb-3"><i class="fa-solid fa-circle-question me-2 text-primary"></i>Frequently Asked Questions</h5>
+          <div class="accordion" id="faqAccordion">
+
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                  How long before my ROI is credited?
+                </button>
+              </h2>
+              <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  Each investment plan has a specific duration. Once that period ends, your capital plus ROI (or ROI only, depending on your plan) will be credited automatically to your wallet.
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                  Can I withdraw my investment before maturity?
+                </button>
+              </h2>
+              <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  No. To maintain system integrity, all invested capital remains locked until the investment cycle completes.
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                  How can I contact support directly?
+                </button>
+              </h2>
+              <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  You can use the form on this page to message the admin or contact us via email: <strong>support@042rafflemarket.com</strong>.
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                  What should I do if my transaction fails?
+                </button>
+              </h2>
+              <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  If a transaction fails, don’t worry. The system will retry automatically or refund your wallet within 24 hours. You can also contact support for manual verification.
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
+                  How secure is my investment data?
+                </button>
+              </h2>
+              <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  All user data and transactions are encrypted with bank-grade security. We never share your data with third parties.
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact Info Section -->
+    <div class="text-center mt-5">
+      <div class="contact-info justify-content-center">
+        <i class="fa-solid fa-headset"></i>
+        <div>
+          <h6 class="text-success mb-1">Customer Support:</h6>
+          <p>Email: support@042rafflemarket.com | WhatsApp: +234 900 000 0000</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+ 
+  
+    </div>
+
+        <!-- FOOTER -->
+      <footer class="text-center mt-5 py-4 border-top">
+        <p class="mb-0 small text-muted">&copy; 2025 042 Raffle Market | Powered by <strong>BenCodes Innovation Hub LTD</strong></p>
+      </footer>
+    </div>
+  </main>
+
+
+  <script>
+    // Simulated form submission (replace later with backend integration)
+    document.getElementById("supportForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      alert("✅ Your message has been sent successfully. The admin will respond shortly!");
+      this.reset();
+    });
+  </script>
+      
+
+  <!-- JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="Js/main.js"></script>
+</body>
+</html>

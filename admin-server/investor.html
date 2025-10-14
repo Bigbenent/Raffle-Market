@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Dashboard | Overview</title>
+
+  <!-- Bootstrap & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+
+  <!-- Custom Styles -->
+  <link href="css/style.css" rel="stylesheet" />
+</head>
+
+
+
+<body>
+    <!-- Sidebar -->
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-header">
+      <h4 class="fw-bold text-success mb-0">Admin<span class="text-dark">Panel</span></h4>
+      <button class="btn btn-sm btn-outline-secondary d-lg-none" id="sidebarToggle"><i class="bi bi-x-lg"></i></button>
+    </div>
+
+    <ul class="sidebar-menu list-unstyled mt-4">
+      <li><a href="overview.html" class="active"><i class="bi bi-house-door me-2"></i> Dashboard</a></li>
+      <li><a href="#"><i class="bi bi-people me-2"></i> Users</a></li>
+     <li class="nav-item dropdown">
+  <a href="#" class="nav-link d-flex align-items-center justify-content-between" data-bs-toggle="collapse" data-bs-target="#drawDropdown" aria-expanded="false">
+    <span><i class="bi bi-ticket-detailed me-2"></i> Draws</span>
+    <i class="bi bi-chevron-down small"></i>
+  </a>
+  <ul class="collapse list-unstyled ms-4 mt-1" id="drawDropdown">
+    <li><a href="add-draws.html" class="nav-link"><i class="bi bi-plus-circle me-2"></i> Add Draw</a></li>
+    <li><a href="manage-draws.html" class="nav-link"><i class="bi bi-gear me-2"></i> Manage Draws</a></li>
+  </ul>
+</li>
+
+      <li><a href="transactions.html"><i class="bi bi-wallet2 me-2"></i> Transactions</a></li>
+      <li><a href="settings.html"><i class="bi bi-envelope me-2"></i> Support</a></li>
+      <li><a href="settings.html"><i class="bi bi-gear me-2"></i> Settings</a></li>
+    </ul>
+  </aside>
+
+  
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top py-3 px-4">
+      <button class="btn btn-outline-success me-3 d-lg-none" id="sidebarToggleMobile"><i class="bi bi-list"></i></button>
+      <h5 class="fw-bold text-dark mb-0">Dashboard Overview</h5>
+      <div class="ms-auto d-flex align-items-center gap-3">
+        <button class="btn btn-light" id="themeToggle"><i class="bi bi-moon"></i></button>
+        <div class="dropdown">
+          <a href="#" class="d-flex align-items-center text-decoration-none" data-bs-toggle="dropdown">
+            <img src="../img/logo.png" class="rounded-circle me-2" width="40" height="40" alt="Admin">
+            <span class="fw-semibold">Admin</span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+            <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Profile</a></li>
+            <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>Settings</a></li>
+            <li><hr class="dropdown-divider" /></li>
+            <li><a class="dropdown-item text-danger" href="#"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+
+    <!-- Page Content -->
+    <div class="container-fluid p-4">
+  
+<!-- ========== START: Admin Dashboard MAIN CONTENT (Drop this into your page) ========== -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<section id="admin-overview" class="container-fluid py-4">
+  <!-- Top summary row -->
+  <div class="row g-3" id="metricRow" aria-label="Key performance metrics">
+    <!-- Card template (duplicated) -->
+    <div class="col-6 col-md-4 col-xl-2">
+      <div class="fin-card" data-key="totalInvestors" tabindex="0">
+        <div class="fin-card-head">
+          <div class="fin-card-title">Total Investors</div>
+          <button class="btn btn-sm btn-ghost" data-action="export" title="Export investors list">Export</button>
+        </div>
+        <div class="fin-card-body">
+          <div class="fin-amount" id="totalInvestorsValue">0</div>
+          <div class="fin-meta">
+            <span class="fin-delta" id="totalInvestorsDelta">+0.0%</span>
+            <small class="fin-period"> vs 30d</small>
+          </div>
+        </div>
+        <div class="fin-sparkline">
+          <canvas id="spark-totalInvestors" height="40" aria-hidden="true"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6 col-md-4 col-xl-2">
+      <div class="fin-card" data-key="activeInvestments" tabindex="0">
+        <div class="fin-card-head">
+          <div class="fin-card-title">Active Investments</div>
+          <button class="btn btn-sm btn-ghost" data-action="view">View</button>
+        </div>
+        <div class="fin-card-body">
+          <div class="fin-amount" id="activeInvestmentsValue">0</div>
+        
+          <div class="fin-meta">
+            <span class="fin-delta" id="activeInvestmentsDelta">+0.0%</span>
+            <small class="fin-period"> vs 30d</small>
+          </div>
+        </div>
+        <div class="fin-sparkline"><canvas id="spark-activeInvestments" height="40" aria-hidden="true"></canvas></div>
+      </div>
+    </div>
+
+    <div class="col-6 col-md-4 col-xl-2">
+      <div class="fin-card" data-key="totalDeposits" tabindex="0">
+        <div class="fin-card-head">
+          <div class="fin-card-title">Total Deposits</div>
+          <button class="btn btn-sm btn-ghost" data-action="export">Export</button>
+        </div>
+        <div class="fin-card-body">
+          <div class="fin-amount" id="totalDepositsValue">₦0</div>
+          <div class="fin-meta">
+            <span class="fin-delta pos" id="totalDepositsDelta">+0.0%</span>
+            <small class="fin-period"> 30d</small>
+          </div>
+        </div>
+        <div class="fin-sparkline"><canvas id="spark-totalDeposits" height="40" aria-hidden="true"></canvas></div>
+      </div>
+    </div>
+
+    <div class="col-6 col-md-4 col-xl-2">
+      <div class="fin-card" data-key="totalWithdrawals" tabindex="0">
+        <div class="fin-card-head">
+          <div class="fin-card-title">Total Withdrawals</div>
+          <button class="btn btn-sm btn-ghost" data-action="review">Review</button>
+        </div>
+        <div class="fin-card-body">
+          <div class="fin-amount" id="totalWithdrawalsValue">₦0</div>
+          <div class="fin-meta">
+            <span class="fin-delta" id="totalWithdrawalsDelta">-0.0%</span>
+            <small class="fin-period"> 30d</small>
+          </div>
+        </div>
+        <div class="fin-sparkline"><canvas id="spark-totalWithdrawals" height="40" aria-hidden="true"></canvas></div>
+      </div>
+    </div>
+
+    <div class="col-6 col-md-4 col-xl-2">
+      <div class="fin-card" data-key="pendingROI" tabindex="0">
+        <div class="fin-card-head">
+          <div class="fin-card-title">Pending ROI Payouts</div>
+          <button class="btn btn-sm btn-ghost" data-action="process">Process</button>
+        </div>
+        <div class="fin-card-body">
+          <div class="fin-amount" id="pendingROIValue">₦0</div>
+          <div class="fin-meta">
+            <span class="fin-delta" id="pendingROIDelta">+0.0%</span>
+            <small class="fin-period"> due this week</small>
+          </div>
+        </div>
+        <div class="fin-sparkline"><canvas id="spark-pendingROI" height="40" aria-hidden="true"></canvas></div>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-6 col-xl-2">
+      <div class="fin-card" data-key="systemWallet" tabindex="0">
+        <div class="fin-card-head">
+          <div class="fin-card-title">System Wallet</div>
+          <button class="btn btn-sm btn-ghost" data-action="fund">Fund</button>
+        </div>
+        <div class="fin-card-body">
+          <div class="fin-amount" id="systemWalletValue">₦0</div>
+          <div class="fin-meta">
+            <span class="fin-delta pos" id="systemWalletDelta">+0.0%</span>
+            <small class="fin-period"> liquidity</small>
+          </div>
+        </div>
+        <div class="fin-sparkline"><canvas id="spark-systemWallet" height="40" aria-hidden="true"></canvas></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Charts row -->
+  <div class="row g-4 mt-3">
+    <div class="col-lg-7">
+      <div class=" chart-card card h-100 p-3">
+        <div class="d-flex align-items-center justify-content-between mb-2">
+          <h6 class="mb-0">Monthly Deposits vs Withdrawals</h6>
+          <small class="text-muted">Last 12 months</small>
+        </div>
+        <canvas id="chartDeposits" height="160" aria-label="Deposits vs Withdrawals chart"></canvas>
+      </div>
+    </div>
+
+    <div class="col-lg-5">
+      <div class="chart-card card h-100 p-3">
+        <div class="d-flex align-items-center justify-content-between mb-2">
+          <h6 class="mb-0">ROI Distribution by Plan</h6>
+          <small class="text-muted">Share of payouts</small>
+        </div>
+        <canvas id="chartROI" height="160" aria-label="ROI distribution chart"></canvas>
+      </div>
+    </div>
+
+    <div class="col-12">
+      <div class="chart-card card p-3">
+        <div class="d-flex align-items-center justify-content-between mb-2">
+          <h6 class="mb-0">New Investors Growth</h6>
+          <div>
+            <button class="btn btn-sm btn-outline-secondary" id="btnRange7">7d</button>
+            <button class="btn btn-sm btn-outline-secondary" id="btnRange30">30d</button>
+            <button class="btn btn-sm btn-outline-secondary active" id="btnRange90">90d</button>
+          </div>
+        </div>
+        <canvas id="chartInvestors" height="80" aria-label="New investors growth chart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent activity feed -->
+  <div class="row mt-3">
+    <div class="col-12">
+      <div class="chart-card card p-3">
+        <div class="d-flex align-items-center justify-content-between mb-2">
+          <h6 class="mb-0">Recent Activities</h6>
+          <small class="text-muted">Real-time feed</small>
+        </div>
+        <ul id="recentActivities" class="list-unstyled mb-0">
+          <!-- populated by JS -->
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer py-3 text-center border-top mt-auto">
+      <p class="mb-0 small text-muted">© 2025 AdminPanel. Built with ❤️ by BenCode Team</p>
+    </footer>
+  </main>
+
+<script>
+/* ------------- Demo JS: render numbers, sparklines, charts & activity feed ------------- */
+/* Replace demoData with real data from backend. Keep chart rendering logic. */
+
+const demoData = {
+  totalInvestors: {
+    value: 1204,
+    changePct: 4.2,
+    series: [20,22,25,30,35,40,46,52,60,70,80,90] // last 12 points
+  },
+  activeInvestments: {
+    value: 326, changePct: -2.1, series: [400,390,380,370,360,350,340,330,326,325,328,326]
+  },
+  totalDeposits: { value: 24500000, changePct: 8.6, series: [1.8,2.1,2.4,3,2.8,3.2,3.5,3.9,4.2,4.8,5,5.5] },
+  totalWithdrawals: { value: 18700000, changePct: -1.9, series: [1.5,1.6,1.8,1.9,2.0,2.1,2.3,2.4,2.5,2.6,2.7,2.9] },
+  pendingROI: { value: 1200000, changePct: 12.5, series: [0.8,0.9,1.0,1.2,1.1,1.0,1.0,1.1,1.2,1.15,1.18,1.2] },
+  systemWallet: { value: 6800000, changePct: 3.6, series: [4,4.2,4.1,4.4,4.3,4.9,5.2,5.6,5.9,6.2,6.5,6.8] },
+
+  monthly: {
+    labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+    deposits: [2.3,3.1,4.2,5.0,4.7,6.1,7.3,5.9,6.5,7.8,6.9,8.1],
+    withdrawals: [1.5,2.1,2.8,3.4,3.2,4.0,5.1,4.3,4.8,5.5,5.0,6.0]
+  },
+
+  roiDist: { labels:['Starter','Middle-Class','Growth','VIP','Gold'], values:[15,25,30,20,10] },
+
+  investorsGrowth: { // sample series for 90d range (trimmed for demo)
+    labels: Array.from({length:90}, (_,i)=>`D${i+1}`),
+    series: Array.from({length:90}, (_,i)=> Math.round(30 + Math.sin(i/10)*8 + i*2/10 ))
+  },
+
+  activities: [
+    {text:'New investor registered — Aisha Bello', time:'2m'},
+    {text:'₦50,000 deposit credited — User: Samuel', time:'12m'},
+    {text:'VIP plan matured — ROI credited ₦135,000 — User: Chika', time:'3h'},
+    {text:'Withdrawal requested ₦30,000 — User: Emeka', time:'6h'},
+    {text:'KYC approved — User: Fatima', time:'1d'}
+  ]
+};
+
+/* helper: format currency (NGN) and numbers */
+function fmtCurrency(n){
+  if(typeof n !== 'number') return n;
+  return '₦' + n.toLocaleString('en-NG');
+}
+function fmtNumber(n){ return n.toLocaleString(); }
+
+/* inject metric card values */
+function renderMetrics(data){
+  // mapping keys to DOM ids
+  const map = {
+    totalInvestors: ['totalInvestorsValue','totalInvestorsDelta','spark-totalInvestors'],
+    activeInvestments: ['activeInvestmentsValue','activeInvestmentsDelta','spark-activeInvestments'],
+    totalDeposits: ['totalDepositsValue','totalDepositsDelta','spark-totalDeposits'],
+    totalWithdrawals: ['totalWithdrawalsValue','totalWithdrawalsDelta','spark-totalWithdrawals'],
+    pendingROI: ['pendingROIValue','pendingROIDelta','spark-pendingROI'],
+    systemWallet: ['systemWalletValue','systemWalletDelta','spark-systemWallet']
+  };
+
+  Object.keys(map).forEach(key=>{
+    const [valId, deltaId, sparkId] = map[key];
+    const nodeVal = document.getElementById(valId);
+    const nodeDelta = document.getElementById(deltaId);
+    const payload = data[key];
+    // value formatting: amounts have '₦' prefix for currency keys, others are plain numbers
+    const currencyKeys = ['totalDeposits','totalWithdrawals','pendingROI','systemWallet'];
+    if(currencyKeys.includes(key)){
+      nodeVal.textContent = fmtCurrency(payload.value);
+    } else {
+      nodeVal.textContent = fmtNumber(payload.value);
+    }
+    // delta styles
+    const delta = (payload.changePct || 0);
+    nodeDelta.textContent = (delta > 0 ? '+' : '') + delta.toFixed(1) + '%';
+    nodeDelta.classList.toggle('pos', delta >= 0);
+    nodeDelta.classList.toggle('neg', delta < 0);
+
+    // small sparkline
+    const ctx = document.getElementById(sparkId).getContext('2d');
+    new Chart(ctx, {
+      type: 'line',
+      data: { labels: payload.series.map((_,i)=>i), datasets:[{
+        data: payload.series,
+        borderColor: (delta>=0? '#16a34a':'#ef4444'),
+        borderWidth: 2,
+        pointRadius: 0,
+        fill: false,
+        tension: 0.35
+      }]},
+      options: {
+        responsive:true,
+        maintainAspectRatio:false,
+        scales:{ x:{display:false}, y:{display:false} },
+        plugins:{ legend:{display:false}, tooltip:{enabled:false} }
+      }
+    });
+  });
+}
+
+/* render big charts */
+function renderCharts(data){
+  // Deposits vs Withdrawals (bar)
+  const depositCtx = document.getElementById('chartDeposits').getContext('2d');
+  new Chart(depositCtx, {
+    type: 'bar',
+    data: {
+      labels: data.monthly.labels,
+      datasets: [
+        { label: 'Deposits (M ₦)', data: data.monthly.deposits, backgroundColor: '#0d6efd' },
+        { label: 'Withdrawals (M ₦)', data: data.monthly.withdrawals, backgroundColor: '#6610f2' }
+      ]
+    },
+    options: { responsive:true, interaction:{mode:'index',intersect:false}, scales:{ y:{ beginAtZero:true } } }
+  });
+
+  // ROI distribution (doughnut)
+  const roiCtx = document.getElementById('chartROI').getContext('2d');
+  new Chart(roiCtx, {
+    type:'doughnut',
+    data: { labels: data.roiDist.labels, datasets:[{ data: data.roiDist.values, backgroundColor:['#0d6efd','#198754','#ffc107','#6610f2','#dc3545'] }] },
+    options: { responsive:true, plugins:{legend:{position:'bottom'}} }
+  });
+
+  // investors growth (line) - use 90d default
+  const invCtx = document.getElementById('chartInvestors').getContext('2d');
+  const dataset = {
+    label:'New investors',
+    data: data.investorsGrowth.series.slice(-90),
+    borderColor:'#0d6efd', fill:true, backgroundColor:'rgba(13,110,253,0.08)', tension:0.3
+  };
+  window._investorChart = new Chart(invCtx, { type:'line', data:{ labels: data.investorsGrowth.labels.slice(-90), datasets:[dataset] }, options:{ responsive:true, scales:{ y:{ beginAtZero:true } } } });
+}
+
+/* render recent activity feed */
+function renderActivities(list){
+  const ul = document.getElementById('recentActivities');
+  ul.innerHTML = '';
+  list.forEach(item=>{
+    const li = document.createElement('li');
+    li.innerHTML = `<div class="d-flex align-items-center justify-content-between">
+      <div><strong>${item.text}</strong><div class="activity-time">${item.time} ago</div></div>
+    </div>`;
+    ul.appendChild(li);
+  });
+}
+
+/* interactive range buttons for investors chart (demo filters) */
+function setupRangeButtons(){
+  document.getElementById('btnRange7').addEventListener('click', ()=>{
+    setRange(7);
+  });
+  document.getElementById('btnRange30').addEventListener('click', ()=>{
+    setRange(30);
+  });
+  document.getElementById('btnRange90').addEventListener('click', ()=>{
+    setRange(90);
+  });
+
+  function setRange(days){
+    // update active button style
+    document.querySelectorAll('#btnRange7,#btnRange30,#btnRange90').forEach(b => b.classList.toggle('active', b.id === 'btnRange'+days));
+    // slice last 'days' points
+    const labels = demoData.investorsGrowth.labels.slice(-days);
+    const series = demoData.investorsGrowth.series.slice(-days);
+    window._investorChart.data.labels = labels;
+    window._investorChart.data.datasets[0].data = series;
+    window._investorChart.update();
+  }
+}
+
+/* initialize everything */
+document.addEventListener('DOMContentLoaded', ()=>{
+  renderMetrics(demoData);
+  renderCharts(demoData);
+  renderActivities(demoData.activities);
+  setupRangeButtons();
+});
+</script>
+<!-- ========== END: Admin Dashboard MAIN CONTENT ========== -->
+
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="Js/main.js"></script>
+</body>
+</html>

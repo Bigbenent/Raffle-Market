@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>042 Raffle Market Investor | Dashboard</title>
+
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Official investor dashboard for 042 Raffle Market — manage investments, monitor ROI, and grow your raffle funding portfolio." />
+  <meta name="keywords" content="042 Raffle Market, Investment, ROI, Raffle Funding, BenCodes Innovation Hub" />
+  <meta name="author" content="BenCodes Innovation Hub LTD" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="img/favicon.png" type="image/png" />
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+
+  <!-- Toastr Notifications -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+
+  <!-- Chart.js for ROI Chart -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+  <!-- Custom CSS -->
+  <link href="css/style.css" rel="stylesheet" />
+
+  <!-- Theme Color for Mobile -->
+  <meta name="theme-color" content="#0d6efd" />
+
+</head>
+<style>
+      [data-bs-theme="dark"] {
+      --bg: #0b1220;
+      --card: #111827;
+      --muted: #9ca3af;
+    }
+
+    html,body{height:100%}
+    body{
+      font-family: "Poppins",sans-serif;
+      background:var(--bg);
+      color:var(--muted);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      transition:background .25s ease,color .25s ease;
+      padding-bottom:40px;
+    }
+
+    .container-xl { max-width:1100px; }
+
+    /* Header */
+    .page-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:1rem;
+      margin:2rem 0 1rem;
+    }
+    .page-title{ font-weight:700; font-size:1.25rem; color:var(--text, #0f172a); }
+
+    /* Layout */
+    .settings-grid{
+      display:grid;
+      grid-template-columns: 360px 1fr;
+      gap:1.5rem;
+      align-items:start;
+    }
+    @media (max-width: 900px){
+      .settings-grid{ grid-template-columns:1fr; }
+    }
+
+    /* Left card: Profile summary */
+    .profile-card{
+      background:var(--card);
+      border-radius:14px;
+      padding:1.25rem;
+      box-shadow: 0 8px 24px rgba(16,24,40,0.06);
+    }
+    .avatar{
+      width:84px;height:84px;border-radius:14px;object-fit:cover;border:3px solid rgba(255,255,255,0.06);
+      box-shadow: 0 6px 18px rgba(16,24,40,0.06);
+    }
+    .meta { color:var(--muted); font-size:.95rem; }
+    .small-muted { color:var(--muted); font-size:.88rem; }
+
+    /* Right card: forms */
+    .card-section{
+      background:var(--card);
+      border-radius:14px;
+      padding:1.25rem;
+      box-shadow: 0 8px 24px rgba(16,24,40,0.06);
+      margin-bottom:1rem;
+    }
+
+    /* Inputs */
+    .form-label { font-weight:600; color: #111827; }
+    .form-control, .form-select, .form-range { border-radius:10px; }
+    .form-control:focus { box-shadow: 0 6px 20px rgba(13,110,253,0.12); border-color:#6610f2; }
+
+    /* Password strength */
+    .pw-meter { height:8px; border-radius:8px; background:#f3f4f6; overflow:hidden; }
+    .pw-meter > i { display:block; height:100%; width:0%; background:linear-gradient(90deg,#ef4444,#f97316,#84cc16); transition: width .35s; }
+
+    /* Small utilities */
+    .muted { color:var(--muted); }
+    .chip { display:inline-flex; gap:.5rem; align-items:center; background:rgba(13,110,253,0.08); color:#0d6efd; padding:.4rem .6rem; border-radius:999px; font-weight:600; font-size:.85rem; }
+
+    /* KYC upload box */
+    .kyc-drop{
+      border:1px dashed rgba(15,23,42,0.06);
+      border-radius:10px;
+      padding:1rem;
+      display:flex;
+      gap:1rem;
+      align-items:center;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+    }
+    .kyc-thumb{ width:72px; height:48px; object-fit:cover; border-radius:8px; border:1px solid rgba(0,0,0,0.06); }
+
+    /* Activity log */
+    .activity-list { list-style:none; padding:0; margin:0; }
+    .activity-list li{ padding:.8rem 0; border-bottom:1px solid rgba(15,23,42,0.04); color:var(--muted); display:flex; justify-content:space-between; gap:1rem; }
+
+    /* Danger area */
+    .danger-box { border-radius:10px; padding:1rem; background: linear-gradient(90deg, rgba(239,68,68,0.06), transparent); border:1px solid rgba(239,68,68,0.07); color:var(--danger); }
+
+    /* Responsive */
+    @media (max-width:576px){
+      .avatar{width:68px;height:68px}
+      .page-title{font-size:1.05rem}
+    }
+
+    /* Dark mode tweak (applies when HTML attribute toggled) */
+    [data-bs-theme="dark"] body, body[data-theme="dark"] {
+      --bg: #071025;
+      background: #071025;
+      color: #cbd5e1;
+    }
+    [data-bs-theme="dark"] .card-section, [data-bs-theme="dark"] .profile-card,
+    body[data-theme="dark"] .card-section, body[data-theme="dark"] .profile-card {
+      background:#0b1220;
+      box-shadow: 0 8px 30px rgba(2,6,23,0.6);
+    }
+    [data-bs-theme="dark"] .form-label, body[data-theme="dark"] .form-label { color:#e6eef8; }
+    [data-bs-theme="dark"] .muted, body[data-theme="dark"] .muted { color:#94a3b8; }
+    [data-bs-theme="dark"] .kyc-drop { border-color: rgba(255,255,255,0.04); background: rgba(255,255,255,0.02); }
+    [data-bs-theme="dark"] .danger-box { background: rgba(239,68,68,0.06); border-color: rgba(239,68,68,0.12); color:#fecaca; }
+
+    /* Buttons */
+    .btn-primary, .btn-outline-primary {
+      border-radius:10px; padding:.6rem 1rem; font-weight:600;
+    }
+</style>
+
+
+<body>
+   <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <h4>042 <span class="text-white">Investor</span></h4>
+    </div>
+     <ul class="sidebar-menu">
+      <li><a href="index.html" class="active"><i class="bi bi-house-door"></i> Dashboard</a></li>
+      <li><a href="plans.html"><i class="bi bi-graph-up-arrow"></i> Investment Plans</a></li>
+      <li><a href="wallet.html"><i class="bi bi-wallet2"></i> Wallet</a></li>
+      <li><a href="transaction.html"><i class="bi bi-cash-coin"></i> Transactions</a></li>
+      <li><a href="roi_history.html"><i class="bi bi-clock-history"></i> ROI History</a></li>
+      <li><a href="support.html"><i class="bi bi-envelope"></i> Support</a></li>
+      <li><a href="settings.html"><i class="bi bi-gear"></i> Settings</a></li>
+    </ul>
+  </aside>
+
+  
+  <!-- Main Content -->
+  <main class="main-content">
+ 
+    <!-- ADVANCED RESPONSIVE NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top py-3 px-3 px-md-4" id="mainNavbar">
+  <!-- SIDEBAR TOGGLE (Visible only on mobile) -->
+  <button class="btn btn-outline-dark me-2 d-lg-none" id="sidebarToggle">
+    <i class="bi bi-list fs-5"></i>
+  </button>
+
+  <!-- LOGO + TITLE -->
+  <div class="d-flex align-items-center">
+    <h6 class="fw-bold mb-0 d-lg-none">042 Investor</h6> <!-- shorter text for mobile -->
+    <h5 class="fw-bold mb-0 d-none d-lg-block">042 Raffle Market Investor</h5>
+  </div>
+
+  <!-- NAV ACTIONS -->
+  <div class="ms-auto d-flex align-items-center gap-2 gap-md-3">
+
+    <!-- USER GREETING (Hidden on mobile) -->
+    <span class="d-none d-md-inline text-muted">Welcome, <strong>John Doe</strong></span>
+
+    <!-- THEME TOGGLE (Hidden on very small devices) -->
+    <button class="btn btn-light border d-none d-sm-inline" id="themeToggle" title="Toggle Theme">
+      <i class="bi bi-moon"></i>
+    </button>
+
+    <!-- NOTIFICATION DROPDOWN -->
+    <div class="dropdown">
+      <button class="btn btn-light position-relative border-0" id="notifDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="bi bi-bell fs-5"></i>
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.6rem;">3</span>
+      </button>
+      <ul class="dropdown-menu dropdown-menu-end shadow border-0 rounded-4 p-0" aria-labelledby="notifDropdown" style="width: 280px;">
+        <li class="dropdown-header text-center fw-semibold py-2 border-bottom bg-light">Notifications</li>
+        <li><a class="dropdown-item py-2 small" href="#"><i class="bi bi-cash-coin text-success me-2"></i>ROI payout processed successfully</a></li>
+        <li><a class="dropdown-item py-2 small" href="#"><i class="bi bi-graph-up-arrow text-primary me-2"></i>New investment plan added</a></li>
+        <li><a class="dropdown-item py-2 small" href="#"><i class="bi bi-info-circle text-warning me-2"></i>System maintenance scheduled</a></li>
+        <li><hr class="dropdown-divider my-1"></li>
+        <li><a class="dropdown-item text-center small text-primary fw-semibold" href="#">View all</a></li>
+      </ul>
+    </div>
+
+    <!-- PROFILE DROPDOWN -->
+    <div class="dropdown">
+      <a href="#" class="d-flex align-items-center text-decoration-none" data-bs-toggle="dropdown" aria-expanded="false">
+        <img src="img/profile.jpg" class="rounded-circle me-1 me-md-2" width="36" height="36" alt="Profile" />
+        <i class="bi bi-chevron-down text-dark fs-6 bg-success py-1 px-2 rounded-pill d-none d-sm-inline"></i>
+      </a>
+      <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 rounded-4">
+        <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i> View Profile</a></li>
+        <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i> Settings</a></li>
+        <li><hr class="dropdown-divider" /></li>
+        <li><a class="dropdown-item text-danger" href="#"><i class="bi bi-box-arrow-right me-2"></i> Logout</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <!-- Page Content -->
+    <div class="container-fluid p-4">
+
+
+  <div class="container-xl">
+    <div class="page-header">
+      <div>
+        <div class="page-title">Account Settings</div>
+        <div class="small-muted">Manage your personal information, security and privacy settings.</div>
+      </div>
+
+      <div class="d-flex align-items-center gap-2">
+        <div class="chip"><i class="bi bi-shield-lock-fill"></i>Secure</div>
+        <button id="themeBtn" class="btn btn-outline-primary btn-sm"><i class="bi bi-moon"></i></button>
+      </div>
+    </div>
+
+    <div class="settings-grid">
+
+      <!-- LEFT: PROFILE SUMMARY + ACTIVITY -->
+      <aside class="profile-card">
+        <div class="d-flex align-items-center gap-3">
+          <img id="avatarPreview" src="../img/logo.png" alt="avatar" class="avatar">
+          <div>
+            <div style="font-weight:700;font-size:1rem;color:var(--text, #0f172a)" id="userFullName">John Doe</div>
+            <div class="meta" id="userEmail">john.doe@example.com</div>
+            <div style="margin-top:.5rem;"><span class="small-muted">Member since</span> <strong>Jan 2024</strong></div>
+          </div>
+        </div>
+
+        <hr style="margin:1rem 0;border-color:rgba(15,23,42,0.04)">
+
+        <div>
+          <div class="d-flex justify-content-between small-muted"><div>Available</div><div><strong id="uiAvailable">₦450,000</strong></div></div>
+          <div class="d-flex justify-content-between small-muted"><div>Locked</div><div><strong id="uiLocked">₦1,200,000</strong></div></div>
+          <div class="d-flex justify-content-between small-muted"><div>Withdrawable</div><div><strong id="uiWithdrawable">₦320,000</strong></div></div>
+        </div>
+
+        <hr style="margin:1rem 0;border-color:rgba(15,23,42,0.04)">
+
+        <div class="small-muted mb-2">Recent activity</div>
+        <ul class="activity-list" id="activityList">
+          <li><div>ROI credited</div><div class="text-success">+₦12,000</div></li>
+          <li><div>Investment started</div><div class="text-warning">₦50,000</div></li>
+          <li><div>Withdrawal requested</div><div class="text-muted">₦30,000</div></li>
+        </ul>
+
+        <hr style="margin:1rem 0;border-color:rgba(15,23,42,0.04)">
+
+        <div class="small-muted">Security</div>
+        <div class="d-flex gap-2 mt-2">
+          <button class="btn btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#changePasswordModal"><i class="bi bi-key me-2"></i>Change Password</button>
+          <button class="btn btn-primary w-100" id="enable2FA"><i class="bi bi-toggle-on me-2"></i>2FA Settings</button>
+        </div>
+      </aside>
+
+      <!-- RIGHT: EDIT FORMS -->
+      <main>
+        <!-- Personal Info -->
+        <section class="card-section mb-3">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h6 style="font-weight:700;">Personal Information</h6>
+            <small class="small-muted">Update your profile details</small>
+          </div>
+
+          <form id="profileForm" autocomplete="off">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Full name</label>
+                <input id="inputFullName" class="form-control" type="text" required />
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Email address</label>
+                <input id="inputEmail" class="form-control" type="email" required />
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Phone number</label>
+                <input id="inputPhone" class="form-control" type="tel" placeholder="+234 80x xxx xxxx" />
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Date of birth</label>
+                <input id="inputDOB" class="form-control" type="date" />
+              </div>
+
+              <div class="col-12">
+                <label class="form-label">Profile photo</label>
+                <div class="d-flex gap-2 align-items-center">
+                  <label class="btn btn-outline-primary btn-sm mb-0">
+                    <input id="avatarInput" type="file" accept="image/*" hidden> Upload photo
+                  </label>
+                  <small class="small-muted">PNG, JPG — max 5MB</small>
+                </div>
+              </div>
+
+              <div class="col-12 text-end">
+                <button type="submit" class="btn btn-primary">Save changes</button>
+              </div>
+            </div>
+          </form>
+        </section>
+
+        <!-- Identity / KYC -->
+        <section class="card-section mb-3">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h6 style="font-weight:700;">Identity Verification (KYC)</h6>
+            <small class="small-muted">Upload ID documents</small>
+          </div>
+
+          <div class="row g-3">
+            <div class="col-md-6">
+              <div class="kyc-drop" id="kycDrop">
+                <div>
+                  <div style="font-weight:700">Upload ID</div>
+                  <div class="small-muted">Passport, National ID or Driver's license</div>
+                </div>
+                <div class="ms-auto text-end">
+                  <img id="kycPreview" class="kyc-thumb" src="https://via.placeholder.com/150x90.png?text=Preview" alt="">
+                  <div class="mt-1"><label class="btn btn-outline-secondary btn-sm mb-0"><input id="kycInput" type="file" accept="image/*,application/pdf" hidden>Choose</label></div>
+                </div>
+              </div>
+              <div class="small-muted mt-2">We'll verify within 24–48 hours.</div>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Document type</label>
+              <select id="kycType" class="form-select">
+                <option value="passport">Passport</option>
+                <option value="nid">National ID</option>
+                <option value="driver">Driver's License</option>
+              </select>
+              <div class="mt-3">
+                <button id="submitKyc" class="btn btn-outline-primary">Submit for verification</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Security Settings -->
+        <section class="card-section mb-3">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h6 style="font-weight:700;">Security & Access</h6>
+            <small class="small-muted">Manage password and two-factor</small>
+          </div>
+
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Two-Factor Authentication (2FA)</label>
+              <div class="d-flex gap-2 align-items-center">
+                <div class="form-check form-switch">
+                  <input id="toggle2fa" class="form-check-input" type="checkbox">
+                </div>
+                <div>
+                  <div style="font-weight:600">Authenticator App</div>
+                  <div class="small-muted">Use Google Authenticator or Authy</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Active sessions</label>
+              <div class="small-muted">Manage devices currently logged in</div>
+              <ul class="mt-2 small-muted" id="sessionList">
+                <li>Chrome on Windows — <small>Last active 2h ago</small></li>
+                <li>Mobile (iOS) — <small>Last active 1d ago</small></li>
+              </ul>
+              <div class="mt-2 text-end">
+                <button id="logoutDevices" class="btn btn-outline-secondary btn-sm">Log out all devices</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Notifications -->
+        <section class="card-section mb-3">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h6 style="font-weight:700;">Notifications</h6>
+            <small class="small-muted">What you'd like to receive</small>
+          </div>
+
+          <div class="row g-3">
+            <div class="col-md-6">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="notifyEmail" checked>
+                <label class="form-check-label" for="notifyEmail">Email notifications (daily summary & alerts)</label>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="notifySms">
+                <label class="form-check-label" for="notifySms">SMS notifications (important alerts)</label>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="notifyPush">
+                <label class="form-check-label" for="notifyPush">Push notifications (mobile)</label>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Linked Accounts -->
+        <section class="card-section mb-3">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h6 style="font-weight:700;">Linked Accounts</h6>
+            <small class="small-muted">Bank accounts & wallets</small>
+          </div>
+
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Primary Bank</label>
+              <div class="d-flex gap-2 align-items-center">
+                <div>
+                  <div style="font-weight:700">GTBank • • • 4321</div>
+                  <div class="small-muted">John Doe</div>
+                </div>
+                <div class="ms-auto text-end">
+                  <button class="btn btn-outline-secondary btn-sm">Edit</button>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Crypto Wallet (Optional)</label>
+              <div class="d-flex gap-2 align-items-center">
+                <div>
+                  <div style="font-weight:700">USDT (TRC20)</div>
+                  <div class="small-muted">0xAb...9F</div>
+                </div>
+                <div class="ms-auto text-end">
+                  <button class="btn btn-outline-secondary btn-sm">Add / Edit</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Danger Zone -->
+        <section class="card-section">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h6 style="font-weight:700;">Danger Zone</h6>
+            <small class="small-muted">Account removal & security</small>
+          </div>
+
+          <div class="danger-box">
+            <div style="font-weight:700">Delete account</div>
+            <div class="small-muted">Permanently delete your account and all data. This cannot be undone.</div>
+            <div class="mt-3">
+              <button id="deleteAccountBtn" class="btn btn-outline-danger">Delete Account</button>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Modals -->
+  <!-- Change Password Modal -->
+  <div class="modal fade" id="changePasswordModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content rounded-4">
+        <div class="modal-header">
+          <h5 class="modal-title">Change Password</h5>
+          <button class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <form id="pwForm">
+          <div class="modal-body">
+            <div class="mb-3">
+              <label class="form-label">Current password</label>
+              <input id="currentPw" class="form-control" type="password" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">New password</label>
+              <input id="newPw" class="form-control" type="password" required>
+              <div class="mt-2 pw-meter"><i id="pwMeterBar"></i></div>
+              <div class="small-muted mt-2">Use at least 8 characters including letters and numbers.</div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Confirm new password</label>
+              <input id="confirmPw" class="form-control" type="password" required>
+            </div>
+            <div id="pwAlert" class="small-muted"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Update password</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Account Confirmation -->
+  <div class="modal fade" id="deleteModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content rounded-4">
+        <div class="modal-body">
+          <h5 class="text-danger">Delete account</h5>
+          <p class="small-muted">This action is irreversible. Type <strong>DELETE</strong> to confirm.</p>
+          <input id="confirmDelete" class="form-control mb-3" placeholder="Type DELETE to confirm">
+          <div class="d-flex justify-content-end gap-2">
+            <button class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button id="confirmDeleteBtn" class="btn btn-danger" disabled>Delete account</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+      
+  
+  
+    </div>
+
+        <!-- FOOTER -->
+      <footer class="text-center mt-5 py-4 border-top">
+        <p class="mb-0 small text-muted">&copy; 2025 042 Raffle Market | Powered by <strong>BenCodes Innovation Hub LTD</strong></p>
+      </footer>
+    </div>
+  </main>
+
+  <script>
+ 
+    // ---------- Avatar preview ----------
+    const avatarInput = document.getElementById('avatarInput');
+    const avatarPreview = document.getElementById('avatarPreview');
+
+    avatarInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if(!file) return;
+      if(file.size > 5 * 1024 * 1024){ alert('File too large. Max 5MB.'); return; }
+      const url = URL.createObjectURL(file);
+      avatarPreview.src = url;
+      // You should upload the file to backend here (FormData)
+    });
+
+   
+    // ---------- 2FA toggle ----------
+    const toggle2fa = document.getElementById('toggle2fa');
+    const enable2FABtn = document.getElementById('enable2FA');
+    toggle2fa.addEventListener('change', () => {
+      const on = toggle2fa.checked;
+      alert(on ? '2FA enabled. Follow steps to connect your authenticator.' : '2FA disabled.');
+      // Implement server call
+    });
+    enable2FABtn.addEventListener('click', () => {
+      // Show QR / instructions (not implemented here)
+      toggle2fa.checked = !toggle2fa.checked;
+      toggle2fa.dispatchEvent(new Event('change'));
+    });
+
+  
+  </script>
+  <!-- JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="Js/main.js"></script>
+</body>
+</html>
